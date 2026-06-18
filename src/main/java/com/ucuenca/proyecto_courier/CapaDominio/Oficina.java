@@ -6,6 +6,10 @@ public class Oficina {
     private String direccion;
     private String telefono;
 
-    public Oficina() {
+    public Oficina(String idOficina, String nombre, String direccion, String telefono) {
+        this.idOficina = idOficina;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
     }
 }

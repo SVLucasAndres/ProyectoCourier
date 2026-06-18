@@ -9,7 +9,12 @@ public abstract class Paquete {
     private boolean tieneSeguro;
     private double porcentajeSeguro;
 
-    public Paquete() {
+    public Paquete(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro) {
+        this.idPaquete = idPaquete;
+        this.peso = peso;
+        this.valorContenido = valorContenido;
+        this.tieneSeguro = tieneSeguro;
+        this.porcentajeSeguro = porcentajeSeguro;
     }
 
     public abstract double calcularCostoBase(List<Rango> rangos);

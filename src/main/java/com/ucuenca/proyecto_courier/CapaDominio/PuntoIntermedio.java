@@ -8,6 +8,10 @@ public class PuntoIntermedio {
     private LocalDateTime horaSalida;
     private Oficina oficina; // Representa la relación de agregación con Oficina
 
-    public PuntoIntermedio() {
+    public PuntoIntermedio(String nombreOficina, LocalDateTime horaLlegada, LocalDateTime horaSalida, Oficina oficina) {
+        this.nombreOficina = nombreOficina;
+        this.horaLlegada = horaLlegada;
+        this.horaSalida = horaSalida;
+        this.oficina = oficina;
     }
 }

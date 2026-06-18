@@ -7,8 +7,9 @@ import java.util.List;
 public class Sobre extends Paquete {
     private Tamano tamano;
 
-    public Sobre() {
-        super();
+    public Sobre(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, Tamano tamano) {
+        super(idPaquete, peso, valorContenido, tieneSeguro, porcentajeSeguro);
+        this.tamano = tamano;
     }
 
     @Override

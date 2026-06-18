@@ -14,7 +14,14 @@ public class Envio {
     private MetodoPago metodoPago;
     private RutaSeguimiento ruta;
 
-    public Envio() {
+    public Envio(String idEnvio, Cliente remitente, Cliente destinatario, List<Paquete> listaPaquetes, TipoServicio rapidez, MetodoPago metodoPago, RutaSeguimiento ruta) {
+        this.idEnvio = idEnvio;
+        this.remitente = remitente;
+        this.destinatario = destinatario;
+        this.listaPaquetes = listaPaquetes;
+        this.rapidez = rapidez;
+        this.metodoPago = metodoPago;
+        this.ruta = ruta;
     }
 
     public double calcularCostoTotal() {

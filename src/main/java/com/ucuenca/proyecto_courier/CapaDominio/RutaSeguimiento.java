@@ -4,7 +4,8 @@ import java.util.List;
 public class RutaSeguimiento {
     private List<PuntoIntermedio> registros;
 
-    public RutaSeguimiento() {
+    public RutaSeguimiento(List<PuntoIntermedio> registros) {
+        this.registros = registros;
     }
 
     public void agregarPaso(PuntoIntermedio punto) {

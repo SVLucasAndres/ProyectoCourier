@@ -7,8 +7,11 @@ public class Caja extends Paquete {
     private double ancho;
     private double largo;
 
-    public Caja() {
-        super();
+    public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, double alto, double ancho, double largo) {
+        super(idPaquete, peso, valorContenido, tieneSeguro, porcentajeSeguro);
+        this.alto = alto;
+        this.ancho = ancho;
+        this.largo = largo;
     }
 
     @Override
