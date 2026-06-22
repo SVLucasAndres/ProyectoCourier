@@ -3,24 +3,6 @@
 ```plantuml
 @startuml
 namespace Capa_Logica_Dominio {
-    interface ClienteService {
-        + crearCliente(ClienteDTO Cliente): void
-        + mostrarCliente(): ClienteDTO
-    }
-
-    interface PaqueteService {
-        + crearPaquete(PaqueteDTO paquete): void
-        + mostrarPaquete(): PaqueteDTO
-        + registrarLlegadaPaquete(Date fecha): void
-        + registrarSalidaPaquete(Date fecha): void
-    }
-
-    interface EnvioService {
-        + realizarEnvio(EnvioDTO paquete): void
-        + mostrarPaquete(): PaqueteDTO
-        + obtenerCostoTotalEnvio(): double
-    }
-
     class Cliente {
         - idCliente: String
         - nombre: String
