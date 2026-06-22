@@ -2,7 +2,7 @@
 
 ```plantuml
 @startuml
-namespace Capa_Logica_Dominio {
+namespace POJO {
     class Cliente {
         - idCliente: String
         - nombre: String
