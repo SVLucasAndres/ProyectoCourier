@@ -1,14 +1,66 @@
-### POJOs
+### Capa de DOMINIO
 
 ```plantuml
 @startuml
-namespace POJO {
+namespace Capa_Logica_Dominio {
+    interface ClienteService {
+        + crearCliente(ClienteDTO cliente): void
++ modificarCliente(ClienteDTO cliente): void
++ archivarCliente(ClienteDTO cliente): void
+        + mostrarCliente(): ClienteDTO
+    }
+
+    interface PaqueteService {
+        + crearPaquete(PaqueteDTO paquete): void
+        + mostrarPaquete(): PaqueteDTO
+        + registrarLlegadaPaquete(Date fecha): void
+        + registrarSalidaPaquete(Date fecha): void
+    }
+
+    interface EnvioService {
+        + realizarEnvio(EnvioDTO envio): void
+        + mostrarEnvio(): EnvioDTO
+        + obtenerCostoTotalEnvio(): double
+    }
+
+interface OficinaService {
+        + crearOficina(OficinaDTO oficina): void
++ modificarOficina(OficinaDTO oficina): void
++ archivarOficina(OficinaDTO oficina): void
+        + mostrarOficina(): OficinaDTO
+    }
+
+
+class OficinaServiceImpl {
+        + crearOficina(OficinaDTO oficina): void
+        + mostrarOficina(): OficinaDTO
+    }
+
+class ClienteServiceImpl {
+        + crearCliente(ClienteDTO cliente): void
+        + mostrarCliente(): ClienteDTO
+    }
+
+    class PaqueteServiceImpl {
+        + crearPaquete(PaqueteDTO paquete): void
+        + mostrarPaquete(): PaqueteDTO
+        + registrarLlegadaPaquete(Date fecha): void
+        + registrarSalidaPaquete(Date fecha): void
+    }
+
+    class EnvioServiceImpl {
+        + realizarEnvio(EnvioDTO envio): void
+        + mostrarEnvio(): EnvioDTO
+        + obtenerCostoTotalEnvio(): double
+    }
+
     class Cliente {
         - idCliente: String
         - nombre: String
         - direccion: String
         - telefono: String
         - listaEnvios: List<Envio>
+        - isActive: boolean
     }
 
     class Envio {
@@ -18,7 +70,6 @@ namespace POJO {
         - listaPaquetes: List<Paquete>
         - rapidez: TipoRapidez
         - metodoPago: MetodoPago
-        - ruta: RutaSeguimiento
         + calcularCostoTotal(): double
     }
 
@@ -35,6 +86,7 @@ namespace POJO {
         - valorContenido: double
         - tieneSeguro: boolean
         - porcentajeSeguro: double
+        - ruta: RutaSeguimiento
         + {abstract} calcularCostoBase(List<Rango> rangos): double
         - calcularCostoSeguro(): double
     }
@@ -52,8 +104,8 @@ namespace POJO {
     }
 
     class RutaSeguimiento {
-        - registros: List<RegistroOficina>
-        + agregarPaso(RegistroOficina)
+        - puntosIntermedios: List<PuntoIntermedio>
+        + agregarPaso(PuntoIntermedio puntoIntermedio): void
     }
 
     class Oficina {
@@ -61,6 +113,7 @@ namespace POJO {
         - nombre: String
         - direccion: String
         - telefono: String
+        - isActive: boolean
     }
 
     class PuntoIntermedio {
@@ -100,5 +153,9 @@ namespace POJO {
     Paquete <|-- Caja 
     PuntoIntermedio o-- Oficina
     RutaSeguimiento *-- PuntoIntermedio
+ClienteService <|.. ClienteServiceImpl
+EnvioService <|.. EnvioServiceImpl
+PaqueteService <|.. PaqueteServiceImpl
+OficinaService <|.. OficinaServiceImpl
 }
 @enduml
