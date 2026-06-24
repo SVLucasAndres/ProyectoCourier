@@ -7,8 +7,8 @@ public class Caja extends Paquete {
     private double ancho;
     private double largo;
 
-    public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, double alto, double ancho, double largo) {
-        super(idPaquete, peso, valorContenido, tieneSeguro, porcentajeSeguro);
+    public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, RutaSeguimiento ruta, double alto, double ancho, double largo) {
+        super(idPaquete, peso, valorContenido, tieneSeguro, porcentajeSeguro, ruta);
         this.alto = alto;
         this.ancho = ancho;
         this.largo = largo;
@@ -19,7 +19,4 @@ public class Caja extends Paquete {
         return 0.0;
     }
 
-    public double calcularCostoBase() {
-        return 0.0;
-    }
 }

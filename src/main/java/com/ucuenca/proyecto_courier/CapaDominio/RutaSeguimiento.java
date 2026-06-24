@@ -2,13 +2,13 @@ package com.ucuenca.proyecto_courier.CapaDominio;
 import java.util.List;
 
 public class RutaSeguimiento {
-    private List<PuntoIntermedio> registros;
+    private List<PuntoIntermedio> puntosIntermedios;
 
-    public RutaSeguimiento(List<PuntoIntermedio> registros) {
-        this.registros = registros;
+    public RutaSeguimiento(List<PuntoIntermedio> puntosIntermedios) {
+        this.puntosIntermedios = puntosIntermedios;
     }
 
-    public void agregarPaso(PuntoIntermedio punto) {
+    public void agregarPaso(PuntoIntermedio puntoIntermedio) {
         // Estructura vacía
     }
 }
