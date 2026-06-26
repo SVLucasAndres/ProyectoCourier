@@ -16,6 +16,13 @@ public class Caja extends Paquete {
 
     @Override
     public double calcularCostoBase(List<Rango> rangos) {
+        if (rangos != null) {
+            for (Rango rango : rangos) {
+                if (getPeso() >= rango.getPesoMinimo() && getPeso() <= rango.getPesoMaximo()) {
+                    return getPeso() * rango.getCostoPorKilogramo();
+                }
+            }
+        }
         return 0.0;
     }
 

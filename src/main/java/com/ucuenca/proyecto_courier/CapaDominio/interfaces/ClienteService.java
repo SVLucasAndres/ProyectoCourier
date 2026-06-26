@@ -6,5 +6,5 @@ public interface ClienteService {
     void crearCliente(ClienteDTO cliente);
     void modificarCliente(ClienteDTO cliente);
     void archivarCliente(ClienteDTO cliente);
-    ClienteDTO mostrarCliente();
+    ClienteDTO mostrarCliente(String idCliente);
 }

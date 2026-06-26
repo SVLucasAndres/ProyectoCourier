@@ -12,4 +12,8 @@ public class Rango {
         this.pesoMaximo = pesoMaximo;
         this.costoPorKilogramo = costoPorKilogramo;
     }
+
+    public double getPesoMinimo() { return pesoMinimo; }
+    public double getPesoMaximo() { return pesoMaximo; }
+    public double getCostoPorKilogramo() { return costoPorKilogramo; }
 }

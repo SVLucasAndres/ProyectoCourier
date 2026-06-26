@@ -22,7 +22,21 @@ public class Envio {
         this.metodoPago = metodoPago;
     }
 
-    public double calcularCostoTotal() {
-        return 0.0;
+    public String getIdEnvio() { return idEnvio; }
+    public Cliente getRemitente() { return remitente; }
+    public Cliente getDestinatario() { return destinatario; }
+    public List<Paquete> getListaPaquetes() { return listaPaquetes; }
+    public TipoServicio getRapidez() { return rapidez; }
+    public MetodoPago getMetodoPago() { return metodoPago; }
+
+    public double calcularCostoTotal(List<Rango> rangos) {
+        double total = 0.0;
+        if (listaPaquetes != null) {
+            for (Paquete p : listaPaquetes) {
+                total += p.calcularCostoBase(rangos) + p.calcularCostoSeguro();
+            }
+        }
+        return total;
     }
+
 }

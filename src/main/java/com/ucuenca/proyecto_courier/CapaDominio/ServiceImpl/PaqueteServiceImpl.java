@@ -30,7 +30,19 @@ public class PaqueteServiceImpl implements PaqueteService {
     }
 
     @Override
-    public PaqueteDTO mostrarPaquete() {
+    public PaqueteDTO mostrarPaquete(String idPaquete) {
+        if (paqueteDAO != null) {
+            Paquete p = paqueteDAO.leer(idPaquete);
+            if (p != null) {
+                PaqueteDTO dto = new PaqueteDTO();
+                dto.setIdPaquete(p.getIdPaquete());
+                dto.setPeso(p.getPeso());
+                dto.setValorContenido(p.getValorContenido());
+                dto.setTieneSeguro(p.isTieneSeguro());
+                dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+                return dto;
+            }
+        }
         return null;
     }
 

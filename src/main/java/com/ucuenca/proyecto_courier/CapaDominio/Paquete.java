@@ -39,7 +39,10 @@ public abstract class Paquete {
 
     public abstract double calcularCostoBase(List<Rango> rangos);
 
-    private double calcularCostoSeguro() {
+    public double calcularCostoSeguro() {
+        if (tieneSeguro) {
+            return valorContenido * (porcentajeSeguro / 100.0);
+        }
         return 0.0;
     }
 }

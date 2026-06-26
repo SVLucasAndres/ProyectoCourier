@@ -9,6 +9,8 @@ public class RutaSeguimiento {
     }
 
     public void agregarPaso(PuntoIntermedio puntoIntermedio) {
-        // Estructura vacía
+        if (this.puntosIntermedios != null) {
+            this.puntosIntermedios.add(puntoIntermedio);
+        }
     }
 }

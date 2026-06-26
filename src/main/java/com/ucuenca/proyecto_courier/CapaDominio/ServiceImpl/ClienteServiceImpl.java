@@ -54,7 +54,13 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteDTO mostrarCliente() {
+    public ClienteDTO mostrarCliente(String idCliente) {
+        if (clienteDAO != null) {
+            Cliente c = clienteDAO.leer(idCliente);
+            if (c != null) {
+                return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive());
+            }
+        }
         return null;
     }
 }

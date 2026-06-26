@@ -6,5 +6,5 @@ public interface OficinaService {
     void crearOficina(OficinaDTO oficina);
     void modificarOficina(OficinaDTO oficina);
     void archivarOficina(OficinaDTO oficina);
-    OficinaDTO mostrarOficina();
+    OficinaDTO mostrarOficina(String idOficina);
 }

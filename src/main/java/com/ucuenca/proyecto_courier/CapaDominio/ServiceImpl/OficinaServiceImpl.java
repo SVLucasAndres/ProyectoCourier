@@ -52,7 +52,19 @@ public class OficinaServiceImpl implements OficinaService {
     }
 
     @Override
-    public OficinaDTO mostrarOficina() {
+    public OficinaDTO mostrarOficina(String idOficina) {
+        if (oficinaDAO != null) {
+            Oficina o = oficinaDAO.leer(idOficina);
+            if (o != null) {
+                OficinaDTO dto = new OficinaDTO();
+                dto.setIdOficina(o.getIdOficina());
+                dto.setNombre(o.getNombre());
+                dto.setDireccion(o.getDireccion());
+                dto.setTelefono(o.getTelefono());
+                dto.setActive(o.isActive());
+                return dto;
+            }
+        }
         return null;
     }
 }
