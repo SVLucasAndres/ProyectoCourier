@@ -159,3 +159,113 @@ PaqueteService <|.. PaqueteServiceImpl
 OficinaService <|.. OficinaServiceImpl
 }
 @enduml
+```
+
+### Capa de ACCESO A DATOS
+
+```plantuml
+@startuml
+namespace Capa_Acceso_Datos {
+
+    interface DAO<T> {
+        + guardar(entidad: T): void
+        + obtenerTodos(): List<T>
+        + buscarPorId(id: String): Optional<T>
+        + eliminar(id: String): void
+    }
+
+    abstract class DAOXML<T> {
+        - rutaArchivo: String
+        + guardar(entidad: T): void
+        + obtenerTodos(): List<T>
+        + buscarPorId(id: String): Optional<T>
+        + eliminar(id: String): void
+    }
+
+    abstract class DAOBIN<T> {
+        - rutaArchivo: String
+        + guardar(entidad: T): void
+        + obtenerTodos(): List<T>
+        + buscarPorId(id: String): Optional<T>
+        + eliminar(id: String): void
+    }
+
+    DAO <|.. DAOXML
+    DAO <|.. DAOBIN
+
+    class ClienteXmlDAO {
+        + ClienteXmlDAO()
+        + buscarPorNombre(nombre: String): List<Cliente>
+        + guardar(entidad: Cliente): void
+        + obtenerTodos(): List<Cliente>
+        + buscarPorId(id: String): Optional<Cliente>
+        + eliminar(id: String): void
+    }
+    class ClienteBinDAO {
+        + ClienteBinDAO()
+        + buscarPorNombre(nombre: String): List<Cliente>
+        + guardar(entidad: Cliente): void
+        + obtenerTodos(): List<Cliente>
+        + buscarPorId(id: String): Optional<Cliente>
+        + eliminar(id: String): void
+    }
+
+    class OficinaXmlDAO {
+        + OficinaXmlDAO()
+        + buscarPorNombre(nombre: String): Optional<Oficina>
+        + guardar(entidad: Oficina): void
+        + obtenerTodos(): List<Oficina>
+        + buscarPorId(id: String): Optional<Oficina>
+        + eliminar(id: String): void
+    }
+    class OficinaBinDAO {
+        + OficinaBinDAO()
+        + buscarPorNombre(nombre: String): Optional<Oficina>
+        + guardar(entidad: Oficina): void
+        + obtenerTodos(): List<Oficina>
+        + buscarPorId(id: String): Optional<Oficina>
+        + eliminar(id: String): void
+    }
+
+    class EnvioXmlDAO {
+        + EnvioXmlDAO()
+        + guardar(entidad: Envio): void
+        + obtenerTodos(): List<Envio>
+        + buscarPorId(id: String): Optional<Envio>
+        + eliminar(id: String): void
+    }
+    class EnvioBinDAO {
+        + EnvioBinDAO()
+        + guardar(entidad: Envio): void
+        + obtenerTodos(): List<Envio>
+        + buscarPorId(id: String): Optional<Envio>
+        + eliminar(id: String): void
+    }
+
+    class PaqueteXmlDAO {
+        + PaqueteXmlDAO()
+        + guardar(entidad: Paquete): void
+        + obtenerTodos(): List<Paquete>
+        + buscarPorId(id: String): Optional<Paquete>
+        + eliminar(id: String): void
+    }
+    class PaqueteBinDAO {
+        + PaqueteBinDAO()
+        + guardar(entidad: Paquete): void
+        + obtenerTodos(): List<Paquete>
+        + buscarPorId(id: String): Optional<Paquete>
+        + eliminar(id: String): void
+    }
+
+    DAOXML <|-- ClienteXmlDAO : <Cliente>
+    DAOXML <|-- EnvioXmlDAO : <Envio>
+    DAOXML <|-- PaqueteXmlDAO : <Paquete>
+    DAOXML <|-- OficinaXmlDAO : <Oficina>
+
+    DAOBIN <|-- ClienteBinDAO : <Cliente>
+    DAOBIN <|-- EnvioBinDAO : <Envio>
+    DAOBIN <|-- PaqueteBinDAO : <Paquete>
+    DAOBIN <|-- OficinaBinDAO : <Oficina>
+}
+@enduml
+```
