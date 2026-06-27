@@ -26,4 +26,7 @@ public class Caja extends Paquete {
         return 0.0;
     }
 
+    public double getAlto() { return alto; }
+    public double getAncho() { return ancho; }
+    public double getLargo() { return largo; }
 }

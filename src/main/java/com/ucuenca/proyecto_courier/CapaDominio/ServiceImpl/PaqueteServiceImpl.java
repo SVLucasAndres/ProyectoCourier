@@ -2,6 +2,7 @@ package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 
 import com.ucuenca.proyecto_courier.CapaDominio.Paquete;
 import com.ucuenca.proyecto_courier.CapaDominio.Caja;
+import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.PaqueteDAO;
@@ -19,15 +20,33 @@ public class PaqueteServiceImpl implements PaqueteService {
     @Override
     public void crearPaquete(PaqueteDTO paquete) {
         if (paqueteDAO != null) {
-            Paquete nuevoPaquete = new Caja(
-                paquete.getIdPaquete(), 
-                paquete.getPeso(), 
-                paquete.getValorContenido(), 
-                paquete.isTieneSeguro(), 
-                paquete.getPorcentajeSeguro(), 
-                null, 0, 0, 0
-            );
-            paqueteDAO.crear(nuevoPaquete);
+            Paquete nuevoPaquete = null;
+            if ("CAJA".equalsIgnoreCase(paquete.getTipo())) {
+                nuevoPaquete = new Caja(
+                    paquete.getIdPaquete(), 
+                    paquete.getPeso(), 
+                    paquete.getValorContenido(), 
+                    paquete.isTieneSeguro(), 
+                    paquete.getPorcentajeSeguro(), 
+                    null, 
+                    paquete.getAlto(), 
+                    paquete.getAncho(), 
+                    paquete.getLargo()
+                );
+            } else if ("SOBRE".equalsIgnoreCase(paquete.getTipo())) {
+                nuevoPaquete = new Sobre(
+                    paquete.getIdPaquete(), 
+                    paquete.getPeso(), 
+                    paquete.getValorContenido(), 
+                    paquete.isTieneSeguro(), 
+                    paquete.getPorcentajeSeguro(), 
+                    null, 
+                    paquete.getTamano()
+                );
+            }
+            if (nuevoPaquete != null) {
+                paqueteDAO.crear(nuevoPaquete);
+            }
         }
     }
 
@@ -42,6 +61,18 @@ public class PaqueteServiceImpl implements PaqueteService {
                 dto.setValorContenido(p.getValorContenido());
                 dto.setTieneSeguro(p.isTieneSeguro());
                 dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+                
+                if (p instanceof Caja) {
+                    Caja c = (Caja) p;
+                    dto.setTipo("CAJA");
+                    dto.setAlto(c.getAlto());
+                    dto.setAncho(c.getAncho());
+                    dto.setLargo(c.getLargo());
+                } else if (p instanceof Sobre) {
+                    Sobre s = (Sobre) p;
+                    dto.setTipo("SOBRE");
+                    dto.setTamano(s.getTamano());
+                }
                 return dto;
             }
         }

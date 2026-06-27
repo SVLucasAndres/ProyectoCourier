@@ -23,4 +23,6 @@ public class Sobre extends Paquete {
         }
         return 0.0;
     }
+
+    public Tamano getTamano() { return tamano; }
 }
