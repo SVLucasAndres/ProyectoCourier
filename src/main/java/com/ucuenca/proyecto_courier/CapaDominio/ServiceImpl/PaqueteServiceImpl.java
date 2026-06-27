@@ -5,6 +5,8 @@ import com.ucuenca.proyecto_courier.CapaDominio.Caja;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.PaqueteDAO;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class PaqueteServiceImpl implements PaqueteService {
@@ -47,12 +49,32 @@ public class PaqueteServiceImpl implements PaqueteService {
     }
 
     @Override
-    public void registrarLlegadaPaquete(Date fecha) {
-        // Lógica de llegada
+    public void registrarLlegadaPaquete(String idPaquete, Date fecha) {
+        if (paqueteDAO != null) {
+            Paquete p = paqueteDAO.leer(idPaquete);
+            if (p != null && p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
+                var puntos = p.getRuta().getPuntosIntermedios();
+                if (!puntos.isEmpty()) {
+                    var ultimoPunto = puntos.get(puntos.size() - 1);
+                    ultimoPunto.setHoraLlegada(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
+                    paqueteDAO.actualizar(p);
+                }
+            }
+        }
     }
 
     @Override
-    public void registrarSalidaPaquete(Date fecha) {
-        // Lógica de salida
+    public void registrarSalidaPaquete(String idPaquete, Date fecha) {
+        if (paqueteDAO != null) {
+            Paquete p = paqueteDAO.leer(idPaquete);
+            if (p != null && p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
+                var puntos = p.getRuta().getPuntosIntermedios();
+                if (!puntos.isEmpty()) {
+                    var ultimoPunto = puntos.get(puntos.size() - 1);
+                    ultimoPunto.setHoraSalida(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
+                    paqueteDAO.actualizar(p);
+                }
+            }
+        }
     }
 }

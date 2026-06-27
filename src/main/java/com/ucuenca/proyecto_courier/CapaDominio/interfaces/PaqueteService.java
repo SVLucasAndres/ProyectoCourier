@@ -6,6 +6,6 @@ import java.util.Date;
 public interface PaqueteService {
     void crearPaquete(PaqueteDTO paquete);
     PaqueteDTO mostrarPaquete(String idPaquete);
-    void registrarLlegadaPaquete(Date fecha);
-    void registrarSalidaPaquete(Date fecha);
+    void registrarLlegadaPaquete(String idPaquete, Date fecha);
+    void registrarSalidaPaquete(String idPaquete, Date fecha);
 }

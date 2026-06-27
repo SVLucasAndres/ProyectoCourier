@@ -13,4 +13,8 @@ public class RutaSeguimiento {
             this.puntosIntermedios.add(puntoIntermedio);
         }
     }
+
+    public List<PuntoIntermedio> getPuntosIntermedios() {
+        return puntosIntermedios;
+    }
 }
