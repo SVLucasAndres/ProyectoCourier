@@ -215,7 +215,6 @@ namespace Capa_Acceso_Datos {
 
     class ClienteXmlDAO {
         + ClienteXmlDAO()
-        + buscarPorNombre(nombre: String): List<Cliente>
         + guardar(entidad: Cliente): void
         + obtenerTodos(): List<Cliente>
         + buscarPorId(id: String): Optional<Cliente>
@@ -223,7 +222,6 @@ namespace Capa_Acceso_Datos {
     }
     class ClienteBinDAO {
         + ClienteBinDAO()
-        + buscarPorNombre(nombre: String): List<Cliente>
         + guardar(entidad: Cliente): void
         + obtenerTodos(): List<Cliente>
         + buscarPorId(id: String): Optional<Cliente>
@@ -232,7 +230,6 @@ namespace Capa_Acceso_Datos {
 
     class OficinaXmlDAO {
         + OficinaXmlDAO()
-        + buscarPorNombre(nombre: String): Optional<Oficina>
         + guardar(entidad: Oficina): void
         + obtenerTodos(): List<Oficina>
         + buscarPorId(id: String): Optional<Oficina>
@@ -240,7 +237,6 @@ namespace Capa_Acceso_Datos {
     }
     class OficinaBinDAO {
         + OficinaBinDAO()
-        + buscarPorNombre(nombre: String): Optional<Oficina>
         + guardar(entidad: Oficina): void
         + obtenerTodos(): List<Oficina>
         + buscarPorId(id: String): Optional<Oficina>
