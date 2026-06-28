@@ -7,6 +7,11 @@ import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl.ClienteServiceImpl;
+import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
+import com.ucuenca.proyecto_courier.CapaDA.xml.ClienteXmlDAO;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
+
 public class MainDominio {
     public static void main(String[] args) {
         System.out.println("--- INICIANDO PRUEBA DEL DOMINIO ---");
@@ -57,6 +62,19 @@ public class MainDominio {
         System.out.println("Pasos registrados en la caja: " + rutaCaja.getPuntosIntermedios().size());
         System.out.println("Última ubicación: " + rutaCaja.getPuntosIntermedios().get(0).getNombreOficina());
         
+        // 7. Prueba de Servicios y DAOs
+        System.out.println("\n--- PRUEBA DE SERVICIOS Y DAOS (Camino A) ---");
+        // Inyectando el DAO genérico XML al Servicio
+        ClienteService clienteService = new ClienteServiceImpl(new ClienteXmlDAO());
+        
+        ClienteDTO nuevoDTO = new ClienteDTO("CLI-003", "Lucas", "Su casa", "123456789", true);
+        clienteService.crearCliente(nuevoDTO);
+        System.out.println("Servicio ejecutó crearCliente sin errores usando ClienteXmlDAO.");
+        
+        // Probando la búsqueda por nombre (retornará null porque los DAOs aún están vacíos)
+        ClienteDTO buscado = clienteService.buscarClientePorNombre("Lucas");
+        System.out.println("Búsqueda por nombre ejecutada (DAO aún no lee archivos): " + buscado);
+
         System.out.println("\n--- PRUEBA FINALIZADA CON ÉXITO ---");
     }
 }

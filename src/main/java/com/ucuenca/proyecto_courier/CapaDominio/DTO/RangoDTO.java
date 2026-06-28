@@ -1,12 +1,14 @@
-package com.ucuenca.proyecto_courier.CapaDominio;
+package com.ucuenca.proyecto_courier.CapaDominio.DTO;
 
-public class Rango {
+public class RangoDTO {
     private String nombre;
     private double pesoMinimo;
     private double pesoMaximo;
     private double costoPorKilogramo;
 
-    public Rango(String nombre, double pesoMinimo, double pesoMaximo, double costoPorKilogramo) {
+    public RangoDTO() {}
+
+    public RangoDTO(String nombre, double pesoMinimo, double pesoMaximo, double costoPorKilogramo) {
         this.nombre = nombre;
         this.pesoMinimo = pesoMinimo;
         this.pesoMaximo = pesoMaximo;

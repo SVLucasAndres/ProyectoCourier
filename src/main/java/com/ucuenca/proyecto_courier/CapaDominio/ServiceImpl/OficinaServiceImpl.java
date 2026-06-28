@@ -4,6 +4,8 @@ import com.ucuenca.proyecto_courier.CapaDominio.Oficina;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.OficinaService;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class OficinaServiceImpl implements OficinaService {
@@ -55,7 +57,7 @@ public class OficinaServiceImpl implements OficinaService {
     }
 
     @Override
-    public OficinaDTO mostrarOficina(String idOficina) {
+    public OficinaDTO buscarOficinaPorID(String idOficina) {
         if (oficinaDAO != null) {
             Optional<Oficina> opt = oficinaDAO.buscarPorId(idOficina);
             if (opt.isPresent()) {
@@ -70,5 +72,42 @@ public class OficinaServiceImpl implements OficinaService {
             }
         }
         return null;
+    }
+
+    @Override
+    public OficinaDTO buscarOficinaPorNombre(String nombre) {
+        if (oficinaDAO != null) {
+            List<Oficina> todas = oficinaDAO.obtenerTodos();
+            for (Oficina o : todas) {
+                if (o.getNombre() != null && o.getNombre().equalsIgnoreCase(nombre)) {
+                    OficinaDTO dto = new OficinaDTO();
+                    dto.setIdOficina(o.getIdOficina());
+                    dto.setNombre(o.getNombre());
+                    dto.setDireccion(o.getDireccion());
+                    dto.setTelefono(o.getTelefono());
+                    dto.setActive(o.isActive());
+                    return dto;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<OficinaDTO> mostrarListaOficinas() {
+        List<OficinaDTO> lista = new ArrayList<>();
+        if (oficinaDAO != null) {
+            List<Oficina> todas = oficinaDAO.obtenerTodos();
+            for (Oficina o : todas) {
+                OficinaDTO dto = new OficinaDTO();
+                dto.setIdOficina(o.getIdOficina());
+                dto.setNombre(o.getNombre());
+                dto.setDireccion(o.getDireccion());
+                dto.setTelefono(o.getTelefono());
+                dto.setActive(o.isActive());
+                lista.add(dto);
+            }
+        }
+        return lista;
     }
 }

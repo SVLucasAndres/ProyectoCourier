@@ -1,4 +1,5 @@
 package com.ucuenca.proyecto_courier.CapaDA.bin;
+
 import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAOBIN;
 import java.util.List;
@@ -10,19 +11,21 @@ public class ClienteBinDAO extends DAOBIN<Cliente> {
         this.rutaArchivo = "clientes.bin";
     }
 
-    public List<Cliente> buscarPorNombre(String nombre) {
+    @Override
+    public void guardar(Cliente entidad) {
+    }
+
+    @Override
+    public List<Cliente> obtenerTodos() {
         return new ArrayList<>();
     }
 
     @Override
-    public void guardar(Cliente entidad) {}
+    public Optional<Cliente> buscarPorId(String id) {
+        return Optional.empty();
+    }
 
     @Override
-    public List<Cliente> obtenerTodos() { return new ArrayList<>(); }
-
-    @Override
-    public Optional<Cliente> buscarPorId(String id) { return Optional.empty(); }
-
-    @Override
-    public void eliminar(String id) {}
+    public void eliminar(String id) {
+    }
 }

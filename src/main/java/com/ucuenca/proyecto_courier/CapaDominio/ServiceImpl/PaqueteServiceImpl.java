@@ -3,12 +3,16 @@ package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 import com.ucuenca.proyecto_courier.CapaDominio.Paquete;
 import com.ucuenca.proyecto_courier.CapaDominio.Caja;
 import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.CajaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class PaqueteServiceImpl implements PaqueteService {
@@ -22,27 +26,29 @@ public class PaqueteServiceImpl implements PaqueteService {
     public void crearPaquete(PaqueteDTO paquete) {
         if (paqueteDAO != null) {
             Paquete nuevoPaquete = null;
-            if ("CAJA".equalsIgnoreCase(paquete.getTipo())) {
+            if (paquete instanceof CajaDTO) {
+                CajaDTO cDTO = (CajaDTO) paquete;
                 nuevoPaquete = new Caja(
-                    paquete.getIdPaquete(), 
-                    paquete.getPeso(), 
-                    paquete.getValorContenido(), 
-                    paquete.isTieneSeguro(), 
-                    paquete.getPorcentajeSeguro(), 
+                    cDTO.getIdPaquete(), 
+                    cDTO.getPeso(), 
+                    cDTO.getValorContenido(), 
+                    cDTO.isTieneSeguro(), 
+                    cDTO.getPorcentajeSeguro(), 
                     null, 
-                    paquete.getAlto(), 
-                    paquete.getAncho(), 
-                    paquete.getLargo()
+                    cDTO.getAlto(), 
+                    cDTO.getAncho(), 
+                    cDTO.getLargo()
                 );
-            } else if ("SOBRE".equalsIgnoreCase(paquete.getTipo())) {
+            } else if (paquete instanceof SobreDTO) {
+                SobreDTO sDTO = (SobreDTO) paquete;
                 nuevoPaquete = new Sobre(
-                    paquete.getIdPaquete(), 
-                    paquete.getPeso(), 
-                    paquete.getValorContenido(), 
-                    paquete.isTieneSeguro(), 
-                    paquete.getPorcentajeSeguro(), 
+                    sDTO.getIdPaquete(), 
+                    sDTO.getPeso(), 
+                    sDTO.getValorContenido(), 
+                    sDTO.isTieneSeguro(), 
+                    sDTO.getPorcentajeSeguro(), 
                     null, 
-                    paquete.getTamano()
+                    sDTO.getTamano()
                 );
             }
             if (nuevoPaquete != null) {
@@ -52,33 +58,71 @@ public class PaqueteServiceImpl implements PaqueteService {
     }
 
     @Override
-    public PaqueteDTO mostrarPaquete(String idPaquete) {
+    public PaqueteDTO buscarPaquetePorID(String idPaquete) {
         if (paqueteDAO != null) {
             Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
             if (opt.isPresent()) {
                 Paquete p = opt.get();
-                PaqueteDTO dto = new PaqueteDTO();
-                dto.setIdPaquete(p.getIdPaquete());
-                dto.setPeso(p.getPeso());
-                dto.setValorContenido(p.getValorContenido());
-                dto.setTieneSeguro(p.isTieneSeguro());
-                dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
-                
+                PaqueteDTO dto = null;
                 if (p instanceof Caja) {
                     Caja c = (Caja) p;
-                    dto.setTipo("CAJA");
-                    dto.setAlto(c.getAlto());
-                    dto.setAncho(c.getAncho());
-                    dto.setLargo(c.getLargo());
+                    CajaDTO cajaDTO = new CajaDTO();
+                    cajaDTO.setAlto(c.getAlto());
+                    cajaDTO.setAncho(c.getAncho());
+                    cajaDTO.setLargo(c.getLargo());
+                    dto = cajaDTO;
                 } else if (p instanceof Sobre) {
                     Sobre s = (Sobre) p;
-                    dto.setTipo("SOBRE");
-                    dto.setTamano(s.getTamano());
+                    SobreDTO sobreDTO = new SobreDTO();
+                    sobreDTO.setTamano(s.getTamano());
+                    dto = sobreDTO;
+                }
+                
+                if (dto != null) {
+                    dto.setIdPaquete(p.getIdPaquete());
+                    dto.setPeso(p.getPeso());
+                    dto.setValorContenido(p.getValorContenido());
+                    dto.setTieneSeguro(p.isTieneSeguro());
+                    dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
                 }
                 return dto;
             }
         }
         return null;
+    }
+
+    @Override
+    public List<PaqueteDTO> mostrarListaPaquetes() {
+        List<PaqueteDTO> lista = new ArrayList<>();
+        if (paqueteDAO != null) {
+            List<Paquete> todos = paqueteDAO.obtenerTodos();
+            for (Paquete p : todos) {
+                PaqueteDTO dto = null;
+                if (p instanceof Caja) {
+                    Caja c = (Caja) p;
+                    CajaDTO cajaDTO = new CajaDTO();
+                    cajaDTO.setAlto(c.getAlto());
+                    cajaDTO.setAncho(c.getAncho());
+                    cajaDTO.setLargo(c.getLargo());
+                    dto = cajaDTO;
+                } else if (p instanceof Sobre) {
+                    Sobre s = (Sobre) p;
+                    SobreDTO sobreDTO = new SobreDTO();
+                    sobreDTO.setTamano(s.getTamano());
+                    dto = sobreDTO;
+                }
+                
+                if (dto != null) {
+                    dto.setIdPaquete(p.getIdPaquete());
+                    dto.setPeso(p.getPeso());
+                    dto.setValorContenido(p.getValorContenido());
+                    dto.setTieneSeguro(p.isTieneSeguro());
+                    dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+                    lista.add(dto);
+                }
+            }
+        }
+        return lista;
     }
 
     @Override

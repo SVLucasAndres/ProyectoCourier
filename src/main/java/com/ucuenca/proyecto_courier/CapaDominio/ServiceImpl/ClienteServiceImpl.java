@@ -5,6 +5,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ClienteServiceImpl implements ClienteService {
@@ -57,7 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteDTO mostrarCliente(String idCliente) {
+    public ClienteDTO buscarClientePorID(String idCliente) {
         if (clienteDAO != null) {
             Optional<Cliente> opt = clienteDAO.buscarPorId(idCliente);
             if (opt.isPresent()) {
@@ -66,5 +67,30 @@ public class ClienteServiceImpl implements ClienteService {
             }
         }
         return null;
+    }
+
+    @Override
+    public ClienteDTO buscarClientePorNombre(String nombre) {
+        if (clienteDAO != null) {
+            List<Cliente> todos = clienteDAO.obtenerTodos();
+            for (Cliente c : todos) {
+                if (c.getNombre() != null && c.getNombre().equalsIgnoreCase(nombre)) {
+                    return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive());
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<ClienteDTO> mostrarListaClientes() {
+        List<ClienteDTO> lista = new ArrayList<>();
+        if (clienteDAO != null) {
+            List<Cliente> todos = clienteDAO.obtenerTodos();
+            for (Cliente c : todos) {
+                lista.add(new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive()));
+            }
+        }
+        return lista;
     }
 }

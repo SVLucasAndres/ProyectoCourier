@@ -7,7 +7,8 @@ public class Caja extends Paquete {
     private double ancho;
     private double largo;
 
-    public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, RutaSeguimiento ruta, double alto, double ancho, double largo) {
+    public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro,
+            RutaSeguimiento ruta, double alto, double ancho, double largo) {
         super(idPaquete, peso, valorContenido, tieneSeguro, porcentajeSeguro, ruta);
         this.alto = alto;
         this.ancho = ancho;
@@ -23,10 +24,18 @@ public class Caja extends Paquete {
                 }
             }
         }
-        return 0.0;
+        return 20.0;
     }
 
-    public double getAlto() { return alto; }
-    public double getAncho() { return ancho; }
-    public double getLargo() { return largo; }
+    public double getAlto() {
+        return alto;
+    }
+
+    public double getAncho() {
+        return ancho;
+    }
+
+    public double getLargo() {
+        return largo;
+    }
 }
