@@ -5,15 +5,16 @@ import com.ucuenca.proyecto_courier.CapaDominio.Caja;
 import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
-import com.ucuenca.proyecto_courier.CapaDA.interfaces.PaqueteDAO;
+import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 public class PaqueteServiceImpl implements PaqueteService {
-    private PaqueteDAO paqueteDAO;
+    private DAO<Paquete> paqueteDAO;
 
-    public PaqueteServiceImpl(PaqueteDAO paqueteDAO) {
+    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO) {
         this.paqueteDAO = paqueteDAO;
     }
 
@@ -45,7 +46,7 @@ public class PaqueteServiceImpl implements PaqueteService {
                 );
             }
             if (nuevoPaquete != null) {
-                paqueteDAO.crear(nuevoPaquete);
+                paqueteDAO.guardar(nuevoPaquete);
             }
         }
     }
@@ -53,8 +54,9 @@ public class PaqueteServiceImpl implements PaqueteService {
     @Override
     public PaqueteDTO mostrarPaquete(String idPaquete) {
         if (paqueteDAO != null) {
-            Paquete p = paqueteDAO.leer(idPaquete);
-            if (p != null) {
+            Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
+            if (opt.isPresent()) {
+                Paquete p = opt.get();
                 PaqueteDTO dto = new PaqueteDTO();
                 dto.setIdPaquete(p.getIdPaquete());
                 dto.setPeso(p.getPeso());
@@ -82,13 +84,16 @@ public class PaqueteServiceImpl implements PaqueteService {
     @Override
     public void registrarLlegadaPaquete(String idPaquete, Date fecha) {
         if (paqueteDAO != null) {
-            Paquete p = paqueteDAO.leer(idPaquete);
-            if (p != null && p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
-                var puntos = p.getRuta().getPuntosIntermedios();
-                if (!puntos.isEmpty()) {
-                    var ultimoPunto = puntos.get(puntos.size() - 1);
-                    ultimoPunto.setHoraLlegada(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
-                    paqueteDAO.actualizar(p);
+            Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
+            if (opt.isPresent()) {
+                Paquete p = opt.get();
+                if (p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
+                    var puntos = p.getRuta().getPuntosIntermedios();
+                    if (!puntos.isEmpty()) {
+                        var ultimoPunto = puntos.get(puntos.size() - 1);
+                        ultimoPunto.setHoraLlegada(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
+                        paqueteDAO.guardar(p);
+                    }
                 }
             }
         }
@@ -97,13 +102,16 @@ public class PaqueteServiceImpl implements PaqueteService {
     @Override
     public void registrarSalidaPaquete(String idPaquete, Date fecha) {
         if (paqueteDAO != null) {
-            Paquete p = paqueteDAO.leer(idPaquete);
-            if (p != null && p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
-                var puntos = p.getRuta().getPuntosIntermedios();
-                if (!puntos.isEmpty()) {
-                    var ultimoPunto = puntos.get(puntos.size() - 1);
-                    ultimoPunto.setHoraSalida(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
-                    paqueteDAO.actualizar(p);
+            Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
+            if (opt.isPresent()) {
+                Paquete p = opt.get();
+                if (p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
+                    var puntos = p.getRuta().getPuntosIntermedios();
+                    if (!puntos.isEmpty()) {
+                        var ultimoPunto = puntos.get(puntos.size() - 1);
+                        ultimoPunto.setHoraSalida(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
+                        paqueteDAO.guardar(p);
+                    }
                 }
             }
         }

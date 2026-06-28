@@ -1,15 +1,11 @@
 package com.ucuenca.proyecto_courier.CapaDA.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface Dao<T, ID> {
-    void crear(T entidad);
-
-    T leer(ID id);
-
-    void actualizar(T entidad);
-
-    void eliminar(ID id);
-
+public interface DAO<T> {
+    void guardar(T entidad);
     List<T> obtenerTodos();
+    Optional<T> buscarPorId(String id);
+    void eliminar(String id);
 }
