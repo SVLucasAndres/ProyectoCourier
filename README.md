@@ -3,6 +3,36 @@
 ```plantuml
 @startuml
 namespace Capa_Logica_Dominio {
+ class Configuracion {
+        - idConfiguracion: String
+        - impuestoIVA: double
+        - rangos: List<Rango>
+        + Configuracion()
+        + Configuracion(impuestoIVA: double, rangos: List<Rango>)
+        + getIdConfiguracion(): String
+        + setIdConfiguracion(id: String): void
+        + getImpuestoIVA(): double
+        + setImpuestoIVA(impuesto: double): void
+        + getRangos(): List<Rango>
+        + setRangos(rangos: List<Rango>): void
+    }
+
+    interface ConfiguracionService {
+        + obtenerConfiguracion(): ConfiguracionDTO
+        + guardarConfiguracion(configuracion: ConfiguracionDTO): void
+    }
+
+    class ConfiguracionServiceImpl {
+        - configDAO: DAO<Configuracion>
+        + ConfiguracionServiceImpl(configDAO: DAO<Configuracion>)
+        + obtenerConfiguracion(): ConfiguracionDTO
+        + guardarConfiguracion(configuracion: ConfiguracionDTO): void
+    }
+
+    ConfiguracionService <|.. ConfiguracionServiceImpl
+    ConfiguracionServiceImpl --> Configuracion
+    Configuracion o-- Rango
+
     interface ClienteService {
         + crearCliente(ClienteDTO cliente): void
 + modificarCliente(ClienteDTO cliente): void
@@ -187,6 +217,8 @@ OficinaService <|.. OficinaServiceImpl
 @startuml
 namespace Capa_Acceso_Datos {
 
+
+
     interface DAO<T> {
         + guardar(entidad: T): void
         + obtenerTodos(): List<T>
@@ -215,6 +247,7 @@ namespace Capa_Acceso_Datos {
 
     class ClienteXmlDAO {
         + ClienteXmlDAO()
+        + buscarPorNombre(nombre: String): List<Cliente>
         + guardar(entidad: Cliente): void
         + obtenerTodos(): List<Cliente>
         + buscarPorId(id: String): Optional<Cliente>
@@ -222,6 +255,7 @@ namespace Capa_Acceso_Datos {
     }
     class ClienteBinDAO {
         + ClienteBinDAO()
+        + buscarPorNombre(nombre: String): List<Cliente>
         + guardar(entidad: Cliente): void
         + obtenerTodos(): List<Cliente>
         + buscarPorId(id: String): Optional<Cliente>
@@ -230,6 +264,7 @@ namespace Capa_Acceso_Datos {
 
     class OficinaXmlDAO {
         + OficinaXmlDAO()
+        + buscarPorNombre(nombre: String): Optional<Oficina>
         + guardar(entidad: Oficina): void
         + obtenerTodos(): List<Oficina>
         + buscarPorId(id: String): Optional<Oficina>
@@ -237,6 +272,7 @@ namespace Capa_Acceso_Datos {
     }
     class OficinaBinDAO {
         + OficinaBinDAO()
+        + buscarPorNombre(nombre: String): Optional<Oficina>
         + guardar(entidad: Oficina): void
         + obtenerTodos(): List<Oficina>
         + buscarPorId(id: String): Optional<Oficina>
@@ -272,16 +308,32 @@ namespace Capa_Acceso_Datos {
         + buscarPorId(id: String): Optional<Paquete>
         + eliminar(id: String): void
     }
+class ConfiguracionXmlDAO {
+        + ConfiguracionXmlDAO ()
+        + guardar(entidad: Configuracion): void
+        + obtenerTodos(): List<Configuracion>
+        + buscarPorId(id: String): Optional<Configuracion>
+        + eliminar(id: String): void
+    }
+    class ConfiguracionBinDAO {
+        + ConfiguracionBinDAO()
+        + guardar(entidad: Configuracion): void
+        + obtenerTodos(): List<Configuracion>
+        + buscarPorId(id: String): Optional<Configuracion>
+        + eliminar(id: String): void
+    }
 
     DAOXML <|-- ClienteXmlDAO : <Cliente>
     DAOXML <|-- EnvioXmlDAO : <Envio>
     DAOXML <|-- PaqueteXmlDAO : <Paquete>
     DAOXML <|-- OficinaXmlDAO : <Oficina>
+DAOXML <|-- ConfiguracionXmlDAO : <Configuracion>
 
     DAOBIN <|-- ClienteBinDAO : <Cliente>
     DAOBIN <|-- EnvioBinDAO : <Envio>
     DAOBIN <|-- PaqueteBinDAO : <Paquete>
     DAOBIN <|-- OficinaBinDAO : <Oficina>
+    DAOBIN <|-- ConfiguracionBinDAO : <Configuracion>
 }
 @enduml
 ```
