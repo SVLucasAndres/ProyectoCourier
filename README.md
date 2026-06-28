@@ -7,7 +7,9 @@ namespace Capa_Logica_Dominio {
         + crearCliente(ClienteDTO cliente): void
 + modificarCliente(ClienteDTO cliente): void
 + archivarCliente(ClienteDTO cliente): void
-        + mostrarCliente(): ClienteDTO
+        + buscarClientePorID(String id): ClienteDTO
++ buscarClientePorNombre(String nombre): ClienteDTO
++ mostrarListaClientes(): List<ClienteDTO>
     }
 
     interface PaqueteService {
@@ -15,30 +17,44 @@ namespace Capa_Logica_Dominio {
         + mostrarPaquete(): PaqueteDTO
         + registrarLlegadaPaquete(Date fecha): void
         + registrarSalidaPaquete(Date fecha): void
++ buscarPaquetePorID(String id): PaqueteDTO
++ mostrarListaPaquetes(): List<PaqueteDTO>
     }
 
     interface EnvioService {
         + realizarEnvio(EnvioDTO envio): void
         + mostrarEnvio(): EnvioDTO
         + obtenerCostoTotalEnvio(): double
++ buscarEnvioPorID(String id): EnvioDTO
++ mostrarListaEnvios(): List<EnvioDTO>
     }
 
 interface OficinaService {
         + crearOficina(OficinaDTO oficina): void
 + modificarOficina(OficinaDTO oficina): void
 + archivarOficina(OficinaDTO oficina): void
-        + mostrarOficina(): OficinaDTO
++ buscarOficinaPorID(String id): OficinaDTO
++ buscarOficinaPorNombre(String nombre): OficinaDTO
++ mostrarListaOficinas(): List<OficinaDTO>
     }
 
 
 class OficinaServiceImpl {
         + crearOficina(OficinaDTO oficina): void
-        + mostrarOficina(): OficinaDTO
++ modificarOficina(OficinaDTO oficina): void
++ archivarOficina(OficinaDTO oficina): void
++ buscarOficinaPorID(String id): OficinaDTO
++ buscarOficinaPorNombre(String nombre): OficinaDTO
++ mostrarListaOficinas(): List<OficinaDTO>
     }
 
 class ClienteServiceImpl {
         + crearCliente(ClienteDTO cliente): void
-        + mostrarCliente(): ClienteDTO
++ modificarCliente(ClienteDTO cliente): void
++ archivarCliente(ClienteDTO cliente): void
+        + buscarClientePorID(String id): ClienteDTO
++ buscarClientePorNombre(String nombre): ClienteDTO
++ mostrarListaClientes(): List<ClienteDTO>
     }
 
     class PaqueteServiceImpl {
@@ -46,12 +62,16 @@ class ClienteServiceImpl {
         + mostrarPaquete(): PaqueteDTO
         + registrarLlegadaPaquete(Date fecha): void
         + registrarSalidaPaquete(Date fecha): void
++ buscarPaquetePorID(String id): PaqueteDTO
++ mostrarListaPaquetes(): List<PaqueteDTO>
     }
 
     class EnvioServiceImpl {
         + realizarEnvio(EnvioDTO envio): void
         + mostrarEnvio(): EnvioDTO
         + obtenerCostoTotalEnvio(): double
++ buscarEnvioPorID(String id): EnvioDTO
++ mostrarListaEnvios(): List<EnvioDTO>
     }
 
     class Cliente {
