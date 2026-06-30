@@ -10,7 +10,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.EntidadNoEncontradaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
-import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
+import com.ucuenca.proyecto_courier.CapaDA.DAO;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;

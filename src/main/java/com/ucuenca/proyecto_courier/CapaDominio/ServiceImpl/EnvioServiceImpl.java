@@ -6,7 +6,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.EntidadNoEncontradaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
-import com.ucuenca.proyecto_courier.CapaDA.interfaces.DAO;
+import com.ucuenca.proyecto_courier.CapaDA.DAO;
 import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
 import com.ucuenca.proyecto_courier.CapaDominio.Configuracion;
 import com.ucuenca.proyecto_courier.CapaDominio.Rango;
