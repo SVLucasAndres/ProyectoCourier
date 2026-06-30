@@ -3,11 +3,43 @@
 ```plantuml
 @startuml
 namespace Capa_Logica_Dominio {
+ class Configuracion {
+        - idConfiguracion: String
+        - impuestoIVA: double
+        - rangos: List<Rango>
+        + Configuracion()
+        + Configuracion(impuestoIVA: double, rangos: List<Rango>)
+        + getIdConfiguracion(): String
+        + setIdConfiguracion(id: String): void
+        + getImpuestoIVA(): double
+        + setImpuestoIVA(impuesto: double): void
+        + getRangos(): List<Rango>
+        + setRangos(rangos: List<Rango>): void
+    }
+
+    interface ConfiguracionService {
+        + obtenerConfiguracion(): ConfiguracionDTO
+        + guardarConfiguracion(configuracion: ConfiguracionDTO): void
+    }
+
+    class ConfiguracionServiceImpl {
+        - configDAO: DAO<Configuracion>
+        + ConfiguracionServiceImpl(configDAO: DAO<Configuracion>)
+        + obtenerConfiguracion(): ConfiguracionDTO
+        + guardarConfiguracion(configuracion: ConfiguracionDTO): void
+    }
+
+    ConfiguracionService <|.. ConfiguracionServiceImpl
+    ConfiguracionServiceImpl --> Configuracion
+    Configuracion o-- Rango
+
     interface ClienteService {
         + crearCliente(ClienteDTO cliente): void
 + modificarCliente(ClienteDTO cliente): void
 + archivarCliente(ClienteDTO cliente): void
-        + mostrarCliente(): ClienteDTO
+        + buscarClientePorID(String id): ClienteDTO
++ buscarClientePorNombre(String nombre): ClienteDTO
++ mostrarListaClientes(): List<ClienteDTO>
     }
 
     interface PaqueteService {
@@ -15,30 +47,44 @@ namespace Capa_Logica_Dominio {
         + mostrarPaquete(): PaqueteDTO
         + registrarLlegadaPaquete(Date fecha): void
         + registrarSalidaPaquete(Date fecha): void
++ buscarPaquetePorID(String id): PaqueteDTO
++ mostrarListaPaquetes(): List<PaqueteDTO>
     }
 
     interface EnvioService {
         + realizarEnvio(EnvioDTO envio): void
         + mostrarEnvio(): EnvioDTO
         + obtenerCostoTotalEnvio(): double
++ buscarEnvioPorID(String id): EnvioDTO
++ mostrarListaEnvios(): List<EnvioDTO>
     }
 
 interface OficinaService {
         + crearOficina(OficinaDTO oficina): void
 + modificarOficina(OficinaDTO oficina): void
 + archivarOficina(OficinaDTO oficina): void
-        + mostrarOficina(): OficinaDTO
++ buscarOficinaPorID(String id): OficinaDTO
++ buscarOficinaPorNombre(String nombre): OficinaDTO
++ mostrarListaOficinas(): List<OficinaDTO>
     }
 
 
 class OficinaServiceImpl {
         + crearOficina(OficinaDTO oficina): void
-        + mostrarOficina(): OficinaDTO
++ modificarOficina(OficinaDTO oficina): void
++ archivarOficina(OficinaDTO oficina): void
++ buscarOficinaPorID(String id): OficinaDTO
++ buscarOficinaPorNombre(String nombre): OficinaDTO
++ mostrarListaOficinas(): List<OficinaDTO>
     }
 
 class ClienteServiceImpl {
         + crearCliente(ClienteDTO cliente): void
-        + mostrarCliente(): ClienteDTO
++ modificarCliente(ClienteDTO cliente): void
++ archivarCliente(ClienteDTO cliente): void
+        + buscarClientePorID(String id): ClienteDTO
++ buscarClientePorNombre(String nombre): ClienteDTO
++ mostrarListaClientes(): List<ClienteDTO>
     }
 
     class PaqueteServiceImpl {
@@ -46,12 +92,16 @@ class ClienteServiceImpl {
         + mostrarPaquete(): PaqueteDTO
         + registrarLlegadaPaquete(Date fecha): void
         + registrarSalidaPaquete(Date fecha): void
++ buscarPaquetePorID(String id): PaqueteDTO
++ mostrarListaPaquetes(): List<PaqueteDTO>
     }
 
     class EnvioServiceImpl {
         + realizarEnvio(EnvioDTO envio): void
         + mostrarEnvio(): EnvioDTO
         + obtenerCostoTotalEnvio(): double
++ buscarEnvioPorID(String id): EnvioDTO
++ mostrarListaEnvios(): List<EnvioDTO>
     }
 
     class Cliente {
@@ -167,6 +217,8 @@ OficinaService <|.. OficinaServiceImpl
 @startuml
 namespace Capa_Acceso_Datos {
 
+
+
     interface DAO<T> {
         + guardar(entidad: T): void
         + obtenerTodos(): List<T>
@@ -256,16 +308,32 @@ namespace Capa_Acceso_Datos {
         + buscarPorId(id: String): Optional<Paquete>
         + eliminar(id: String): void
     }
+class ConfiguracionXmlDAO {
+        + ConfiguracionXmlDAO ()
+        + guardar(entidad: Configuracion): void
+        + obtenerTodos(): List<Configuracion>
+        + buscarPorId(id: String): Optional<Configuracion>
+        + eliminar(id: String): void
+    }
+    class ConfiguracionBinDAO {
+        + ConfiguracionBinDAO()
+        + guardar(entidad: Configuracion): void
+        + obtenerTodos(): List<Configuracion>
+        + buscarPorId(id: String): Optional<Configuracion>
+        + eliminar(id: String): void
+    }
 
     DAOXML <|-- ClienteXmlDAO : <Cliente>
     DAOXML <|-- EnvioXmlDAO : <Envio>
     DAOXML <|-- PaqueteXmlDAO : <Paquete>
     DAOXML <|-- OficinaXmlDAO : <Oficina>
+DAOXML <|-- ConfiguracionXmlDAO : <Configuracion>
 
     DAOBIN <|-- ClienteBinDAO : <Cliente>
     DAOBIN <|-- EnvioBinDAO : <Envio>
     DAOBIN <|-- PaqueteBinDAO : <Paquete>
     DAOBIN <|-- OficinaBinDAO : <Oficina>
+    DAOBIN <|-- ConfiguracionBinDAO : <Configuracion>
 }
 @enduml
 ```
