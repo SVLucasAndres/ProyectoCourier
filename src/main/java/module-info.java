@@ -7,5 +7,7 @@ module com.ucuenca.proyecto_courier {
     requires com.almasb.fxgl.all;
 
     opens com.ucuenca.proyecto_courier.CapaPresentacion to javafx.fxml;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes to javafx.fxml;
     exports com.ucuenca.proyecto_courier.CapaPresentacion;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
 }
