@@ -22,7 +22,7 @@
     </top>
 
     <left>
-        <VBox prefWidth="200.0" spacing="10.0" style="-fx-background-color: #34495e; -fx-padding: 20 10 20 10;" BorderPane.alignment="CENTER">
+        <VBox prefWidth="200.0" spacing="10.0" style="-fx-background-color: #34495e; -fx-padding: 20 10 20 10;" BorderPane.alignment="CENTER" stylesheets="/estilos.css">
             <children>
                 <Label text="MENÚ" textFill="#bdc3c7">
                     <font>
@@ -32,25 +32,17 @@
                         <Insets bottom="10.0" left="10.0" />
                     </VBox.margin>
                 </Label>
-                <Button fx:id="btnInicio" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #1abc9c; -fx-text-fill: white;" text="Inicio" />
-                <Button fx:id="btnClientes" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Clientes" />
-                <Button fx:id="btnEnvios" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Envios" />
-                <Button fx:id="btnPaquetes" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Paquetes" />
-                <Button fx:id="btnOficinas" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Oficinas" />
-                <Button fx:id="btnConfig" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Configuración" />
+                <Button fx:id="btnInicio" styleClass="button-menu, button-menu-active" text="Inicio" onAction="#cambiarVista"/>
+                <Button fx:id="btnClientes" styleClass="button-menu" text="Clientes" onAction="#cambiarVista"/>
+                <Button fx:id="btnEnvios" styleClass="button-menu" text="Envios" onAction="#cambiarVista"/>
+                <Button fx:id="btnPaquetes" styleClass="button-menu" text="Paquetes" onAction="#cambiarVista" />
+                <Button fx:id="btnOficinas" styleClass="button-menu" text="Oficinas"  onAction="#cambiarVista"/>
+                <Button fx:id="btnConfig" styleClass="button-menu" text="Configuración"  onAction="#cambiarVista"/>
             </children>
         </VBox>
     </left>
 
     <center>
-        <VBox spacing="15.0" style="-fx-padding: 20;" BorderPane.alignment="CENTER" fx:id="panelCentral">
-            <children>
-                <Label text="Listado de Clientes" textFill="#2c3e50">
-                    <font>
-                        <Font name="System Bold" size="22.0" />
-                    </font>
-                </Label>
-            </children>
-        </VBox>
+        <VBox fx:id="panelCentral" spacing="15.0" style="-fx-padding: 20;" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>

@@ -1,5 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.RangoDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 
@@ -7,24 +8,28 @@ import java.util.List;
 
 public class Envio {
     private String idEnvio;
-    private Cliente remitente;
-    private Cliente destinatario;
+    private String idRemitente;
+    private String idDestinatario;
     private List<Paquete> listaPaquetes;
     private TipoServicio rapidez;
     private MetodoPago metodoPago;
 
-    public Envio(String idEnvio, Cliente remitente, Cliente destinatario, List<Paquete> listaPaquetes, TipoServicio rapidez, MetodoPago metodoPago) {
+    public Envio(String idEnvio, String idRemitente, String idDestinatario, List<Paquete> listaPaquetes, TipoServicio rapidez, MetodoPago metodoPago) {
         this.idEnvio = idEnvio;
-        this.remitente = remitente;
-        this.destinatario = destinatario;
+        this.idRemitente = idRemitente;
+        this.idDestinatario = idDestinatario;
         this.listaPaquetes = listaPaquetes;
         this.rapidez = rapidez;
         this.metodoPago = metodoPago;
     }
 
+    public Envio(){
+
+    }
+
     public String getIdEnvio() { return idEnvio; }
-    public Cliente getRemitente() { return remitente; }
-    public Cliente getDestinatario() { return destinatario; }
+    public String getRemitente() { return idRemitente; }
+    public String getDestinatario() { return idDestinatario; }
     public List<Paquete> getListaPaquetes() { return listaPaquetes; }
     public TipoServicio getRapidez() { return rapidez; }
     public MetodoPago getMetodoPago() { return metodoPago; }

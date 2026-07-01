@@ -15,6 +15,10 @@ public class Caja extends Paquete {
         this.largo = largo;
     }
 
+    public Caja(){
+
+    }
+
     @Override
     public double calcularCostoBase(List<Rango> rangos) {
         if (rangos != null) {

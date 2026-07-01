@@ -6,6 +6,7 @@ module com.ucuenca.proyecto_courier {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires com.almasb.fxgl.all;
+    requires annotations;
 
     opens com.ucuenca.proyecto_courier.CapaPresentacion to javafx.fxml;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes to javafx.fxml;
@@ -15,4 +16,8 @@ module com.ucuenca.proyecto_courier {
     exports com.ucuenca.proyecto_courier.CapaDominio;
     exports com.ucuenca.proyecto_courier.CapaDA;
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Inicio to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Inicio;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Envios to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Envios;
 }

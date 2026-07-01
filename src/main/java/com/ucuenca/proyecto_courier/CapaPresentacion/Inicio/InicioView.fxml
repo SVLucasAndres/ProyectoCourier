@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;"
+      VBox.vgrow="ALWAYS"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Inicio.InicioController">
+    <children>
+
+        <Label layoutX="14.0" layoutY="14.0" text="Panel de Control" textFill="#2c3e50">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+        <HBox layoutX="7.0" layoutY="44.0" spacing="20.0" style="-fx-padding: 20;">
+            <children>
+                <!-- Tarjeta 1: Envíos -->
+                <VBox prefWidth="220.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #4A5568; -fx-font-weight: bold;" text="📦 Envíos Activos" />
+                    <Label fx:id="lblEnviosActivos" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #3182CE;" text="24" /> <!-- Azul -->
+                </VBox>
+
+                <!-- Tarjeta 2: Clientes -->
+                <VBox prefWidth="220.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #4A5568; -fx-font-weight: bold;" text="👥 Clientes Totales" />
+                    <Label fx:id="lblClientesTotales" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #38A169;" text="142" /> <!-- Verde -->
+                </VBox>
+
+                <!-- Tarjeta 3: Oficinas -->
+                <VBox prefWidth="220.0" spacing="10.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #4A5568; -fx-font-weight: bold;" text="🏢 Oficinas Habilitadas" />
+                    <Label fx:id="lblOficinasActivas" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #E53E3E;" text="8" /> <!-- Rojo -->
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>

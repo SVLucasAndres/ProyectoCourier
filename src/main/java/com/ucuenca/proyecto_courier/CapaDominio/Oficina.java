@@ -15,6 +15,9 @@ public class Oficina {
         this.isActive = isActive;
     }
 
+    public Oficina(){
+
+    }
     public String getIdOficina() { return idOficina; }
     public void setIdOficina(String idOficina) { this.idOficina = idOficina; }
 

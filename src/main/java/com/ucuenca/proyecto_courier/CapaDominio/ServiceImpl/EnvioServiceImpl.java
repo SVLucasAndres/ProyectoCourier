@@ -58,8 +58,8 @@ public class EnvioServiceImpl implements EnvioService {
         
         Envio nuevoEnvio = new Envio(
             envio.getIdEnvio(), 
-            remitente, 
-            destinatario, 
+            remitente.getIdCliente(),
+            destinatario.getIdCliente(),
             new ArrayList<>(), 
             envio.getRapidez(), 
             envio.getMetodoPago()
@@ -77,8 +77,8 @@ public class EnvioServiceImpl implements EnvioService {
             Envio e = opt.get();
             EnvioDTO dto = new EnvioDTO();
             dto.setIdEnvio(e.getIdEnvio());
-            if (e.getRemitente() != null) dto.setIdRemitente(e.getRemitente().getIdCliente());
-            if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario().getIdCliente());
+            if (e.getRemitente() != null) dto.setIdRemitente(e.getRemitente());
+            if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario());
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
             dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos()));
@@ -111,8 +111,8 @@ public class EnvioServiceImpl implements EnvioService {
         for (Envio e : todos) {
             EnvioDTO dto = new EnvioDTO();
             dto.setIdEnvio(e.getIdEnvio());
-            if (e.getRemitente() != null) dto.setIdRemitente(e.getRemitente().getIdCliente());
-            if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario().getIdCliente());
+            if (e.getRemitente() != null) dto.setIdRemitente(e.getRemitente());
+            if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario());
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
             dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos()));

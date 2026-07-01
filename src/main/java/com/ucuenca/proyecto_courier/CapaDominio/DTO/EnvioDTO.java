@@ -3,6 +3,8 @@ package com.ucuenca.proyecto_courier.CapaDominio.DTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 
+import java.util.List;
+
 public class EnvioDTO {
     private String idEnvio;
     private String idRemitente;
@@ -10,6 +12,7 @@ public class EnvioDTO {
     private TipoServicio rapidez;
     private MetodoPago metodoPago;
     private double costoTotal;
+    private List<PaqueteDTO> listaPaquetes;
 
     public EnvioDTO() {}
 
@@ -30,4 +33,12 @@ public class EnvioDTO {
     
     public double getCostoTotal() { return costoTotal; }
     public void setCostoTotal(double costoTotal) { this.costoTotal = costoTotal; }
+
+    public List<PaqueteDTO> getListaPaquetes() {
+        return listaPaquetes;
+    }
+
+    public void setListaPaquetes(List<PaqueteDTO> listaPaquetes) {
+        this.listaPaquetes = listaPaquetes;
+    }
 }

@@ -13,6 +13,8 @@ public class Sobre extends Paquete {
         this.tamano = tamano;
     }
 
+    public Sobre(){}
+
     @Override
     public double calcularCostoBase(List<Rango> rangos) {
         if (rangos != null) {

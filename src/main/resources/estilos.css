@@ -1,0 +1,43 @@
+.button-menu {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 180px;
+    -fx-font-size: 13px;
+    -fx-transition: 0.2s; /* Para que el cambio no sea brusco */
+}
+
+.button-menu:hover {
+    -fx-background-color: #1abc9c; /* El verde que usas en Inicio */
+    -fx-text-fill: white;
+    -fx-cursor: hand; /* Cambia el cursor a una manito */
+}
+
+.button-menu-active {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+}
+
+
+.botonAgregar {
+    -fx-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+    -fx-background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+    -fx-background-color:#007dc1;
+    -fx-border-radius:3px;
+    -fx-display:inline-block;
+    -fx-cursor:pointer;
+    -fx-color:#ffffff;
+    -fx-font-family:Arial;
+    -fx-font-size:13px;
+    -fx-padding:6px 24px;
+    -fx-text-fill: #ffffff;
+}
+.botonAgregar:hover {
+    -fx-background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+    -fx-background-color:#0061a7;
+}
+.botonAgregar:active {
+    -fx-position:relative;
+    -fx-top:1px;
+}
