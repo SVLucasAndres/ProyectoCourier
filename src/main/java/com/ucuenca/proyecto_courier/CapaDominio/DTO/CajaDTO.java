@@ -7,6 +7,13 @@ public class CajaDTO extends PaqueteDTO {
 
     public CajaDTO() {}
 
+    public CajaDTO(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double alto, double ancho, double largo) {
+        super(idPaquete, peso, valorContenido, tieneSeguro);
+        this.alto = alto;
+        this.ancho = ancho;
+        this.largo = largo;
+    }
+
     public double getAlto() { return alto; }
     public void setAlto(double alto) { this.alto = alto; }
     public double getAncho() { return ancho; }

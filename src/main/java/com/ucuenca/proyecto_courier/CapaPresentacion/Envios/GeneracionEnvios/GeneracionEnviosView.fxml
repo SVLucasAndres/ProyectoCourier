@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="650.0" prefWidth="650.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios.GeneracionEnviosController">
+    <children>
+
+        <VBox spacing="5.0">
+            <children>
+                <Label text="Generar Nuevo Envío" textFill="#2c3e50">
+                    <font> <Font name="System Bold" size="22.0" /> </font>
+                </Label>
+                <Label text="Configure las entidades, paquetes y métodos de distribución." textFill="#7f8c8d" />
+            </children>
+        </VBox>
+
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">
+            <children>
+
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e;" text="Código de Envío Asignado:" />
+                        <TextField fx:id="txtIdEnvio" disable="true" editable="false" prefWidth="150.0" style="-fx-background-color: #edf2f7; -fx-font-weight: bold; -fx-alignment: center;" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="textoAlerta" text="Hola" textFill="#8d2e31">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin></Label>
+                    </children>
+                </HBox>
+
+                <GridPane hgap="15.0" vgap="15.0">
+                    <children>
+                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label style="-fx-font-weight: bold;" text="Seleccionar Remitente (Origen) *" textFill="#34495e" />
+                            <ComboBox fx:id="cmbRemitente" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione la cédula..." />
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label style="-fx-font-weight: bold;" text="Seleccionar Destinatario (Destino) *" textFill="#34495e" />
+                            <ComboBox fx:id="cmbDestinatario" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione la cédula..." />
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <Label style="-fx-font-weight: bold;" text="Tipo de Rapidez *" textFill="#34495e" />
+                            <ComboBox fx:id="cmbRapidez" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione..." />
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <Label style="-fx-font-weight: bold;" text="Método de Pago *" textFill="#34495e" />
+                            <ComboBox fx:id="cmbMetodoPago" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione..." />
+                        </VBox>
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Seleccionar uno o más Paquetes *" textFill="#34495e" />
+                        <Label style="-fx-font-size: 11; -fx-text-fill: #95a5a6;" text="(Mantenga presionado CTRL para seleccionar múltiples paquetes)" />
+                        <ListView fx:id="lstPaquetes" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <children>
+                <Button fx:id="btnCancelar" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" />
+                <Button fx:id="btnGuardar" onAction="#handleGuardar" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Registrar Envío" />
+            </children>
+        </HBox>
+
+    </children>
+</VBox>

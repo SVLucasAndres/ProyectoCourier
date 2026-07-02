@@ -10,6 +10,8 @@ import com.ucuenca.proyecto_courier.CapaDA.DAO;
 import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
 import com.ucuenca.proyecto_courier.CapaDominio.Configuracion;
 import com.ucuenca.proyecto_courier.CapaDominio.Rango;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,26 +47,32 @@ public class EnvioServiceImpl implements EnvioService {
         }
         Optional<Cliente> optRemitente = clienteDAO.buscarPorId(envio.getIdRemitente());
         Optional<Cliente> optDestinatario = clienteDAO.buscarPorId(envio.getIdDestinatario());
-        
+
+        Envio nuevoEnvio = getEnvio(envio, optRemitente, optDestinatario);
+        envioDAO.guardar(nuevoEnvio);
+    }
+
+    @NotNull
+    private static Envio getEnvio(EnvioDTO envio, Optional<Cliente> optRemitente, Optional<Cliente> optDestinatario) {
         if (optRemitente.isEmpty()) {
             throw new EntidadNoEncontradaException("Remitente no encontrado con ID: " + envio.getIdRemitente());
         }
         if (optDestinatario.isEmpty()) {
             throw new EntidadNoEncontradaException("Destinatario no encontrado con ID: " + envio.getIdDestinatario());
         }
-        
+
         Cliente remitente = optRemitente.get();
         Cliente destinatario = optDestinatario.get();
-        
+
         Envio nuevoEnvio = new Envio(
-            envio.getIdEnvio(), 
+            envio.getIdEnvio(),
             remitente.getIdCliente(),
             destinatario.getIdCliente(),
-            new ArrayList<>(), 
-            envio.getRapidez(), 
+            new ArrayList<>(),
+            envio.getRapidez(),
             envio.getMetodoPago()
         );
-        envioDAO.guardar(nuevoEnvio);
+        return nuevoEnvio;
     }
 
     @Override

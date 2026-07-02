@@ -16,6 +16,14 @@ public class EnvioDTO {
 
     public EnvioDTO() {}
 
+    public EnvioDTO(String idRemitente, String idEnvio, String idDestinatario, TipoServicio rapidez, MetodoPago metodoPago) {
+        this.idRemitente = idRemitente;
+        this.idEnvio = idEnvio;
+        this.idDestinatario = idDestinatario;
+        this.rapidez = rapidez;
+        this.metodoPago = metodoPago;
+    }
+
     public String getIdEnvio() { return idEnvio; }
     public void setIdEnvio(String idEnvio) { this.idEnvio = idEnvio; }
 

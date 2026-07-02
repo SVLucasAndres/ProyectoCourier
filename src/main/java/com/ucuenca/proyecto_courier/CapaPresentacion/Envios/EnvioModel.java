@@ -5,6 +5,7 @@ import javafx.beans.property.*;
 public class EnvioModel {
     private final StringProperty idEnvio = new SimpleStringProperty();
     private final StringProperty idDestinatario = new SimpleStringProperty();
+    private final StringProperty idRemitente = new SimpleStringProperty();
     private final StringProperty rapidez = new SimpleStringProperty();
     private final StringProperty metodoPago = new SimpleStringProperty();
     private final IntegerProperty cantidadPaquetes = new SimpleIntegerProperty();
@@ -12,6 +13,7 @@ public class EnvioModel {
     // Property getters
     public StringProperty idEnvioProperty() { return idEnvio; }
     public StringProperty idDestinatarioProperty() { return idDestinatario; }
+    public StringProperty idRemitenteProperty() { return idRemitente; }
     public StringProperty rapidezProperty() { return rapidez; }
     public StringProperty metodoPagoProperty() { return metodoPago; }
     public IntegerProperty cantidadPaquetesProperty() { return cantidadPaquetes; }
@@ -23,7 +25,13 @@ public class EnvioModel {
     public String getIdDestinatario() { return idDestinatario.get(); }
     public void setIdDestinatario(String value) { idDestinatario.set(value); }
 
-    public String getRapidez() { return rapidez.get(); }
+    public String getIdRemitente() { return idRemitente.get(); }
+    public void setIdRemitente(String value) { idRemitente.set(value); }
+
+    public String getRapidez() {
+
+        return rapidez.get();
+    }
     public void setRapidez(String value) { rapidez.set(value); }
 
     public String getMetodoPago() { return metodoPago.get(); }

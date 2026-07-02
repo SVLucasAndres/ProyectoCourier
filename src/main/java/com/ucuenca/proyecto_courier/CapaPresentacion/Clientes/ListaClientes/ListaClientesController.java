@@ -1,16 +1,16 @@
-package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
+package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes;
 
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteMapper;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ContextoCliente;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -53,7 +53,7 @@ public class ListaClientesController {
                         ContextoCliente.setCliente(clienteSeleccionado);
                         ContextoCliente.setNavegador(navegador); //Guardamos el navegador actual
 
-                        navegador.cambiarAPantalla("Clientes/PropiedadesClienteView.fxml", "Propiedades del Cliente");
+                        navegador.cambiarAPantalla("Clientes/PropiedadesCliente/PropiedadesClienteView.fxml", "Propiedades del Cliente");
                     }
                 });
             }
@@ -109,7 +109,7 @@ public class ListaClientesController {
     @FXML
     private void handleAgregarCliente(ActionEvent event) {
         if (navegador != null) {
-            navegador.cambiarAPantalla("Clientes/AgregacionClientesView.fxml", "Agregar Cliente");
+            navegador.cambiarAPantalla("Clientes/AgregacionClientes/AgregacionClientesView.fxml", "Agregar Cliente");
         }
     }
 

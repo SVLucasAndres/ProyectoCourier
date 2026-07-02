@@ -12,14 +12,4 @@ public class OficinaXmlDAO extends DAOXML<Oficina> {
     protected String obtenerId(Oficina entidad) {
         return entidad.getIdOficina();
     }
-
-    public java.util.Optional<Oficina> buscarPorNombre(String nombre) {
-        java.util.List<Oficina> todas = obtenerTodos();
-        for (Oficina o : todas) {
-            if (o.getNombre() != null && o.getNombre().equalsIgnoreCase(nombre)) {
-                return java.util.Optional.of(o);
-            }
-        }
-        return java.util.Optional.empty();
-    }
 }

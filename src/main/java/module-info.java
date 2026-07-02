@@ -20,4 +20,14 @@ module com.ucuenca.proyecto_courier {
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Inicio;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Envios to javafx.fxml;
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Envios;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios to javafx.fxml;
 }

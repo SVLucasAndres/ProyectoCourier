@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefWidth="600.0" spacing="20.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ModificarCliente.ModificacionClientesController">
+<children>
+
+    <VBox spacing="5.0">
+        <children>
+            <Label text="Actualizar Cliente" textFill="#2c3e50">
+                <font>
+                    <Font name="System Bold" size="22.0" />
+                </font>
+            </Label>
+            <Label text="Ingrese la cédula para proceder a editar el cliente" textFill="#7f8c8d" />
+        </children>
+        <VBox.margin>
+            <Insets bottom="10.0" />
+        </VBox.margin>
+    </VBox>
+
+    <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+        <children>
+
+            <VBox spacing="5.0">
+                <children>
+                    <Label text="Número de Cédula (ID) *" textFill="#34495e">
+                        <font> <Font name="System Bold" size="13.0" /> </font>
+                    </Label>
+                    <TextField fx:id="txtCedula" prefHeight="35.0" promptText="Ej: 0102030405" style="-fx-background-radius: 5;" />
+                </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+                <children>
+                    <Label text="Nombre Completo *" textFill="#34495e">
+                        <font> <Font name="System Bold" size="13.0" /> </font>
+                    </Label>
+                    <TextField fx:id="txtNombre" prefHeight="35.0" promptText="Ej: Lucas Sangurima" style="-fx-background-radius: 5;" />
+                </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+                <children>
+                    <Label text="Dirección de Domicilio" textFill="#34495e">
+                        <font> <Font name="System Bold" size="13.0" /> </font>
+                    </Label>
+                    <TextField fx:id="txtDireccion" prefHeight="35.0" promptText="Ej: Av. 12 de Abril, Cuenca" style="-fx-background-radius: 5;" />
+                </children>
+            </VBox>
+
+            <VBox spacing="5.0">
+                <children>
+                    <Label text="Teléfono de Contacto" textFill="#34495e">
+                        <font> <Font name="System Bold" size="13.0" /> </font>
+                    </Label>
+                    <TextField fx:id="txtTelefono" prefHeight="35.0" promptText="Ej: 0987654321" style="-fx-background-radius: 5;" />
+                </children>
+            </VBox>
+
+        </children>
+    </VBox>
+
+    <HBox alignment="CENTER_RIGHT" spacing="15.0">
+        <children>
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" />
+
+            <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleGuardar" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Guardar" />
+        </children>
+        <VBox.margin>
+            <Insets top="10.0" />
+        </VBox.margin>
+    </HBox>
+
+</children>
+</VBox>

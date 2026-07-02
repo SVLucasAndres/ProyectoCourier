@@ -1,8 +1,11 @@
-package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
+package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes;
 
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteMapper;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +48,7 @@ public class AgregacionClientesController {
         clienteModel.setTelefono("");
 
         if (navegador != null) {
-            navegador.cambiarAPantalla("Clientes/ListaClientesView.fxml", "Listado de clientes");
+            navegador.cambiarAPantalla("Clientes/ListaClientes/ListaClientesView.fxml", "Listado de clientes");
         }
     }
 
@@ -66,7 +69,7 @@ public class AgregacionClientesController {
 
             //Volvemos a la lista de clientes
             if (navegador != null) {
-                navegador.cambiarAPantalla("Clientes/ListaClientesView.fxml", "Listado de clientes");
+                navegador.cambiarAPantalla("Clientes/ListaClientes/ListaClientesView.fxml", "Listado de clientes");
             }
 
         } catch (ValidacionException e) {

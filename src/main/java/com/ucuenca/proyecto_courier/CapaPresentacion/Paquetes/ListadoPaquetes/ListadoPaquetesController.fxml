@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes.ListadoPaquetesController">
+    <children>
+        <HBox nodeOrientation="LEFT_TO_RIGHT" stylesheets="/estilos.css">
+            <Label text="Gestión de Envios" textFill="#2c3e50">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Label>
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button fx:id="btnCrearPaquete" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleCrearPaquete" styleClass="botonAgregar" text="Crear Paquete" />
+        </HBox>
+
+        <TableView fx:id="tablaPaquetes" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colSeguro" prefWidth="30" text="🔒" />
+                <TableColumn fx:id="colIdPaquete" prefWidth="125.39999771118164" text="ID"/>
+                <TableColumn fx:id="colPeso" prefWidth="180.0" text="Peso" />
+                <TableColumn fx:id="colValor" prefWidth="90.0" text="Valor" />
+                <TableColumn fx:id="colAcciones" text="Acciones" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+
+    </children>
+</VBox>

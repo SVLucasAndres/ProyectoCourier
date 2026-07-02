@@ -1,9 +1,9 @@
-package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
+package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente;
 
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteEnviosDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ContextoCliente;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioModel;
@@ -17,8 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.List;
 
 public class PropiedadesClienteController {
@@ -124,9 +122,18 @@ public class PropiedadesClienteController {
         NavegadorVistas nav = ContextoCliente.getNavegador();
 
         if (nav != null) {
-            nav.cambiarAPantalla("Clientes/ListaClientesView.fxml", "Lista Clientes");
+            nav.cambiarAPantalla("Clientes/ListaClientes/ListaClientesView.fxml", "Lista Clientes");
         } else {
             System.out.println("Error crítico: El navegador sigue siendo null en el contexto.");
         }
     }
+    @FXML
+    private void handleEliminarCliente(ActionEvent event){
+
+    }
+    @FXML
+    private void handleModificarCliente(ActionEvent event){
+
+    }
+
 }

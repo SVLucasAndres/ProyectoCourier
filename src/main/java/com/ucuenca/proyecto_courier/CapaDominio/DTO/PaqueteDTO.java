@@ -10,6 +10,13 @@ public abstract class PaqueteDTO {
     public PaqueteDTO() {
     }
 
+    public PaqueteDTO(String idPaquete, double peso, double valorContenido, boolean tieneSeguro) {
+        this.idPaquete = idPaquete;
+        this.peso = peso;
+        this.valorContenido = valorContenido;
+        this.tieneSeguro = tieneSeguro;
+    }
+
     public String getIdPaquete() {
         return idPaquete;
     }

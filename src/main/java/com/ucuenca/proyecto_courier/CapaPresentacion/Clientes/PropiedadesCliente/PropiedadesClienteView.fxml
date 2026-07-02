@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesClienteController" prefWidth="700.0" prefHeight="500.0" style="-fx-padding: 20;">
+<VBox spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente.PropiedadesClienteController" prefWidth="700.0" prefHeight="500.0" style="-fx-padding: 20;">
 
     <VBox spacing="5.0" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #cccccc;">
         <Label text="DETALLES DEL CLIENTE" style="-fx-font-weight: bold; -fx-font-size: 14;" />
@@ -24,6 +24,11 @@
             <Label fx:id="lblTelefono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         </GridPane>
     </VBox>
+
+    <HBox stylesheets="/estilos.css">
+        <Button fx:id="btnModificarCliente" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Modificar Cliente" styleClass="botonAgregar" onAction="#handleModificarCliente"/>
+        <Button fx:id="btnEliminarCliente" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Eliminar Cliente" styleClass="botonAgregar" onAction="#handleEliminarCliente"/>
+    </HBox>
 
     <Label text="Historial de Envíos Realizados" style="-fx-font-weight: bold; -fx-font-size: 13;" />
     <TableView fx:id="tablaEnvios" VBox.vgrow="ALWAYS">

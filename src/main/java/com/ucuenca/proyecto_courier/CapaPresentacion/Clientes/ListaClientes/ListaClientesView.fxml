@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientesController">
+<VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes.ListaClientesController">
    <children>
 
       <HBox nodeOrientation="LEFT_TO_RIGHT" stylesheets="/estilos.css">

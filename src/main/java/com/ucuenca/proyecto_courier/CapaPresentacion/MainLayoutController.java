@@ -1,22 +1,19 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion;
 
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientesController;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes.AgregacionClientesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes.ListaClientesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios.GeneracionEnviosController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios.ListaEnviosController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-import java.awt.*;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 public class MainLayoutController {
 
@@ -42,10 +39,19 @@ public class MainLayoutController {
             Parent vistaClientes = loader.load();
 
             Object controlador = loader.getController();
+
+            //CLIENTES
             if (controlador instanceof ListaClientesController) {
                 ((ListaClientesController) controlador).setNavegador(this::cargarVista);
             }else if (controlador instanceof AgregacionClientesController) {
                 ((AgregacionClientesController) controlador).setNavegador(this::cargarVista);
+            }
+
+            //ENVIOS
+            if (controlador instanceof ListaEnviosController) {
+                ((ListaEnviosController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof GeneracionEnviosController) {
+                ((GeneracionEnviosController) controlador).setNavegador(this::cargarVista);
             }
 
             panelCentral.getChildren().clear();
@@ -64,11 +70,11 @@ public class MainLayoutController {
             actualizarBotonActivo((Button) botonPresionado);
         }
         if(botonPresionado == btnClientes){
-            cargarVista("Clientes/ListaClientesView.fxml","Clientes");
+            cargarVista("Clientes/ListaClientes/ListaClientesView.fxml","Clientes");
         }else if(botonPresionado == btnConfig){
             cargarVista("Configuraciones/ConfiguracionView.fxml","Configuracion");
         }else if(botonPresionado == btnEnvios){
-            cargarVista("Envios/ListaEnviosView.fxml","Envios");
+            cargarVista("Envios/ListaEnvios/ListaEnviosView.fxml","Envios");
         }else if(botonPresionado == btnInicio){
             cargarVista("Inicio/InicioView.fxml","Inicio");
         }else if(botonPresionado == btnOficinas){

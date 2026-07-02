@@ -7,6 +7,11 @@ public class SobreDTO extends PaqueteDTO {
 
     public SobreDTO() {}
 
+    public SobreDTO(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, Tamano tamano) {
+        super(idPaquete,peso,valorContenido,tieneSeguro);
+        this.tamano = tamano;
+    }
+
     public Tamano getTamano() { return tamano; }
     public void setTamano(Tamano tamano) { this.tamano = tamano; }
 }
