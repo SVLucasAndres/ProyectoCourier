@@ -23,9 +23,7 @@ public class OficinaServiceImpl implements OficinaService {
         if (oficinaDAO == null) {
             throw new OperacionInvalidaException("El DAO de oficina no está inicializado.");
         }
-        if (oficina.getNombre() == null || oficina.getNombre().trim().isEmpty()) {
-            throw new ValidacionException("El nombre de la oficina no puede estar vacío.");
-        }
+        validarDatosOficina(oficina);
         Oficina nuevaOficina = new Oficina(
             oficina.getIdOficina(), 
             oficina.getNombre(), 
@@ -41,9 +39,7 @@ public class OficinaServiceImpl implements OficinaService {
         if (oficinaDAO == null) {
             throw new OperacionInvalidaException("El DAO de oficina no está inicializado.");
         }
-        if (oficina.getNombre() == null || oficina.getNombre().trim().isEmpty()) {
-            throw new ValidacionException("El nombre de la oficina no puede estar vacío.");
-        }
+        validarDatosOficina(oficina);
         Optional<Oficina> opt = oficinaDAO.buscarPorId(oficina.getIdOficina());
         if (opt.isPresent()) {
             Oficina o = opt.get();
@@ -129,5 +125,19 @@ public class OficinaServiceImpl implements OficinaService {
             lista.add(dto);
         }
         return lista;
+    }
+
+    private void validarDatosOficina(OficinaDTO oficina) {
+        if (oficina.getNombre() != null && !oficina.getNombre().trim().isEmpty()) {
+            if (!oficina.getNombre().matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s]+$")) {
+                throw new ValidacionException("El nombre de la oficina solo debe contener letras y números.");
+            }
+        }
+        
+        if (oficina.getTelefono() != null && !oficina.getTelefono().trim().isEmpty()) {
+            if (!oficina.getTelefono().matches("^\\d{10}$")) {
+                throw new ValidacionException("El número de teléfono de la oficina debe tener exactamente 10 dígitos numéricos.");
+            }
+        }
     }
 }

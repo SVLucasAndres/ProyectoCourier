@@ -10,7 +10,6 @@ import com.ucuenca.proyecto_courier.CapaDA.DAO;
 import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
 import com.ucuenca.proyecto_courier.CapaDominio.Configuracion;
 import com.ucuenca.proyecto_courier.CapaDominio.Rango;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,16 @@ public class EnvioServiceImpl implements EnvioService {
         return new ArrayList<>();
     }
 
+    private double obtenerIVA() {
+        if (configDAO != null) {
+            Optional<Configuracion> opt = configDAO.buscarPorId("GLOBAL");
+            if (opt.isPresent()) {
+                return opt.get().getImpuestoIVA();
+            }
+        }
+        return 0.0;
+    }
+
     @Override
     public void realizarEnvio(EnvioDTO envio) {
         if (envioDAO == null || clienteDAO == null) {
@@ -52,7 +61,6 @@ public class EnvioServiceImpl implements EnvioService {
         envioDAO.guardar(nuevoEnvio);
     }
 
-    @NotNull
     private static Envio getEnvio(EnvioDTO envio, Optional<Cliente> optRemitente, Optional<Cliente> optDestinatario) {
         if (optRemitente.isEmpty()) {
             throw new EntidadNoEncontradaException("Remitente no encontrado con ID: " + envio.getIdRemitente());
@@ -89,7 +97,7 @@ public class EnvioServiceImpl implements EnvioService {
             if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario());
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
-            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos()));
+            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos(), obtenerIVA()));
             return dto;
         } else {
             throw new EntidadNoEncontradaException("No se encontró el envío con ID: " + idEnvio);
@@ -103,7 +111,7 @@ public class EnvioServiceImpl implements EnvioService {
         }
         Optional<Envio> opt = envioDAO.buscarPorId(idEnvio);
         if (opt.isPresent()) {
-            return opt.get().calcularCostoTotal(obtenerRangos());
+            return opt.get().calcularCostoTotal(obtenerRangos(), obtenerIVA());
         } else {
             throw new EntidadNoEncontradaException("No se encontró el envío con ID: " + idEnvio);
         }
@@ -123,7 +131,7 @@ public class EnvioServiceImpl implements EnvioService {
             if (e.getDestinatario() != null) dto.setIdDestinatario(e.getDestinatario());
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
-            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos()));
+            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos(), obtenerIVA()));
             lista.add(dto);
         }
         return lista;

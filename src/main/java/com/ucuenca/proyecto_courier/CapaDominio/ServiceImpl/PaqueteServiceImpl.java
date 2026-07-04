@@ -3,6 +3,7 @@ package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 import com.ucuenca.proyecto_courier.CapaDominio.Paquete;
 import com.ucuenca.proyecto_courier.CapaDominio.Caja;
 import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
+import com.ucuenca.proyecto_courier.CapaDominio.Envio;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.CajaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
@@ -17,12 +18,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PaqueteServiceImpl implements PaqueteService {
     private DAO<Paquete> paqueteDAO;
+    private DAO<Envio> envioDAO;
 
-    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO) {
+    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO, DAO<Envio> envioDAO) {
         this.paqueteDAO = paqueteDAO;
+        this.envioDAO = envioDAO;
     }
 
     @Override
@@ -37,27 +42,25 @@ public class PaqueteServiceImpl implements PaqueteService {
         if (paquete instanceof CajaDTO) {
             CajaDTO cDTO = (CajaDTO) paquete;
             nuevoPaquete = new Caja(
-                cDTO.getIdPaquete(), 
-                cDTO.getPeso(), 
-                cDTO.getValorContenido(), 
-                cDTO.isTieneSeguro(), 
-                cDTO.getPorcentajeSeguro(), 
-                null, 
-                cDTO.getAlto(), 
-                cDTO.getAncho(), 
-                cDTO.getLargo()
-            );
+                    cDTO.getIdPaquete(),
+                    cDTO.getPeso(),
+                    cDTO.getValorContenido(),
+                    cDTO.isTieneSeguro(),
+                    cDTO.getPorcentajeSeguro(),
+                    null,
+                    cDTO.getAlto(),
+                    cDTO.getAncho(),
+                    cDTO.getLargo());
         } else if (paquete instanceof SobreDTO) {
             SobreDTO sDTO = (SobreDTO) paquete;
             nuevoPaquete = new Sobre(
-                sDTO.getIdPaquete(), 
-                sDTO.getPeso(), 
-                sDTO.getValorContenido(), 
-                sDTO.isTieneSeguro(), 
-                sDTO.getPorcentajeSeguro(), 
-                null, 
-                sDTO.getTamano()
-            );
+                    sDTO.getIdPaquete(),
+                    sDTO.getPeso(),
+                    sDTO.getValorContenido(),
+                    sDTO.isTieneSeguro(),
+                    sDTO.getPorcentajeSeguro(),
+                    null,
+                    sDTO.getTamano());
         }
         if (nuevoPaquete != null) {
             paqueteDAO.guardar(nuevoPaquete);
@@ -88,7 +91,7 @@ public class PaqueteServiceImpl implements PaqueteService {
                 sobreDTO.setTamano(s.getTamano());
                 dto = sobreDTO;
             }
-            
+
             if (dto != null) {
                 dto.setIdPaquete(p.getIdPaquete());
                 dto.setPeso(p.getPeso());
@@ -124,7 +127,7 @@ public class PaqueteServiceImpl implements PaqueteService {
                 sobreDTO.setTamano(s.getTamano());
                 dto = sobreDTO;
             }
-            
+
             if (dto != null) {
                 dto.setIdPaquete(p.getIdPaquete());
                 dto.setPeso(p.getPeso());
@@ -181,5 +184,57 @@ public class PaqueteServiceImpl implements PaqueteService {
         } else {
             throw new EntidadNoEncontradaException("No se encontró el paquete con ID: " + idPaquete);
         }
+    }
+
+    @Override
+    public List<PaqueteDTO> mostrarPaquetesSinEnvio() {
+        if (paqueteDAO == null || envioDAO == null) {
+            throw new OperacionInvalidaException("Los DAO no están inicializados.");
+        }
+
+        // 1. Obtener todos los envíos
+        List<Envio> envios = envioDAO.obtenerTodos();
+
+        // 2. Extraer los IDs de todos los paquetes que ya están en algún envío
+        Set<String> idsOcupados = envios.stream()
+                .filter(e -> e.getListaPaquetes() != null)
+                .flatMap(e -> e.getListaPaquetes().stream())
+                .map(Paquete::getIdPaquete)
+                .collect(Collectors.toSet());
+
+        // 3. Obtener todos los paquetes y mapear a DTO solo los que no estén en la
+        // lista de ocupados
+        List<PaqueteDTO> paquetesLibres = new ArrayList<>();
+        List<Paquete> todosPaquetes = paqueteDAO.obtenerTodos();
+
+        for (Paquete p : todosPaquetes) {
+            if (!idsOcupados.contains(p.getIdPaquete())) {
+                PaqueteDTO dto = null;
+                if (p instanceof Caja) {
+                    Caja c = (Caja) p;
+                    CajaDTO cajaDTO = new CajaDTO();
+                    cajaDTO.setAlto(c.getAlto());
+                    cajaDTO.setAncho(c.getAncho());
+                    cajaDTO.setLargo(c.getLargo());
+                    dto = cajaDTO;
+                } else if (p instanceof Sobre) {
+                    Sobre s = (Sobre) p;
+                    SobreDTO sobreDTO = new SobreDTO();
+                    sobreDTO.setTamano(s.getTamano());
+                    dto = sobreDTO;
+                }
+
+                if (dto != null) {
+                    dto.setIdPaquete(p.getIdPaquete());
+                    dto.setPeso(p.getPeso());
+                    dto.setValorContenido(p.getValorContenido());
+                    dto.setTieneSeguro(p.isTieneSeguro());
+                    dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+                    paquetesLibres.add(dto);
+                }
+            }
+        }
+
+        return paquetesLibres;
     }
 }
