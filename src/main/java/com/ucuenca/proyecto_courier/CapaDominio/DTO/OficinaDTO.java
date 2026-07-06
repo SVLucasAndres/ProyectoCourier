@@ -9,6 +9,13 @@ public class OficinaDTO {
 
     public OficinaDTO() {}
 
+    public OficinaDTO(String idOficina, String nombre, String telefono, String direccion) {
+        this.idOficina = idOficina;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
     public String getIdOficina() { return idOficina; }
     public void setIdOficina(String idOficina) { this.idOficina = idOficina; }
 

@@ -76,10 +76,10 @@ public class ListadoPaquetesController {
                 btnDetalle.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand; -fx-background-radius: 3;");
 
                 btnDetalle.setOnAction(event -> {
-                    PaqueteModel envioSeleccionado = getTableView().getItems().get(getIndex());
+                    PaqueteModel paqueteSeleccionado = getTableView().getItems().get(getIndex());
 
                     if (navegador != null) {
-                        ContextoPaquete.setEnvio(envioSeleccionado);
+                        ContextoPaquete.setEnvio(paqueteSeleccionado);
                         ContextoPaquete.setNavegador(navegador); //Guardamos el navegador actual
 
                         navegador.cambiarAPantalla("Paquetes/DetallePaquetes/DetallePaquetesView.fxml", "Propiedades del Paquete");
@@ -138,7 +138,7 @@ public class ListadoPaquetesController {
     @FXML
     private void handleCrearPaquete(ActionEvent event) {
         if (navegador != null) {
-            navegador.cambiarAPantalla("Envios/GeneracionEnvios/GeneracionEnviosView.fxml", "Generar Envio");
+            navegador.cambiarAPantalla("Paquetes/GeneracionPaquetes/GeneracionPaquetesView.fxml", "Generar Paquetes");
         }
     }
 }

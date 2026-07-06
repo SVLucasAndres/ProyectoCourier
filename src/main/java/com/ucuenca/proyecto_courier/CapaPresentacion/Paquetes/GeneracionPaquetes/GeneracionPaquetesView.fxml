@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="700.0" prefWidth="680.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.GeneracionPaquetes.GeneracionPaquetesController">
+    <children>
+
+        <VBox spacing="5.0">
+            <children>
+                <Label text="Crear Nuevo Paquete" textFill="#2c3e50">
+                    <font> <Font name="System Bold" size="22.0" /> </font>
+                </Label>
+                <Label text="Configure las especificaciones físicas, el seguro y la ruta del paquete." textFill="#7f8c8d" />
+            </children>
+        </VBox>
+
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">
+            <children>
+
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e;" text="Código de Paquete:" />
+                        <TextField fx:id="txtIdPaquete" disable="true" editable="false" prefHeight="26.0" prefWidth="128.0" style="-fx-background-color: #edf2f7; -fx-font-weight: bold; -fx-alignment: center;" />
+                         <CheckBox fx:id="chkSeguro" mnemonicParsing="false" style="-fx-font-weight: bold;" text="¿Asegurarlo?" textFill="#34495e" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="textoAlerta" style="-fx-font-weight: bold;" text="" textFill="#8d2e31" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 5 0;">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Tipo de Paquete: *" textFill="#34495e" />
+                        <RadioButton fx:id="rbSobre" mnemonicParsing="false" selected="true" text="Sobre">
+                            <toggleGroup><ToggleGroup fx:id="grupoTipo" /></toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rbCaja" mnemonicParsing="false" text="Caja" toggleGroup="$grupoTipo" />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                               <Label style="-fx-font-weight: bold;" text="Peso (kg) *" textFill="#34495e" />
+                               <TextField fx:id="txtPeso" prefHeight="35.0" promptText="Ej: 1.50" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                               <Label style="-fx-font-weight: bold;" text="Valor Contenido ($) *" textFill="#34495e" />
+                               <TextField fx:id="txtValor" prefHeight="35.0" promptText="Ej: 25.50" />
+                     </children>
+                  </VBox>
+                    </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+                </HBox>
+
+                <StackPane alignment="TOP_LEFT">
+                    <children>
+                        <VBox fx:id="paneSobre" spacing="5.0">
+                            <Label style="-fx-font-weight: bold;" text="Tamaño del Sobre *" textFill="#34495e" />
+                            <ComboBox fx:id="cmbTamano" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione tamaño..." />
+                        </VBox>
+
+                        <HBox fx:id="paneCaja" spacing="15.0" visible="false">
+                            <children>
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-font-weight: bold;" text="Alto (cm) *" textFill="#34495e" />
+                                    <TextField fx:id="txtAlto" prefHeight="35.0" promptText="cm" />
+                                </VBox>
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-font-weight: bold;" text="Ancho (cm) *" textFill="#34495e" />
+                                    <TextField fx:id="txtAncho" prefHeight="35.0" promptText="cm" />
+                                </VBox>
+                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-font-weight: bold;" text="Largo (cm) *" textFill="#34495e" />
+                                    <TextField fx:id="txtLargo" prefHeight="35.0" promptText="cm" />
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </StackPane>
+
+                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Configurar Ruta de Seguimiento (Oficinas en Orden)" textFill="#34495e" />
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <children>
+                                <ComboBox fx:id="cmbOficinasDisponibles" prefHeight="35.0" prefWidth="300.0" promptText="Seleccionar Oficina..." />
+                                <Button fx:id="btnAgregarPunto" onAction="#handleAgregarOficinaARuta" prefHeight="35.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Añadir a la Ruta" />
+                                <Button fx:id="btnRemoverPunto" onAction="#handleRemoverOficinaDeRuta" prefHeight="35.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Remover" />
+                            </children>
+                        </HBox>
+                        <ListView fx:id="lstRutaOficinas" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <children>
+                <Button fx:id="btnCancelar" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" />
+                <Button fx:id="btnGuardar" onAction="#handleGuardar" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Guardar Paquete" />
+            </children>
+        </HBox>
+
+    </children>
+</VBox>

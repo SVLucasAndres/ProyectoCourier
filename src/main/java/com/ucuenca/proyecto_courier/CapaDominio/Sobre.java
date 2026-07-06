@@ -30,4 +30,7 @@ public class Sobre extends Paquete {
     public Tamano getTamano() {
         return tamano;
     }
+    public void setTamano(Tamano tamano) {
+        this.tamano = tamano;
+    }
 }

@@ -1,5 +1,7 @@
 package com.ucuenca.proyecto_courier.CapaDominio.DTO;
 
+import java.util.List;
+
 public class CajaDTO extends PaqueteDTO {
     private double alto;
     private double ancho;
@@ -7,8 +9,8 @@ public class CajaDTO extends PaqueteDTO {
 
     public CajaDTO() {}
 
-    public CajaDTO(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double alto, double ancho, double largo) {
-        super(idPaquete, peso, valorContenido, tieneSeguro);
+    public CajaDTO(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double alto, double ancho, double largo, List<OficinaDTO> listaOficinas) {
+        super(idPaquete, peso, valorContenido, tieneSeguro, listaOficinas);
         this.alto = alto;
         this.ancho = ancho;
         this.largo = largo;

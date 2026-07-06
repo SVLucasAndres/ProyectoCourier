@@ -42,4 +42,16 @@ public class Caja extends Paquete {
     public double getLargo() {
         return largo;
     }
+
+    public void setLargo(double largo) {
+        this.largo = largo;
+    }
+
+    public void setAncho(double ancho) {
+        this.ancho = ancho;
+    }
+
+    public void setAlto(double alto) {
+        this.alto = alto;
+    }
 }

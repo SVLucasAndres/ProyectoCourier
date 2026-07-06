@@ -13,10 +13,16 @@
                <Font name="System Bold" size="20.0" />
             </font>
          </Label>
-         <Pane HBox.hgrow="ALWAYS"></Pane>
+      </HBox>
 
-         <Button fx:id="btnAgregarCliente" alignment="CENTER_RIGHT" mnemonicParsing="false" text="+ Nuevo Cliente" styleClass="botonAgregar" onAction="#handleAgregarCliente"/>
+      <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+         <children>
+            <TextField fx:id="txtBuscar" prefHeight="35.0" prefWidth="280.0" promptText="Buscar cliente por nombre o ID..." style="-fx-background-radius: 5;" />
 
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <Button fx:id="btnAgregarCliente" mnemonicParsing="false" onAction="#handleAgregarCliente" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Nuevo Cliente" />
+         </children>
       </HBox>
 
       <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS">

@@ -1,8 +1,7 @@
 package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 
-import com.ucuenca.proyecto_courier.CapaDominio.Paquete;
-import com.ucuenca.proyecto_courier.CapaDominio.Caja;
-import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
+import com.ucuenca.proyecto_courier.CapaDominio.*;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.CajaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
@@ -20,9 +19,11 @@ import java.util.Optional;
 
 public class PaqueteServiceImpl implements PaqueteService {
     private DAO<Paquete> paqueteDAO;
+    private DAO<Oficina> oficinaDAO;
 
-    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO) {
+    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO, DAO<Oficina> oficinaDao) {
         this.paqueteDAO = paqueteDAO;
+        this.oficinaDAO = oficinaDao;
     }
 
     @Override
@@ -33,32 +34,59 @@ public class PaqueteServiceImpl implements PaqueteService {
         if (paquete == null) {
             throw new ValidacionException("El paquete a crear no puede ser nulo.");
         }
+
+        RutaSeguimiento ruta = new RutaSeguimiento();
+        if (paquete.getListaOficinas() != null) {
+            for (OficinaDTO o : paquete.getListaOficinas()) {
+
+                Optional<Oficina> oficinaBd = (oficinaDAO != null) ? oficinaDAO.buscarPorId(o.getIdOficina()) : Optional.empty();
+
+                Oficina oficinaDominio;
+                // Trae nombre, dirección, teléfono, etc.
+                oficinaDominio = oficinaBd.orElseGet(() -> new Oficina(o.getIdOficina(), "Oficina " + o.getIdOficina(), "", "", true));
+
+                PuntoIntermedio punto = new PuntoIntermedio(null, null, oficinaDominio);
+                ruta.agregarPaso(punto);
+            }
+        }
+
         Paquete nuevoPaquete = null;
+
         if (paquete instanceof CajaDTO) {
             CajaDTO cDTO = (CajaDTO) paquete;
-            nuevoPaquete = new Caja(
-                cDTO.getIdPaquete(), 
-                cDTO.getPeso(), 
-                cDTO.getValorContenido(), 
-                cDTO.isTieneSeguro(), 
-                cDTO.getPorcentajeSeguro(), 
-                null, 
-                cDTO.getAlto(), 
-                cDTO.getAncho(), 
-                cDTO.getLargo()
+            Caja cajaEntity = new Caja(
+                    cDTO.getIdPaquete(),
+                    cDTO.getPeso(),
+                    cDTO.getValorContenido(),
+                    cDTO.isTieneSeguro(),
+                    cDTO.getPorcentajeSeguro(),
+                    ruta, //Pasamos la ruta
+                    cDTO.getAlto(),
+                    cDTO.getAncho(),
+                    cDTO.getLargo()
             );
+            nuevoPaquete = cajaEntity;
+
         } else if (paquete instanceof SobreDTO) {
             SobreDTO sDTO = (SobreDTO) paquete;
-            nuevoPaquete = new Sobre(
-                sDTO.getIdPaquete(), 
-                sDTO.getPeso(), 
-                sDTO.getValorContenido(), 
-                sDTO.isTieneSeguro(), 
-                sDTO.getPorcentajeSeguro(), 
-                null, 
-                sDTO.getTamano()
+
+            Sobre sobreEntity = new Sobre(
+                    sDTO.getIdPaquete(),
+                    sDTO.getPeso(),
+                    sDTO.getValorContenido(),
+                    sDTO.isTieneSeguro(),
+                    sDTO.getPorcentajeSeguro(),
+                    ruta, //Pasamos la ruta
+                    sDTO.getTamano()
             );
+
+            if (sDTO.getTamano() != null) {
+                sobreEntity.setTamano(sDTO.getTamano());
+            }
+
+            nuevoPaquete = sobreEntity;
         }
+
         if (nuevoPaquete != null) {
             paqueteDAO.guardar(nuevoPaquete);
         } else {
@@ -88,13 +116,16 @@ public class PaqueteServiceImpl implements PaqueteService {
                 sobreDTO.setTamano(s.getTamano());
                 dto = sobreDTO;
             }
-            
+
             if (dto != null) {
                 dto.setIdPaquete(p.getIdPaquete());
                 dto.setPeso(p.getPeso());
                 dto.setValorContenido(p.getValorContenido());
                 dto.setTieneSeguro(p.isTieneSeguro());
                 dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+
+                // Mapeamos los puntos intermedios a una lista limpia de Strings
+                dto.setPuntosRuta(generarPuntosRutaTexto(p));
             }
             return dto;
         } else {
@@ -124,17 +155,43 @@ public class PaqueteServiceImpl implements PaqueteService {
                 sobreDTO.setTamano(s.getTamano());
                 dto = sobreDTO;
             }
-            
+
             if (dto != null) {
                 dto.setIdPaquete(p.getIdPaquete());
                 dto.setPeso(p.getPeso());
                 dto.setValorContenido(p.getValorContenido());
                 dto.setTieneSeguro(p.isTieneSeguro());
                 dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+
+                //Asignamos la lista formateada de strings al DTO
+                dto.setPuntosRuta(generarPuntosRutaTexto(p));
+
                 lista.add(dto);
             }
         }
         return lista;
+    }
+
+    private List<String> generarPuntosRutaTexto(Paquete p) {
+        List<String> paradasTexto = new ArrayList<>();
+        if (p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
+            for (PuntoIntermedio punto : p.getRuta().getPuntosIntermedios()) {
+                if (punto.getOficina() != null) {
+                    String nombreOfi = punto.getOficina().getNombre();
+                    String detallePaso = nombreOfi;
+
+                    if (punto.getHoraLlegada() != null && punto.getHoraSalida() == null) {
+                        detallePaso += " (En tránsito - Llegó: " + punto.getHoraLlegada().toLocalTime().toString().substring(0, 5) + ")";
+                    } else if (punto.getHoraSalida() != null) {
+                        detallePaso += " (Despachado - Salió: " + punto.getHoraSalida().toLocalTime().toString().substring(0, 5) + ")";
+                    } else {
+                        detallePaso += " (En Espera)";
+                    }
+                    paradasTexto.add(detallePaso);
+                }
+            }
+        }
+        return paradasTexto;
     }
 
     @Override

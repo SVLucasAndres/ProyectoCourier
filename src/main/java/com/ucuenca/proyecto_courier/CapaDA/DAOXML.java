@@ -75,7 +75,7 @@ public abstract class DAOXML<T> implements DAO<T> {
         escribirArchivo(lista);
     }
 
-    private void escribirArchivo(List<T> lista) {
+    void escribirArchivo(List<T> lista) {
         File archivo = new File(rutaArchivo);
         // Crear directorios padre si no existen
         if (archivo.getParentFile() != null && !archivo.getParentFile().exists()) {

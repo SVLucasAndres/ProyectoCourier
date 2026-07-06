@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="700.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 25;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ListaOficinas.ListaOficinasController">
+    <children>
+
+        <VBox spacing="5.0">
+            <children>
+                <Label text="Gestión de Oficinas" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Label text="Administre las sucursales del sistema para el trazado de rutas de envío." textFill="#7f8c8d" />
+            </children>
+        </VBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+            <children>
+                <TextField fx:id="txtBuscar" prefHeight="35.0" prefWidth="280.0" promptText="Buscar oficina por nombre o ID..." style="-fx-background-radius: 5;" />
+
+                <Pane HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#handleAgregarOficina" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Nueva Oficina" />
+            </children>
+        </HBox>
+
+        <VBox style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8; -fx-padding: 10;" VBox.vgrow="ALWAYS">
+            <children>
+                <TableView fx:id="tblOficinas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 5; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" prefWidth="120.0" text="ID Oficina" />
+                        <TableColumn fx:id="colNombre" prefWidth="180.0" text="Nombre / Sucursal" />
+                        <TableColumn fx:id="colDireccion" prefWidth="150.0" text="Dirección" />
+                        <TableColumn fx:id="colTelefono" prefWidth="200.0" text="Telefono" />
+                        <TableColumn fx:id="colAcciones" text="Acciones" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+
+    </children>
+</VBox>

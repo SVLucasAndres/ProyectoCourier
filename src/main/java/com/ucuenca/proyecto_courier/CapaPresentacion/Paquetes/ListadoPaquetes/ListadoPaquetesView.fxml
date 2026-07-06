@@ -7,20 +7,27 @@
 <VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes.ListadoPaquetesController">
     <children>
         <HBox nodeOrientation="LEFT_TO_RIGHT" stylesheets="/estilos.css">
-            <Label text="Gestión de Envios" textFill="#2c3e50">
+            <Label text="Gestión de Paquetes" textFill="#2c3e50">
                 <font>
                     <Font name="System Bold" size="20.0" />
                 </font>
             </Label>
-            <Pane HBox.hgrow="ALWAYS" />
+        </HBox>
 
-            <Button fx:id="btnCrearPaquete" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleCrearPaquete" styleClass="botonAgregar" text="Crear Paquete" />
+        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+            <children>
+                <TextField fx:id="txtBuscar" prefHeight="35.0" prefWidth="280.0" promptText="Buscar paquete por ID..." style="-fx-background-radius: 5;" />
+
+                <Pane HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnCrearPaquete" mnemonicParsing="false" onAction="#handleCrearPaquete" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Nuevo Paquete" />
+            </children>
         </HBox>
 
         <TableView fx:id="tablaPaquetes" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colSeguro" prefWidth="30" text="🔒" />
-                <TableColumn fx:id="colIdPaquete" prefWidth="125.39999771118164" text="ID"/>
+                <TableColumn fx:id="colIdPaquete" prefWidth="125.39999771118164" text="ID" />
                 <TableColumn fx:id="colPeso" prefWidth="180.0" text="Peso" />
                 <TableColumn fx:id="colValor" prefWidth="90.0" text="Valor" />
                 <TableColumn fx:id="colAcciones" text="Acciones" />

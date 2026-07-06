@@ -19,7 +19,9 @@ public class Cliente {
         this.isActive = isActive;
     }
 
-    public Cliente(){}
+    public Cliente(){
+        this.isActive = true;
+    }
 
     public String getIdCliente() { return idCliente; }
     public void setIdCliente(String idCliente) { this.idCliente = idCliente; }
@@ -36,6 +38,6 @@ public class Cliente {
     public List<Envio> getListaEnvios() { return listaEnvios; }
     public void setListaEnvios(List<Envio> listaEnvios) { this.listaEnvios = listaEnvios; }
 
-    public boolean isActive() { return isActive; }
-    public void setActive(boolean active) { isActive = active; }
+    public boolean isIsActive() { return isActive; }
+    public void setIsActive(boolean isActive) { this.isActive = isActive; }
 }

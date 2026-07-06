@@ -2,8 +2,16 @@ package com.ucuenca.proyecto_courier.CapaPresentacion;
 
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes.AgregacionClientesController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes.ListaClientesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente.PropiedadesClienteController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios.GeneracionEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios.ListaEnviosController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.AgregacionOficinas.AgregacionOficinasController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.DetalleOficinas.DetallesOficinasController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ListaOficinas.ListaOficinasController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ModificacionOficinas.ModificacionOficinasController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes.DetallePaquetesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.GeneracionPaquetes.GeneracionPaquetesController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes.ListadoPaquetesController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -45,6 +53,8 @@ public class MainLayoutController {
                 ((ListaClientesController) controlador).setNavegador(this::cargarVista);
             }else if (controlador instanceof AgregacionClientesController) {
                 ((AgregacionClientesController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof PropiedadesClienteController) {
+                ((PropiedadesClienteController) controlador).setNavegador(this::cargarVista);
             }
 
             //ENVIOS
@@ -53,6 +63,27 @@ public class MainLayoutController {
             }else if (controlador instanceof GeneracionEnviosController) {
                 ((GeneracionEnviosController) controlador).setNavegador(this::cargarVista);
             }
+
+            //Paquetes
+            if (controlador instanceof ListadoPaquetesController) {
+                ((ListadoPaquetesController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof GeneracionPaquetesController) {
+                ((GeneracionPaquetesController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof DetallePaquetesController) {
+                ((DetallePaquetesController) controlador).setNavegador(this::cargarVista);
+            }
+
+            //Oficina
+            if (controlador instanceof ListaOficinasController) {
+                ((ListaOficinasController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof AgregacionOficinasController) {
+                ((AgregacionOficinasController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof DetallesOficinasController) {
+                ((DetallesOficinasController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof ModificacionOficinasController) {
+                ((ModificacionOficinasController) controlador).setNavegador(this::cargarVista);
+            }
+
 
             panelCentral.getChildren().clear();
             panelCentral.getChildren().add(vistaClientes);
@@ -78,9 +109,9 @@ public class MainLayoutController {
         }else if(botonPresionado == btnInicio){
             cargarVista("Inicio/InicioView.fxml","Inicio");
         }else if(botonPresionado == btnOficinas){
-            cargarVista("Oficinas/OficinasView.fxml","Oficinas");
+            cargarVista("Oficinas/ListaOficinas/ListaOficinasView.fxml","Oficinas");
         }else if(botonPresionado == btnPaquetes){
-            cargarVista("Paquetes/PaquetesView.fxml","Paquetes");
+            cargarVista("Paquetes/ListadoPaquetes/ListadoPaquetesView.fxml","Paquetes");
         }
     }
 

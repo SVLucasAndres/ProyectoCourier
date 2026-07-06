@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="550.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 25;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ModificacionOficinas.ModificacionOficinasController">
+    <children>
+
+        <VBox spacing="5.0">
+            <children>
+                <Label text="Modificar Datos de Oficina" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Label text="Edite los campos necesarios de la sucursal. El código identificador no es modificable." textFill="#7f8c8d" />
+            </children>
+        </VBox>
+
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">
+            <children>
+
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold; -fx-text-fill: #34495e;" text="Código de Oficina:" />
+                        <TextField fx:id="txtIdOficina" disable="true" editable="false" prefWidth="150.0" style="-fx-background-color: #edf2f7; -fx-font-weight: bold; -fx-alignment: center;" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Label fx:id="textoAlerta" text="" textFill="#8d2e31" style="-fx-font-weight: bold;" />
+                    </children>
+                </HBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Nombre / Sucursal: *" textFill="#34495e" />
+                        <TextField fx:id="txtNombre" prefHeight="35.0" promptText="Ej: Sucursal El Ejido" style="-fx-background-radius: 5;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Dirección Exacta: *" textFill="#34495e" />
+                        <TextField fx:id="txtDireccion" prefHeight="35.0" promptText="Ej: Av. Solano y Turi" style="-fx-background-radius: 5;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0">
+                    <children>
+                        <Label style="-fx-font-weight: bold;" text="Teléfono de Contacto: *" textFill="#34495e" />
+                        <TextField fx:id="txtTelefono" prefHeight="35.0" promptText="Ej: 072834567" style="-fx-background-radius: 5;" />
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <children>
+                <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#handleCancelar" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Cancelar" />
+                <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleActualizar" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Actualizar Datos" />
+            </children>
+        </HBox>
+
+    </children>
+</VBox>

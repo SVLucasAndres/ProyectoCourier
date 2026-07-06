@@ -47,7 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
             cliente.getDireccion(), 
             cliente.getTelefono(), 
             new ArrayList<>(), 
-            cliente.isActive()
+            true
         );
         clienteDAO.guardar(nuevoCliente);
     }
@@ -66,7 +66,7 @@ public class ClienteServiceImpl implements ClienteService {
             c.setNombre(cliente.getNombre());
             c.setDireccion(cliente.getDireccion());
             c.setTelefono(cliente.getTelefono());
-            c.setActive(cliente.isActive());
+            c.setIsActive(cliente.isActive());
             clienteDAO.guardar(c);
         } else {
             throw new EntidadNoEncontradaException("No se encontró el cliente con ID: " + cliente.getIdCliente());
@@ -81,7 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
         Optional<Cliente> opt = clienteDAO.buscarPorId(cliente.getIdCliente());
         if (opt.isPresent()) {
             Cliente c = opt.get();
-            c.setActive(false);
+            c.setIsActive(false);
             clienteDAO.guardar(c);
         } else {
             throw new EntidadNoEncontradaException("No se encontró el cliente con ID: " + cliente.getIdCliente());
@@ -96,7 +96,7 @@ public class ClienteServiceImpl implements ClienteService {
         Optional<Cliente> opt = clienteDAO.buscarPorId(idCliente);
         if (opt.isPresent()) {
             Cliente c = opt.get();
-            return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive());
+            return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isIsActive());
         } else {
             throw new EntidadNoEncontradaException("No se encontró el cliente con ID: " + idCliente);
         }
@@ -110,7 +110,7 @@ public class ClienteServiceImpl implements ClienteService {
         List<Cliente> todos = clienteDAO.obtenerTodos();
         for (Cliente c : todos) {
             if (c.getNombre() != null && c.getNombre().equalsIgnoreCase(nombre)) {
-                return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive());
+                return new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isIsActive());
             }
         }
         throw new EntidadNoEncontradaException("No se encontró el cliente con nombre: " + nombre);
@@ -124,7 +124,10 @@ public class ClienteServiceImpl implements ClienteService {
         List<ClienteDTO> lista = new ArrayList<>();
         List<Cliente> todos = clienteDAO.obtenerTodos();
         for (Cliente c : todos) {
-            lista.add(new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isActive()));
+            if (c.isIsActive()) {
+                lista.add(new ClienteDTO(c.getIdCliente(), c.getNombre(), c.getDireccion(), c.getTelefono(), c.isIsActive()));
+
+            }
         }
         return lista;
     }
@@ -152,7 +155,7 @@ public class ClienteServiceImpl implements ClienteService {
                 clienteEncontrado.getNombre(),
                 clienteEncontrado.getDireccion(),
                 clienteEncontrado.getTelefono(),
-                clienteEncontrado.isActive(),
+                clienteEncontrado.isIsActive(),
                 enviosPorCliente
         );
     }

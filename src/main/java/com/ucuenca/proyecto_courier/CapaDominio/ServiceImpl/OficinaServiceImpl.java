@@ -31,7 +31,7 @@ public class OficinaServiceImpl implements OficinaService {
             oficina.getNombre(), 
             oficina.getDireccion(), 
             oficina.getTelefono(), 
-            oficina.isActive()
+            true
         );
         oficinaDAO.guardar(nuevaOficina);
     }
@@ -120,13 +120,15 @@ public class OficinaServiceImpl implements OficinaService {
         List<OficinaDTO> lista = new ArrayList<>();
         List<Oficina> todas = oficinaDAO.obtenerTodos();
         for (Oficina o : todas) {
-            OficinaDTO dto = new OficinaDTO();
-            dto.setIdOficina(o.getIdOficina());
-            dto.setNombre(o.getNombre());
-            dto.setDireccion(o.getDireccion());
-            dto.setTelefono(o.getTelefono());
-            dto.setActive(o.isActive());
-            lista.add(dto);
+            if(o.isActive()) {
+                OficinaDTO dto = new OficinaDTO();
+                dto.setIdOficina(o.getIdOficina());
+                dto.setNombre(o.getNombre());
+                dto.setDireccion(o.getDireccion());
+                dto.setTelefono(o.getTelefono());
+                dto.setActive(o.isActive());
+                lista.add(dto);
+            }
         }
         return lista;
     }
