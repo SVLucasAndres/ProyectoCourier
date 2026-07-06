@@ -10,4 +10,5 @@ public interface PaqueteService {
     void registrarLlegadaPaquete(String idPaquete, Date fecha);
     void registrarSalidaPaquete(String idPaquete, Date fecha);
     List<PaqueteDTO> mostrarListaPaquetes();
+    List<PaqueteDTO> mostrarPaquetesSinEnvio();
 }

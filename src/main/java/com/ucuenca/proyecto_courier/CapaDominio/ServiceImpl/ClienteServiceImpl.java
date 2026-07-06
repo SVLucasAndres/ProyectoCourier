@@ -30,15 +30,9 @@ public class ClienteServiceImpl implements ClienteService {
         if (clienteDAO == null) {
             throw new OperacionInvalidaException("El DAO de cliente no está inicializado.");
         }
-        if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
-            throw new ValidacionException("El nombre del cliente no puede estar vacío.");
-        }else if(cliente.getTelefono() == null || cliente.getTelefono().trim().isEmpty()){
-            throw new ValidacionException("El campo de teléfono no puede estar vacio");
-        }else if(cliente.getDireccion() == null || cliente.getDireccion().trim().isEmpty()){
-            throw new ValidacionException("El campo de dirección no puede estar vacio");
-        }else if (cliente.getIdCliente()==null || cliente.getIdCliente().trim().isEmpty()){
-            throw new ValidacionException("El campo de cédula no puede estar vacio");
-        }else if (clienteDAO.buscarPorId(cliente.getIdCliente()).isPresent()) {
+        validarDatosCliente(cliente);
+        
+        if (cliente.getIdCliente() != null && clienteDAO.buscarPorId(cliente.getIdCliente()).isPresent()) {
             throw new ValidacionException("El cliente ya existe en el sistema");
         }
         Cliente nuevoCliente = new Cliente(
@@ -57,9 +51,7 @@ public class ClienteServiceImpl implements ClienteService {
         if (clienteDAO == null) {
             throw new OperacionInvalidaException("El DAO de cliente no está inicializado.");
         }
-        if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
-            throw new ValidacionException("El nombre del cliente no puede estar vacío.");
-        }
+        validarDatosCliente(cliente);
         Optional<Cliente> opt = clienteDAO.buscarPorId(cliente.getIdCliente());
         if (opt.isPresent()) {
             Cliente c = opt.get();
@@ -133,7 +125,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, List<Rango> rangos) {
+    public ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, List<Rango> rangos, double iva) {
 
         Cliente clienteEncontrado;
         if (clienteDAO.buscarPorId(id).isEmpty())
@@ -147,7 +139,7 @@ public class ClienteServiceImpl implements ClienteService {
             envio.setIdRemitente(e.getRemitente());
             envio.setRapidez(e.getRapidez());
             envio.setMetodoPago(e.getMetodoPago());
-            envio.setCostoTotal(e.calcularCostoTotal(rangos));
+            envio.setCostoTotal(e.calcularCostoTotal(rangos, iva));
             enviosPorCliente.add(envio);
         }
         return new ClienteEnviosDTO(
@@ -158,5 +150,57 @@ public class ClienteServiceImpl implements ClienteService {
                 clienteEncontrado.isIsActive(),
                 enviosPorCliente
         );
+    }
+
+    private void validarDatosCliente(ClienteDTO cliente) {
+        if (cliente.getNombre() != null && !cliente.getNombre().trim().isEmpty()) {
+            if (!cliente.getNombre().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+                throw new ValidacionException("El nombre del cliente solo debe contener letras.");
+            }
+        }
+        
+        if (cliente.getTelefono() != null && !cliente.getTelefono().trim().isEmpty()) {
+            if (!cliente.getTelefono().matches("^\\d{10}$")) {
+                throw new ValidacionException("El número de teléfono debe tener exactamente 10 dígitos numéricos.");
+            }
+        }
+        
+        if (cliente.getIdCliente() != null && !cliente.getIdCliente().trim().isEmpty()) {
+            if (!cliente.getIdCliente().matches("^\\d{10}$")) {
+                throw new ValidacionException("La cédula debe tener exactamente 10 dígitos numéricos.");
+            }
+            if (!esCedulaValida(cliente.getIdCliente())) {
+                throw new ValidacionException("La cédula ingresada es incorrecta o falsa.");
+            }
+        }
+    }
+
+    private boolean esCedulaValida(String cedula) {
+        try {
+            int provincia = Integer.parseInt(cedula.substring(0, 2));
+            if (provincia < 1 || (provincia > 24 && provincia != 30)) {
+                return false;
+            }
+            int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+            if (tercerDigito >= 6) {
+                return false;
+            }
+            
+            int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+            int suma = 0;
+            for (int i = 0; i < 9; i++) {
+                int valor = Integer.parseInt(cedula.substring(i, i + 1)) * coeficientes[i];
+                suma += (valor >= 10) ? valor - 9 : valor;
+            }
+            
+            int digitoVerificador = Integer.parseInt(cedula.substring(9, 10));
+            int decenas = (suma / 10 + 1) * 10;
+            int calculado = decenas - suma;
+            if (calculado == 10) calculado = 0;
+            
+            return calculado == digitoVerificador;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

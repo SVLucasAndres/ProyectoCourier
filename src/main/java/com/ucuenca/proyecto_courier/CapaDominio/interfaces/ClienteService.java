@@ -13,5 +13,5 @@ public interface ClienteService {
     ClienteDTO buscarClientePorID(String id);
     ClienteDTO buscarClientePorNombre(String nombre);
     List<ClienteDTO> mostrarListaClientes();
-    ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, List<Rango> rangos);
+    ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, List<Rango> rangos, double iva);
 }
