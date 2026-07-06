@@ -46,7 +46,7 @@ public class GestorServicios {
         servicioEnvio = new EnvioServiceImpl(envioDAO,clienteDAO,configuracionDAO);
         servicioConfiguracion = new ConfiguracionServiceImpl(configuracionDAO);
         servicioOficina = new OficinaServiceImpl(oficinaDAO);
-        servicioPaquete = new PaqueteServiceImpl(paqueteDAO,oficinaDAO,envioDAO);
+        servicioPaquete = new PaqueteServiceImpl(paqueteDAO,envioDAO,oficinaDAO);
     }
 
     public ClienteService obtenerServicioCliente(){
