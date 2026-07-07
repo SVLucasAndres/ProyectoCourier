@@ -4,6 +4,7 @@ import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes.ListaClientesController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ModificarCliente.ModificacionClientesController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente.PropiedadesClienteController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion.ConfiguracionController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.DetalleEnvios.DetalleEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios.GeneracionEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios.ListaEnviosController;
@@ -90,6 +91,10 @@ public class MainLayoutController {
                 ((ModificacionOficinasController) controlador).setNavegador(this::cargarVista);
             }
 
+            //Configuracion
+            if (controlador instanceof ConfiguracionController) {
+                ((ConfiguracionController) controlador).setNavegador(this::cargarVista);
+            }
 
             panelCentral.getChildren().clear();
             panelCentral.getChildren().add(vistaClientes);
@@ -109,7 +114,7 @@ public class MainLayoutController {
         if(botonPresionado == btnClientes){
             cargarVista("Clientes/ListaClientes/ListaClientesView.fxml","Clientes");
         }else if(botonPresionado == btnConfig){
-            cargarVista("Configuraciones/ConfiguracionView.fxml","Configuracion");
+            cargarVista("Configuracion/ConfiguracionView.fxml","Configuracion");
         }else if(botonPresionado == btnEnvios){
             cargarVista("Envios/ListaEnvios/ListaEnviosView.fxml","Envios");
         }else if(botonPresionado == btnInicio){

@@ -13,6 +13,10 @@ public class Rango {
         this.costoPorKilogramo = costoPorKilogramo;
     }
 
+    public Rango(){
+
+    }
+
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     public double getPesoMinimo() { return pesoMinimo; }

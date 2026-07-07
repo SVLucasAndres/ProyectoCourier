@@ -47,6 +47,6 @@ module com.ucuenca.proyecto_courier {
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.GeneracionPaquetes to javafx.fxml;
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes to javafx.fxml;
-    exports com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes;
-    opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion to javafx.fxml;
 }
