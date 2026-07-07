@@ -53,7 +53,6 @@ public class ListaEnviosController {
 
                     if (navegador != null) {
                         ContextoEnvio.setEnvio(envioSeleccionado);
-                        ContextoEnvio.setNavegador(navegador); //Guardamos el navegador actual
 
                         navegador.cambiarAPantalla("Envios/DetalleEnvios/DetalleEnviosView.fxml", "Propiedades del Envio");
                     }

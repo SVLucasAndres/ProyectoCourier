@@ -3,6 +3,7 @@ package com.ucuenca.proyecto_courier.CapaPresentacion;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.AgregacionClientes.AgregacionClientesController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ListaClientes.ListaClientesController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente.PropiedadesClienteController;
+import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.DetalleEnvios.DetalleEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.GeneracionEnvios.GeneracionEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios.ListaEnviosController;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.AgregacionOficinas.AgregacionOficinasController;
@@ -62,6 +63,8 @@ public class MainLayoutController {
                 ((ListaEnviosController) controlador).setNavegador(this::cargarVista);
             }else if (controlador instanceof GeneracionEnviosController) {
                 ((GeneracionEnviosController) controlador).setNavegador(this::cargarVista);
+            }else if (controlador instanceof DetalleEnviosController) {
+                ((DetalleEnviosController) controlador).setNavegador(this::cargarVista);
             }
 
             //Paquetes

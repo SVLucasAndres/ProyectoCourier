@@ -1,5 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaDominio.interfaces;
 
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
 import java.util.List;
 
@@ -8,4 +9,6 @@ public interface EnvioService {
     EnvioDTO buscarEnvioPorID(String idEnvio);
     double obtenerCostoTotalEnvio(String idEnvio);
     List<EnvioDTO> mostrarListaEnvios();
+
+    void cancelarEnvio(EnvioDTO envio);
 }

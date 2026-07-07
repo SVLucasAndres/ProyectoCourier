@@ -1,10 +1,8 @@
 package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 
 import com.ucuenca.proyecto_courier.CapaDominio.*;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.CajaDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.*;
+import com.ucuenca.proyecto_courier.CapaDominio.Enums.EstadoEnvio;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.EntidadNoEncontradaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
@@ -20,7 +18,7 @@ public class EnvioServiceImpl implements EnvioService {
     private DAO<Configuracion> configDAO;
     private DAO<Paquete> paqueteDAO;
 
-    public EnvioServiceImpl(DAO<Envio> envioDAO, DAO<Cliente> clienteDAO, DAO<Configuracion> configDAO) {
+    public EnvioServiceImpl(DAO<Envio> envioDAO, DAO<Cliente> clienteDAO, DAO<Configuracion> configDAO, DAO<Paquete> paqueteDAO) {
         this.envioDAO = envioDAO;
         this.clienteDAO = clienteDAO;
         this.configDAO = configDAO;
@@ -60,6 +58,7 @@ public class EnvioServiceImpl implements EnvioService {
         envioDominio.setRapidez(dto.getRapidez());
         envioDominio.setMetodoPago(dto.getMetodoPago());
 
+        envioDominio.setEstadoEnvio(dto.getEstadoEnvio() != null ? dto.getEstadoEnvio() : EstadoEnvio.ACTIVO);
         List<String> idsPaquetes = new ArrayList<>();
         if (dto.getListaPaquetes() != null) {
             for (PaqueteDTO pDto : dto.getListaPaquetes()) {
@@ -118,14 +117,10 @@ public class EnvioServiceImpl implements EnvioService {
 
     @Override
     public List<EnvioDTO> mostrarListaEnvios() {
-        if (envioDAO == null) {
-            return new ArrayList<>();
-        }
-
-        List<Envio> enviosDePersistencia = envioDAO.obtenerTodos();
+        List<Envio> listaDominio = envioDAO.obtenerTodos();
         List<EnvioDTO> listaDtos = new ArrayList<>();
 
-        for (Envio e : enviosDePersistencia) {
+        for (Envio e : listaDominio) {
             List<Paquete> paquetesDominio = new ArrayList<>();
             List<PaqueteDTO> paquetesDtos = new ArrayList<>();
 
@@ -147,12 +142,13 @@ public class EnvioServiceImpl implements EnvioService {
             dto.setIdDestinatario(e.getIdDestinatario());
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
+            dto.setEstadoEnvio(e.getEstadoEnvio());
+
             dto.setListaPaquetes(paquetesDtos);
             dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos(), obtenerIVA()));
 
             listaDtos.add(dto);
         }
-
         return listaDtos;
     }
     private PaqueteDTO convertirPaqueteADto(Paquete p) {
@@ -160,15 +156,34 @@ public class EnvioServiceImpl implements EnvioService {
             PaqueteDTO pDto = new SobreDTO();
             pDto.setIdPaquete(p.getIdPaquete());
             pDto.setPeso(p.getPeso());
-            pDto.setTieneSeguro(p.isTieneSeguro()); // O getTieneSeguro() según tu entidad
+            pDto.setTieneSeguro(p.isTieneSeguro());
+            pDto.setValorContenido(p.getValorContenido());
+            pDto.setPorcentajeSeguro(p.getPorcentajeSeguro());
             return pDto;
         }else{
             PaqueteDTO pDto = new CajaDTO();
             pDto.setIdPaquete(p.getIdPaquete());
             pDto.setPeso(p.getPeso());
-            pDto.setTieneSeguro(p.isTieneSeguro()); // O getTieneSeguro() según tu entidad
+            pDto.setTieneSeguro(p.isTieneSeguro());
+            pDto.setValorContenido(p.getValorContenido());
+            pDto.setPorcentajeSeguro(p.getPorcentajeSeguro());
             return pDto;
         }
 
+    }
+
+    @Override
+    public void cancelarEnvio(EnvioDTO envio) {
+        if (envioDAO == null) {
+            throw new OperacionInvalidaException("El DAO de envios no está inicializado.");
+        }
+        Optional<Envio> opt = envioDAO.buscarPorId(envio.getIdEnvio());
+        if (opt.isPresent()) {
+            Envio c = opt.get();
+            c.setEstadoEnvio(EstadoEnvio.CANCELADO);
+            envioDAO.guardar(c);
+        } else {
+            throw new EntidadNoEncontradaException("No se encontró el envio con ID: " + envio.getIdEnvio());
+        }
     }
 }

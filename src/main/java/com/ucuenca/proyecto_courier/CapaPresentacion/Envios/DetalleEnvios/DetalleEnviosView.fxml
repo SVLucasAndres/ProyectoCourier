@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Envios.DetalleEnvios.DetalleEnviosController"
+      prefWidth="600.0" prefHeight="500.0" style="-fx-background-color: #f8f9fa;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Detalle del Envío:" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Label fx:id="lblIdEnvio" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="lblEstado" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 5; -fx-background-radius: 3;"/>
+    </HBox>
+
+    <Separator/>
+
+    <GridPane hgap="15" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120"/>
+            <ColumnConstraints prefWidth="180"/>
+            <ColumnConstraints prefWidth="100"/>
+            <ColumnConstraints prefWidth="160"/>
+        </columnConstraints>
+
+        <Label text="Remitente (ID):" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblRemitente" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Destinatario (ID):" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblDestinatario" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Rapidez:" GridPane.columnIndex="2" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblRapidez" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+        <Label text="Método de Pago:" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblPago" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+    </GridPane>
+
+    <Separator/>
+
+    <Label text="Paquetes en este envío" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+    <TableView fx:id="tablaPaquetesDetalle" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colIdPaquete" text="ID Paquete" prefWidth="150"/>
+            <TableColumn fx:id="colPeso" text="Peso" prefWidth="120"/>
+            <TableColumn fx:id="colValor" text="Valor Contenido" prefWidth="150"/>
+            <TableColumn fx:id="colSeguro" text="Seguro" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button fx:id="btnCancelarEnvio" text="Cancelar Envío" onAction="#handleCancelarEnvio"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        <Button text="Regresar" onAction="#handleRegresar"
+                style="-fx-background-color: #7f8c8d; -fx-text-fill: white; -fx-cursor: hand;"/>
+    </HBox>
+</VBox>

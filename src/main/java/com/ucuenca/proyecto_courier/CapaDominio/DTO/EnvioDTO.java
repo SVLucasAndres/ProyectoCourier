@@ -1,5 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaDominio.DTO;
 
+import com.ucuenca.proyecto_courier.CapaDominio.Enums.EstadoEnvio;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 
@@ -13,15 +14,17 @@ public class EnvioDTO {
     private MetodoPago metodoPago;
     private double costoTotal;
     private List<PaqueteDTO> listaPaquetes;
+    private EstadoEnvio estadoEnvio;
 
     public EnvioDTO() {}
 
-    public EnvioDTO(String idRemitente, String idEnvio, String idDestinatario, TipoServicio rapidez, MetodoPago metodoPago) {
+    public EnvioDTO(String idRemitente, String idEnvio, String idDestinatario, TipoServicio rapidez, MetodoPago metodoPago, EstadoEnvio estadoEnvio) {
         this.idRemitente = idRemitente;
         this.idEnvio = idEnvio;
         this.idDestinatario = idDestinatario;
         this.rapidez = rapidez;
         this.metodoPago = metodoPago;
+        this.estadoEnvio = estadoEnvio;
     }
 
     public String getIdEnvio() { return idEnvio; }
@@ -48,5 +51,13 @@ public class EnvioDTO {
 
     public void setListaPaquetes(List<PaqueteDTO> listaPaquetes) {
         this.listaPaquetes = listaPaquetes;
+    }
+
+    public EstadoEnvio getEstadoEnvio() {
+        return estadoEnvio;
+    }
+
+    public void setEstadoEnvio(EstadoEnvio estadoEnvio) {
+        this.estadoEnvio = estadoEnvio;
     }
 }

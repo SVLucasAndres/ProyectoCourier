@@ -43,7 +43,7 @@ public class GestorServicios {
         }
         // Inyectores de DAOs
         servicioCliente = new ClienteServiceImpl(clienteDAO);
-        servicioEnvio = new EnvioServiceImpl(envioDAO,clienteDAO,configuracionDAO);
+        servicioEnvio = new EnvioServiceImpl(envioDAO,clienteDAO,configuracionDAO,paqueteDAO);
         servicioConfiguracion = new ConfiguracionServiceImpl(configuracionDAO);
         servicioOficina = new OficinaServiceImpl(oficinaDAO);
         servicioPaquete = new PaqueteServiceImpl(paqueteDAO,envioDAO,oficinaDAO);

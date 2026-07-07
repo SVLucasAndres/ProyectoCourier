@@ -1,5 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import com.ucuenca.proyecto_courier.CapaDominio.Enums.EstadoEnvio;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 
@@ -14,6 +15,9 @@ public class Envio {
     private List<String> listaIdPaquetes = new ArrayList<>();
     private TipoServicio rapidez;
     private MetodoPago metodoPago;
+
+    private EstadoEnvio estadoEnvio;
+
 
     public Envio(String idEnvio, String idRemitente, String idDestinatario, List<Paquete> listaPaquetes,
                  TipoServicio rapidez, MetodoPago metodoPago) {
@@ -58,4 +62,8 @@ public class Envio {
         }
         return total + (total * (iva / 100.0));
     }
+
+
+    public EstadoEnvio getEstadoEnvio() { return estadoEnvio; }
+    public void setEstadoEnvio(EstadoEnvio estadoEnvio) { this.estadoEnvio = estadoEnvio; }
 }
