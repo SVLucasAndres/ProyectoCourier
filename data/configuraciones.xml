@@ -33,7 +33,7 @@
          <string>Rango5</string>
         </void>
         <void property="pesoMaximo">
-         <double>60.0</double>
+         <double>70.0</double>
         </void>
         <void property="pesoMinimo">
          <double>50.0</double>
