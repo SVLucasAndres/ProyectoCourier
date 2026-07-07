@@ -9,6 +9,9 @@
     <void property="idCliente">
      <string>0150692150</string>
     </void>
+    <void property="isActive">
+     <boolean>false</boolean>
+    </void>
     <void property="listaEnvios">
      <object class="java.util.ArrayList"/>
     </void>
@@ -23,7 +26,7 @@
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Cliente">
     <void property="direccion">
-     <string>Avenida de las americas</string>
+     <string>Avenida de las Américas y México</string>
     </void>
     <void property="idCliente">
      <string>0102959756</string>
@@ -55,6 +58,28 @@
     </void>
     <void property="telefono">
      <string>0969562966</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Cliente">
+    <void property="direccion">
+     <string></string>
+    </void>
+    <void property="idCliente">
+     <string></string>
+    </void>
+    <void property="isActive">
+     <boolean>false</boolean>
+    </void>
+    <void property="listaEnvios">
+     <object class="java.util.ArrayList"/>
+    </void>
+    <void property="nombre">
+     <string></string>
+    </void>
+    <void property="telefono">
+     <string></string>
     </void>
    </object>
   </void>

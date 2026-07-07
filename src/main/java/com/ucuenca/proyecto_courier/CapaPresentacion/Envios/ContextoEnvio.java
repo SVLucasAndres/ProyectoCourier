@@ -1,6 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Envios;
 
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
 public class ContextoEnvio {
     private static EnvioModel envioSeleccionado;

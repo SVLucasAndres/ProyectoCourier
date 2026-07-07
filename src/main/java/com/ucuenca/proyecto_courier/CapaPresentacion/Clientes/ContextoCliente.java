@@ -1,5 +1,7 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
 
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
+
 public class ContextoCliente {
     private static ClienteModel clienteSeleccionado;
     private static NavegadorVistas navegadorGlobal;

@@ -8,7 +8,7 @@ import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaModel;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ContextoOficina;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -31,7 +31,7 @@ public class ConfiguracionServiceImpl implements ConfiguracionService {
             Configuracion c = opt.get();
             ConfiguracionDTO dto = new ConfiguracionDTO();
             dto.setImpuestoIVA(c.getImpuestoIVA());
-            
+            dto.setIdConfiguracion(c.getIdConfiguracion());
             List<RangoDTO> rangosDto = new ArrayList<>();
             if (c.getRangos() != null) {
                 for (Rango r : c.getRangos()) {

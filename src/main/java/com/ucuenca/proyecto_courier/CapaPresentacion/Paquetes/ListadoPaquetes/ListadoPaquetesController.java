@@ -1,13 +1,8 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes;
 
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ContextoEnvio;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioMapper;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioModel;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ContextoPaquete;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.PaqueteMapper;

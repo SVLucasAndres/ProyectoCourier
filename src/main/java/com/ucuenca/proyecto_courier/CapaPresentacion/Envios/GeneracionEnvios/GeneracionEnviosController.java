@@ -9,11 +9,8 @@ import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ContextoCliente;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

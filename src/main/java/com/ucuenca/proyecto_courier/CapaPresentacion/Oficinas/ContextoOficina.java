@@ -1,6 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas;
 
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
 public class ContextoOficina {
 

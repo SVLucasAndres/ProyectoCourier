@@ -1,6 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes;
 
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ContextoPaquete;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.PaqueteModel;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.SobreModel;

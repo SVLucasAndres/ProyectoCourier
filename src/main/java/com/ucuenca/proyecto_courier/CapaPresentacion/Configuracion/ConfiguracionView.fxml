@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefWidth="650.0" spacing="20.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion.ConfiguracionController">
+    <children>
+
+        <!-- Cabecera -->
+        <VBox spacing="5.0">
+            <children>
+                <Label text="Configuración Global del Sistema" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Label>
+                <Label text="Gestione los parámetros e impositivos que rigen las tarifas de envíos" textFill="#7f8c8d" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </VBox>
+
+        <!-- Panel de Impuestos -->
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+            <children>
+                <VBox spacing="5.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <children>
+                                <Label text="Porcentaje de Impuesto IVA (%) *" textFill="#34495e">
+                                    <font>
+                                        <Font name="System Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <!-- Texto de validación en rojo -->
+                                <Label fx:id="lblErrorIva" textFill="#e74c3c">
+                                    <font>
+                                        <Font name="System Italic" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <TextField fx:id="txtIva" maxWidth="200.0" prefHeight="35.0" promptText="Ej: 15.0" style="-fx-background-radius: 5;" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+        <!-- Tabla de Listado de Rangos -->
+        <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+            <children>
+                <Label text="Rangos y Tarifas Base Asociadas" textFill="#34495e">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="tablaRangos" prefHeight="200.0" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colIdRango" prefWidth="120.0" text="ID Rango" />
+                        <TableColumn fx:id="colDesde" prefWidth="140.0" text="Límite Inferior" />
+                        <TableColumn fx:id="colHasta" prefWidth="140.0" text="Límite Superior" />
+                        <TableColumn fx:id="colPrecio" prefWidth="140.0" text="Costo Base" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+
+        <!-- Botón Guardar -->
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#handleGuardar" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Guardar Cambios" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

@@ -5,7 +5,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
-import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.NavegadorVistas;
+import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
