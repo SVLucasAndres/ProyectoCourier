@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.util.List;
 
 public class ConfiguracionModel {
     private final StringProperty idConfiguracion = new SimpleStringProperty();
@@ -21,5 +22,5 @@ public class ConfiguracionModel {
     public void setImpuestoIVA(double iva) { this.impuestoIVA.set(iva); }
 
     public ObservableList<RangoModel> getRangos() { return rangos; }
-    public void setRangos(java.util.List<RangoModel> lista) { this.rangos.setAll(lista); }
+    public void setRangos(List<RangoModel> lista) { this.rangos.setAll(lista); }
 }

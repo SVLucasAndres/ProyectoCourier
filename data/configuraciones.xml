@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="26.0.1" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Configuracion">
+    <void property="impuestoIVA">
+     <double>12.0</double>
+    </void>
+    <void property="rangos">
+     <object class="java.util.ArrayList">
+      <void method="add">
+       <object class="com.ucuenca.proyecto_courier.CapaDominio.Rango">
+        <void property="costoPorKilogramo">
+         <double>10.0</double>
+        </void>
+        <void property="nombre">
+         <string>Rango4</string>
+        </void>
+        <void property="pesoMaximo">
+         <double>40.0</double>
+        </void>
+        <void property="pesoMinimo">
+         <double>30.1</double>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.ucuenca.proyecto_courier.CapaDominio.Rango">
+        <void property="costoPorKilogramo">
+         <double>10.0</double>
+        </void>
+        <void property="nombre">
+         <string>Rango5</string>
+        </void>
+        <void property="pesoMaximo">
+         <double>60.0</double>
+        </void>
+        <void property="pesoMinimo">
+         <double>50.0</double>
+        </void>
+       </object>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

@@ -1,93 +1,173 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion;
 
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ConfiguracionDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService; // Ajusta según tu interfaz real
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.RangoDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
+import javafx.util.converter.NumberStringConverter;
 
 public class ConfiguracionController {
 
     @FXML private TextField txtIva;
     @FXML private Label lblErrorIva;
 
-    // Tabla para visualizar los Rangos asociados de la lista
-    @FXML private TableView<Object> tablaRangos; // Reemplaza Object por tu clase 'Rango' real si aplica
-    @FXML private TableColumn<Object, String> colIdRango;
-    @FXML private TableColumn<Object, Double> colDesde;
-    @FXML private TableColumn<Object, Double> colHasta;
-    @FXML private TableColumn<Object, Double> colPrecio;
+    @FXML private TableView<RangoModel> tablaRangos;
+    @FXML private TableColumn<RangoModel, String> colIdRango;
+    @FXML private TableColumn<RangoModel, Number> colDesde;
+    @FXML private TableColumn<RangoModel, Number> colHasta;
+    @FXML private TableColumn<RangoModel, Number> colPrecio;
+    @FXML private TableColumn<RangoModel, Void> colAcciones;
 
     @FXML private Button btnGuardar;
 
+    private final ConfiguracionModel configuracionModel = new ConfiguracionModel();
     private NavegadorVistas navegador;
-    private ConfiguracionService configuracionService;
-    private String idConfiguracionActual;
+
+    private double ivaOriginal = 15.0;
+    private int cantidadRangosOriginal = 0;
+    private boolean cargandoDatos = false;
 
     @FXML
     public void initialize() {
-        // Enlazar columnas de la tabla de Rangos (ajusta los nombres de las propiedades de tu clase Rango)
-        colIdRango.setCellValueFactory(new PropertyValueFactory<>("idRango"));
-        colDesde.setCellValueFactory(new PropertyValueFactory<>("minimo"));
-        colHasta.setCellValueFactory(new PropertyValueFactory<>("maximo"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        colIdRango.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        colDesde.setCellValueFactory(cellData -> cellData.getValue().pesoMinimoProperty());
+        colHasta.setCellValueFactory(cellData -> cellData.getValue().pesoMaximoProperty());
+        colPrecio.setCellValueFactory(cellData -> cellData.getValue().costoPorKilogramoProperty());
 
-        // Cargar datos iniciales desde el sistema
-        try {
-            // Asumiendo que obtienes el servicio global desde tu Gestor
-            // configuracionService = GestorServicios.getInstance().obtenerServicioConfiguracion();
+        configurarColumnaEliminar();
 
-            cargarConfiguracionGlobal();
-        } catch (Exception e) {
-            System.err.println("Error al conectar con el servicio de configuración: " + e.getMessage());
-        }
+        txtIva.textProperty().bindBidirectional(configuracionModel.impuestoIVAProperty(), new NumberStringConverter());
 
-        // Validación en tiempo real para el campo de IVA
+        tablaRangos.setItems(configuracionModel.getRangos());
+
+        cargarConfiguracionGlobal();
+
         txtIva.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null || newValue.trim().isEmpty()) {
-                lblErrorIva.setText("⚠️ El campo IVA es obligatorio.");
-                btnGuardar.setDisable(true);
-            } else {
-                try {
-                    double valorIva = Double.parseDouble(newValue.trim());
-                    if (valorIva < 0 || valorIva > 100) {
-                        lblErrorIva.setText("⚠️ Debe estar entre 0% y 100%.");
-                        btnGuardar.setDisable(true);
-                    } else {
-                        lblErrorIva.setText("");
-                        btnGuardar.setDisable(false);
-                    }
-                } catch (NumberFormatException e) {
-                    lblErrorIva.setText("⚠️ Ingrese un número decimal válido.");
-                    btnGuardar.setDisable(true);
-                }
-            }
+            if (cargandoDatos) return;
+            validarYVerificarCambios();
+        });
+
+        configuracionModel.getRangos().addListener((ListChangeListener<RangoModel>) change -> {
+            if (cargandoDatos) return;
+            validarYVerificarCambios();
         });
     }
 
-    private void cargarConfiguracionGlobal() {
+    private void configurarColumnaEliminar() {
+        Callback<TableColumn<RangoModel, Void>, TableCell<RangoModel, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<RangoModel, Void> call(final TableColumn<RangoModel, Void> param) {
+                return new TableCell<>() {
+                    private final Button btnEliminar = new Button("Eliminar");
 
-        ConfiguracionDTO dto = configuracionService.obtenerConfiguracion();
-        if (dto != null) {
-            this.idConfiguracionActual = dto.getIdConfiguracion();
-            txtIva.setText(String.valueOf(dto.getImpuestoIVA()));
-            tablaRangos.getItems().setAll(dto.getRangos());
+                    {
+                        btnEliminar.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 3; -fx-cursor: hand;");
+                        btnEliminar.setOnAction(event -> {
+                            RangoModel rango = getTableView().getItems().get(getIndex());
+                            configuracionModel.getRangos().remove(rango);
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btnEliminar);
+                        }
+                    }
+                };
+            }
+        };
+        colAcciones.setCellFactory(cellFactory);
+    }
+
+    private void validarYVerificarCambios() {
+        String textoIva = txtIva.getText();
+
+        if (textoIva == null || textoIva.trim().isEmpty()) {
+            lblErrorIva.setText("El campo IVA es obligatorio.");
+            lblErrorIva.setStyle("-fx-text-fill: #e74c3c;");
+            btnGuardar.setDisable(true);
+            return;
+        }
+
+        try {
+            double valorIva = Double.parseDouble(textoIva.trim());
+            if (valorIva < 0 || valorIva > 100) {
+                lblErrorIva.setText("Debe estar entre 0% y 100%.");
+                lblErrorIva.setStyle("-fx-text-fill: #e74c3c;");
+                btnGuardar.setDisable(true);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            lblErrorIva.setText("Ingrese un número decimal válido.");
+            lblErrorIva.setStyle("-fx-text-fill: #e74c3c;");
+            btnGuardar.setDisable(true);
+            return;
+        }
+
+        double valorIvaActual = configuracionModel.getImpuestoIVA();
+        boolean haCambiadoIva = Math.abs(valorIvaActual - ivaOriginal) > 0.001;
+        boolean hanCambiadoRangos = configuracionModel.getRangos().size() != cantidadRangosOriginal;
+
+        if (haCambiadoIva || hanCambiadoRangos) {
+            lblErrorIva.setText("Hay cambios sin guardar.");
+            lblErrorIva.setStyle("-fx-text-fill: #f39c12;");
+            btnGuardar.setDisable(false);
+        } else {
+            lblErrorIva.setText("");
+            btnGuardar.setDisable(false);
+        }
+    }
+
+    private void cargarConfiguracionGlobal() {
+        try {
+            cargandoDatos = true;
+            ConfiguracionService servicio = GestorServicios.getInstance().obtenerServicioConfiguracion();
+            ConfiguracionDTO dto = servicio.obtenerConfiguracion();
+
+            if (dto != null) {
+                ConfiguracionModel cargado = ConfiguracionMapper.dtoToModelo(dto);
+                configuracionModel.setIdConfiguracion(cargado.getIdConfiguracion());
+                configuracionModel.setImpuestoIVA(cargado.getImpuestoIVA());
+                configuracionModel.getRangos().setAll(cargado.getRangos());
+
+                ivaOriginal = cargado.getImpuestoIVA();
+                cantidadRangosOriginal = cargado.getRangos().size();
+            }
+        } catch (Exception e) {
+            configuracionModel.setIdConfiguracion("GLOBAL");
+            configuracionModel.setImpuestoIVA(15.0);
+            ivaOriginal = 15.0;
+            cantidadRangosOriginal = 0;
+        } finally {
+            cargandoDatos = false;
         }
     }
 
     @FXML
     private void handleGuardar(ActionEvent event) {
         try {
-            ConfiguracionService configuracionService = GestorServicios.getInstance().obtenerServicioConfiguracion();
-            double nuevoIva = Double.parseDouble(txtIva.getText().trim());
+            ConfiguracionService servicio = GestorServicios.getInstance().obtenerServicioConfiguracion();
 
-            configuracionService.(idConfiguracionActual, nuevoIva);
+            ConfiguracionDTO dtoAEnviar = ConfiguracionMapper.modeloToDto(configuracionModel);
+            servicio.guardarConfiguracion(dtoAEnviar);
 
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "Configuración del sistema actualizada correctamente.", ButtonType.OK);
+            ivaOriginal = configuracionModel.getImpuestoIVA();
+            cantidadRangosOriginal = configuracionModel.getRangos().size();
+            lblErrorIva.setText("");
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION, "Configuración global guardada correctamente.", ButtonType.OK);
             alerta.setTitle("Éxito");
             alerta.setHeaderText(null);
             alerta.showAndWait();
@@ -102,5 +182,89 @@ public class ConfiguracionController {
 
     public void setNavegador(NavegadorVistas navegador) {
         this.navegador = navegador;
+    }
+
+    @FXML
+    private void handleAgregarRango(ActionEvent event) {
+        Dialog<RangoModel> dialog = new Dialog<>();
+        dialog.setTitle("Agregar Nuevo Rango");
+        dialog.setHeaderText("Ingrese los límites y el costo base del rango:");
+
+        ButtonType buttonTypeOk = new ButtonType("Agregar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
+
+        TextField txtId = new TextField();
+        txtId.setPromptText("Ej: RANGO_04");
+        TextField txtMin = new TextField();
+        txtMin.setPromptText("Ej: 10.5");
+        TextField txtMax = new TextField();
+        txtMax.setPromptText("Ej: 20.0");
+        TextField txtVal = new TextField();
+        txtVal.setPromptText("Ej: 5.75");
+
+        grid.add(new Label("ID Rango:"), 0, 0);
+        grid.add(txtId, 1, 0);
+        grid.add(new Label("Límite Inferior (Min):"), 0, 1);
+        grid.add(txtMin, 1, 1);
+        grid.add(new Label("Límite Superior (Max):"), 0, 2);
+        grid.add(txtMax, 1, 2);
+        grid.add(new Label("Costo Base:"), 0, 3);
+        grid.add(txtVal, 1, 3);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == buttonTypeOk) {
+                try {
+                    RangoModel nuevoRango = new RangoModel();
+                    nuevoRango.setNombre(txtId.getText().trim());
+                    nuevoRango.setPesoMinimo(Double.parseDouble(txtMin.getText().trim()));
+                    nuevoRango.setPesoMaximo(Double.parseDouble(txtMax.getText().trim()));
+                    nuevoRango.setCostoPorKilogramo(Double.parseDouble(txtVal.getText().trim()));
+
+                    for(RangoModel e : configuracionModel.getRangos()){
+                        if(e.getNombre().equalsIgnoreCase(nuevoRango.getNombre())){
+                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Nombre", "Este rango ya existe. Eliga otro nombre");
+                            return null;
+                        }
+                        if(nuevoRango.getPesoMinimo() <= e.getPesoMaximo() && nuevoRango.getPesoMinimo() >= e.getPesoMinimo()){
+                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso minimo", "El límite inferior está sobre el rango " + e.getNombre());
+                            return null;
+                        }
+                        if(nuevoRango.getPesoMaximo() <= e.getPesoMaximo() && nuevoRango.getPesoMaximo() >= e.getPesoMinimo()){
+                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso máximo", "El límite superior está sobre el rango " + e.getNombre());
+                            return null;
+                        }
+                        if(nuevoRango.getPesoMinimo() >= nuevoRango.getPesoMaximo()){
+                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Pesos", "El peso minimo no puede ser mayor o igual al máximo");
+                            return null;
+                        }
+                    }
+                    return nuevoRango;
+                } catch (NumberFormatException e) {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Los límites y el costo deben ser números válidos.");
+                }
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(nuevoRango -> {
+            if (!nuevoRango.getNombre().isEmpty()) {
+                configuracionModel.getRangos().add(nuevoRango);
+            }
+        });
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

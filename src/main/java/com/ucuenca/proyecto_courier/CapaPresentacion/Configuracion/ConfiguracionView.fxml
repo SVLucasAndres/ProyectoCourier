@@ -52,17 +52,24 @@
         <!-- Tabla de Listado de Rangos -->
         <VBox spacing="10.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label text="Rangos y Tarifas Base Asociadas" textFill="#34495e">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Label>
-                <TableView fx:id="tablaRangos" prefHeight="200.0" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label text="Rangos y Tarifas Base de Envíos" textFill="#34495e">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Pane HBox.hgrow="ALWAYS" /> <Button fx:id="btnAgregarRango" mnemonicParsing="false" onAction="#handleAgregarRango" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="＋ Agregar Rango" />
+                    </children>
+                </HBox>
+
+                <TableView fx:id="tablaRangos" prefHeight="220.0" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colIdRango" prefWidth="120.0" text="ID Rango" />
-                        <TableColumn fx:id="colDesde" prefWidth="140.0" text="Límite Inferior" />
-                        <TableColumn fx:id="colHasta" prefWidth="140.0" text="Límite Superior" />
-                        <TableColumn fx:id="colPrecio" prefWidth="140.0" text="Costo Base" />
+                        <TableColumn fx:id="colIdRango" prefWidth="140.0" text="ID Rango" />
+                        <TableColumn fx:id="colDesde" prefWidth="90.0" text="Límite Inferior" />
+                        <TableColumn fx:id="colHasta" prefWidth="110.0" text="Límite Superior" />
+                        <TableColumn fx:id="colPrecio" prefWidth="90.0" text="Costo Base" />
+                        <TableColumn fx:id="colAcciones" prefWidth="170.0" text="Acciones" />
                     </columns>
                 </TableView>
             </children>
