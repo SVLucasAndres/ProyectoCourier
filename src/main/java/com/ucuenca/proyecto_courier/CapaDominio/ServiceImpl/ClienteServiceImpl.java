@@ -135,8 +135,8 @@ public class ClienteServiceImpl implements ClienteService {
         for(Envio e:clienteEncontrado.getListaEnvios()){
             EnvioDTO envio = new EnvioDTO();
             envio.setIdEnvio(e.getIdEnvio());
-            envio.setIdDestinatario(e.getDestinatario());
-            envio.setIdRemitente(e.getRemitente());
+            envio.setIdDestinatario(e.getIdDestinatario());
+            envio.setIdRemitente(e.getIdRemitente());
             envio.setRapidez(e.getRapidez());
             envio.setMetodoPago(e.getMetodoPago());
             envio.setCostoTotal(e.calcularCostoTotal(rangos, iva));

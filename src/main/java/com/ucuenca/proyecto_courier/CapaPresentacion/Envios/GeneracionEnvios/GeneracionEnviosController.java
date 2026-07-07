@@ -121,7 +121,7 @@ public class GeneracionEnviosController {
 
             // Llenar Paquetes
             PaqueteService paqueteService = GestorServicios.getInstance().obtenerServicioPaquete();
-            for (PaqueteDTO p : paqueteService.mostrarListaPaquetes()) {
+            for (PaqueteDTO p : paqueteService.mostrarPaquetesSinEnvio()) {
                 // Mostramos el ID del paquete en la lista visual
                 lstPaquetes.getItems().add(p.getIdPaquete());
             }
@@ -145,8 +145,11 @@ public class GeneracionEnviosController {
             // Construcción del EnvioDTO
             EnvioDTO nuevoEnvio = new EnvioDTO();
             nuevoEnvio.setIdEnvio(txtIdEnvio.getText());
-            nuevoEnvio.setIdRemitente(cmbRemitente.getValue());
-            nuevoEnvio.setIdDestinatario(cmbDestinatario.getValue());
+            String idRemitenteFormateado = cmbRemitente.getValue().split("-")[0];
+            String idDestinatarioFormateado = cmbDestinatario.getValue().split("-")[0];
+
+            nuevoEnvio.setIdRemitente(idRemitenteFormateado);
+            nuevoEnvio.setIdDestinatario(idDestinatarioFormateado);
 
             // Transformación de los Strings elegidos a Enums
             nuevoEnvio.setRapidez(TipoServicio.valueOf(cmbRapidez.getValue()));

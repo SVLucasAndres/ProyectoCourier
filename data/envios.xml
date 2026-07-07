@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="26.0.1" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Envio" id="Envio0">
+    <void property="idDestinatario">
+     <string>0102814043</string>
+    </void>
+    <void property="idEnvio">
+     <string>ENV-DB33A0</string>
+    </void>
+    <void property="idRemitente">
+     <string>0150692150</string>
+    </void>
+    <void property="listaIdPaquetes">
+     <void method="add">
+      <string>PAQ-E382CD</string>
+     </void>
+     <void method="add">
+      <string>PAQ-E63598</string>
+     </void>
+    </void>
+    <void property="metodoPago">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago</class>
+      <string>TARJETA_CREDITO_DEBITO</string>
+     </object>
+    </void>
+    <void property="rapidez">
+     <object idref="TipoServicio0"/>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

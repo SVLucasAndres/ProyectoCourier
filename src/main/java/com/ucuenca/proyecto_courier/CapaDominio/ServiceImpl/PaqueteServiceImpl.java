@@ -257,11 +257,10 @@ public class PaqueteServiceImpl implements PaqueteService {
         List<Envio> envios = envioDAO.obtenerTodos();
 
         // 2. Extraer los IDs de todos los paquetes que ya están en algún envío
-        Set<String> idsOcupados = envios.stream()
-                .filter(e -> e.getListaPaquetes() != null)
-                .flatMap(e -> e.getListaPaquetes().stream())
-                .map(Paquete::getIdPaquete)
-                .collect(Collectors.toSet());
+        java.util.Set<String> idsOcupados = envios.stream()
+                .filter(e -> e.getListaIdPaquetes() != null)
+                .flatMap(e -> e.getListaIdPaquetes().stream())
+                .collect(java.util.stream.Collectors.toSet());
 
         // 3. Obtener todos los paquetes y mapear a DTO solo los que no estén en la
         // lista de ocupados
