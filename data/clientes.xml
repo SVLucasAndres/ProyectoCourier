@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="26.0.1" class="java.beans.XMLDecoder">
+<java version="21.0.11" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Cliente">
@@ -42,6 +42,28 @@
     </void>
     <void property="telefono">
      <string>0998295810</string>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Cliente">
+    <void property="contrasena">
+     <string>Luis</string>
+    </void>
+    <void property="direccion">
+     <string>Calle Quito y Puyo</string>
+    </void>
+    <void property="idCliente">
+     <string>0956442834</string>
+    </void>
+    <void property="listaEnvios">
+     <object class="java.util.ArrayList"/>
+    </void>
+    <void property="nombre">
+     <string>Luis Pantoja</string>
+    </void>
+    <void property="telefono">
+     <string>0981252791</string>
     </void>
    </object>
   </void>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="26.0.1" class="java.beans.XMLDecoder">
+<java version="21.0.11" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Envio" id="Envio0">
@@ -7,7 +7,7 @@
      <double>67.39</double>
     </void>
     <void property="estadoEnvio">
-     <object class="java.lang.Enum" method="valueOf">
+     <object class="java.lang.Enum" id="EstadoEnvio0" method="valueOf">
       <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.EstadoEnvio</class>
       <string>ACTIVO</string>
      </object>
@@ -36,6 +36,42 @@
      <object class="java.lang.Enum" method="valueOf">
       <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio</class>
       <string>SEGUNDO_DIA</string>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Envio" id="Envio1">
+    <void property="costoTotal">
+     <double>26.45</double>
+    </void>
+    <void property="estadoEnvio">
+     <object idref="EstadoEnvio0"/>
+    </void>
+    <void property="idDestinatario">
+     <string>0150692150</string>
+    </void>
+    <void property="idEnvio">
+     <string>ENV-61D868</string>
+    </void>
+    <void property="idRemitente">
+     <string>0956442834</string>
+    </void>
+    <void property="listaIdPaquetes">
+     <void method="add">
+      <string>PAQ-EC34AF</string>
+     </void>
+    </void>
+    <void property="metodoPago">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago</class>
+      <string>EFECTIVO</string>
+     </object>
+    </void>
+    <void property="rapidez">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio</class>
+      <string>NORMAL</string>
      </object>
     </void>
    </object>

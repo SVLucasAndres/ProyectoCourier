@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="26.0.1" class="java.beans.XMLDecoder">
+<java version="21.0.11" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Caja">
@@ -29,6 +29,74 @@
     </void>
     <void property="valorContenido">
      <double>56.1</double>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Sobre">
+    <void property="idPaquete">
+     <string>PAQ-EC34AF</string>
+    </void>
+    <void property="peso">
+     <double>10.0</double>
+    </void>
+    <void property="porcentajeSeguro">
+     <double>10.0</double>
+    </void>
+    <void property="ruta">
+     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento" id="RutaSeguimiento0">
+      <void property="puntosIntermedios">
+       <void method="add">
+        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
+         <void property="llegadaTexto">
+          <string>2026-07-09T17:13:08.5175207</string>
+         </void>
+         <void property="oficina">
+          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
+           <void property="idOficina">
+            <string>OFI-8E2F53 - Sucursal Miraflores</string>
+           </void>
+           <void property="nombre">
+            <string>Oficina OFI-8E2F53 - Sucursal Miraflores</string>
+           </void>
+          </object>
+         </void>
+        </object>
+       </void>
+       <void method="add">
+        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
+         <void property="oficina">
+          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
+           <void property="direccion">
+            <string>Av. de las Américas y Av. México</string>
+           </void>
+           <void property="idOficina">
+            <string>OFI-AF620F</string>
+           </void>
+           <void property="nombre">
+            <string>Sucursal Feria Libre</string>
+           </void>
+           <void property="telefono">
+            <string>0969562966</string>
+           </void>
+          </object>
+         </void>
+        </object>
+       </void>
+      </void>
+     </object>
+    </void>
+    <void property="tamano">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.Tamano</class>
+      <string>XL</string>
+     </object>
+    </void>
+    <void property="tieneSeguro">
+     <boolean>true</boolean>
+    </void>
+    <void property="valorContenido">
+     <double>22.0</double>
     </void>
    </object>
   </void>

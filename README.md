@@ -3,18 +3,14 @@
 ```plantuml
 @startuml
 namespace Capa_Logica_Dominio {
- class Configuracion {
+    class Configuracion {
         - idConfiguracion: String
         - impuestoIVA: double
         - rangos: List<Rango>
-        + Configuracion()
-        + Configuracion(impuestoIVA: double, rangos: List<Rango>)
-        + getIdConfiguracion(): String
-        + setIdConfiguracion(id: String): void
-        + getImpuestoIVA(): double
-        + setImpuestoIVA(impuesto: double): void
-        + getRangos(): List<Rango>
-        + setRangos(rangos: List<Rango>): void
+        - porcentajeSeguro: double
+        - tarifaEntregaInmediata: double
+        - tarifaEntregaSegundoDia: double
+        - tarifaEntregaNormal: double
     }
 
     interface ConfiguracionService {
@@ -34,74 +30,92 @@ namespace Capa_Logica_Dominio {
     Configuracion o-- Rango
 
     interface ClienteService {
-        + crearCliente(ClienteDTO cliente): void
-+ modificarCliente(ClienteDTO cliente): void
-+ archivarCliente(ClienteDTO cliente): void
-        + buscarClientePorID(String id): ClienteDTO
-+ buscarClientePorNombre(String nombre): ClienteDTO
-+ mostrarListaClientes(): List<ClienteDTO>
+        + crearCliente(cliente: ClienteDTO, contrasena: String): void
+        + modificarCliente(cliente: ClienteDTO): void
+        + archivarCliente(cliente: ClienteDTO): void
+        + buscarClientePorID(id: String): ClienteDTO
+        + buscarClientePorNombre(nombre: String): ClienteDTO
+        + mostrarListaClientes(): List<ClienteDTO>
+        + obtenerListadoPaquetesPorIdCliente(id: String, configuracion: ConfiguracionDTO): ClienteEnviosDTO
+        + validarLogin(cliente: ClienteDTO, contrasena: String): ClienteDTO
     }
 
     interface PaqueteService {
-        + crearPaquete(PaqueteDTO paquete): void
-        + mostrarPaquete(): PaqueteDTO
-        + registrarLlegadaPaquete(Date fecha): void
-        + registrarSalidaPaquete(Date fecha): void
-+ buscarPaquetePorID(String id): PaqueteDTO
-+ mostrarListaPaquetes(): List<PaqueteDTO>
+        + crearPaquete(paquete: PaqueteDTO, configuracion: ConfiguracionDTO): void
+        + buscarPaquetePorID(id: String): PaqueteDTO
+        + mostrarListaPaquetes(): List<PaqueteDTO>
+        + mostrarPaquetesSinEnvio(): List<PaqueteDTO>
+        + registrarMovimientoPaquete(idPaquete: String, nombreOficina: String, fechaHora: LocalDateTime, esLlegada: boolean, textoFormateado: String): void
+        + agregarPuntoRuta(idPaquete: String, nombreOficina: String): void
+        + obtenerPaquetesPorDestinatario(idDestinatario: String): List<PaqueteDTO>
+        + obtenerPaquetesPorRemitente(idRemitente: String): List<PaqueteDTO>
+        + obtenerTextosRutaConEstados(idPaquete: String): List<String>
     }
 
     interface EnvioService {
-        + realizarEnvio(EnvioDTO envio): void
-        + mostrarEnvio(): EnvioDTO
-        + obtenerCostoTotalEnvio(): double
-+ buscarEnvioPorID(String id): EnvioDTO
-+ mostrarListaEnvios(): List<EnvioDTO>
+        + realizarEnvio(envio: EnvioDTO, configuracion: ConfiguracionDTO): void
+        + buscarEnvioPorID(id: String): EnvioDTO
+        + obtenerCostoTotalEnvio(idEnvio: String): double
+        + mostrarListaEnvios(configuracion: ConfiguracionDTO): List<EnvioDTO>
+        + cancelarEnvio(envio: EnvioDTO): void
     }
 
-interface OficinaService {
-        + crearOficina(OficinaDTO oficina): void
-+ modificarOficina(OficinaDTO oficina): void
-+ archivarOficina(OficinaDTO oficina): void
-+ buscarOficinaPorID(String id): OficinaDTO
-+ buscarOficinaPorNombre(String nombre): OficinaDTO
-+ mostrarListaOficinas(): List<OficinaDTO>
+    interface OficinaService {
+        + crearOficina(oficina: OficinaDTO): void
+        + modificarOficina(oficina: OficinaDTO): void
+        + archivarOficina(oficina: OficinaDTO): void
+        + buscarOficinaPorID(id: String): OficinaDTO
+        + buscarOficinaPorNombre(nombre: String): OficinaDTO
+        + mostrarListaOficinas(): List<OficinaDTO>
     }
 
-
-class OficinaServiceImpl {
-        + crearOficina(OficinaDTO oficina): void
-+ modificarOficina(OficinaDTO oficina): void
-+ archivarOficina(OficinaDTO oficina): void
-+ buscarOficinaPorID(String id): OficinaDTO
-+ buscarOficinaPorNombre(String nombre): OficinaDTO
-+ mostrarListaOficinas(): List<OficinaDTO>
+    class OficinaServiceImpl {
+        - oficinaDAO: DAO<Oficina>
+        + crearOficina(oficina: OficinaDTO): void
+        + modificarOficina(oficina: OficinaDTO): void
+        + archivarOficina(oficina: OficinaDTO): void
+        + buscarOficinaPorID(id: String): OficinaDTO
+        + buscarOficinaPorNombre(nombre: String): OficinaDTO
+        + mostrarListaOficinas(): List<OficinaDTO>
     }
 
-class ClienteServiceImpl {
-        + crearCliente(ClienteDTO cliente): void
-+ modificarCliente(ClienteDTO cliente): void
-+ archivarCliente(ClienteDTO cliente): void
-        + buscarClientePorID(String id): ClienteDTO
-+ buscarClientePorNombre(String nombre): ClienteDTO
-+ mostrarListaClientes(): List<ClienteDTO>
+    class ClienteServiceImpl {
+        - clienteDAO: DAO<Cliente>
+        + crearCliente(cliente: ClienteDTO, contrasena: String): void
+        + modificarCliente(cliente: ClienteDTO): void
+        + archivarCliente(cliente: ClienteDTO): void
+        + buscarClientePorID(id: String): ClienteDTO
+        + buscarClientePorNombre(nombre: String): ClienteDTO
+        + mostrarListaClientes(): List<ClienteDTO>
+        + obtenerListadoPaquetesPorIdCliente(id: String, configuracion: ConfiguracionDTO): ClienteEnviosDTO
+        + validarLogin(cliente: ClienteDTO, contrasena: String): ClienteDTO
     }
 
     class PaqueteServiceImpl {
-        + crearPaquete(PaqueteDTO paquete): void
-        + mostrarPaquete(): PaqueteDTO
-        + registrarLlegadaPaquete(Date fecha): void
-        + registrarSalidaPaquete(Date fecha): void
-+ buscarPaquetePorID(String id): PaqueteDTO
-+ mostrarListaPaquetes(): List<PaqueteDTO>
+        - paqueteDAO: DAO<Paquete>
+        - envioDAO: DAO<Envio>
+        - oficinaDAO: DAO<Oficina>
+        + crearPaquete(paquete: PaqueteDTO, configuracion: ConfiguracionDTO): void
+        + buscarPaquetePorID(id: String): PaqueteDTO
+        + mostrarListaPaquetes(): List<PaqueteDTO>
+        + mostrarPaquetesSinEnvio(): List<PaqueteDTO>
+        + registrarMovimientoPaquete(idPaquete: String, nombreOficina: String, fechaHora: LocalDateTime, esLlegada: boolean, textoFormateado: String): void
+        + agregarPuntoRuta(idPaquete: String, nombreOficina: String): void
+        + obtenerPaquetesPorDestinatario(idDestinatario: String): List<PaqueteDTO>
+        + obtenerPaquetesPorRemitente(idRemitente: String): List<PaqueteDTO>
+        + obtenerTextosRutaConEstados(idPaquete: String): List<String>
     }
 
     class EnvioServiceImpl {
-        + realizarEnvio(EnvioDTO envio): void
-        + mostrarEnvio(): EnvioDTO
-        + obtenerCostoTotalEnvio(): double
-+ buscarEnvioPorID(String id): EnvioDTO
-+ mostrarListaEnvios(): List<EnvioDTO>
+        - envioDAO: DAO<Envio>
+        - clienteDAO: DAO<Cliente>
+        - configDAO: DAO<Configuracion>
+        - paqueteDAO: DAO<Paquete>
+        + realizarEnvio(envio: EnvioDTO, configuracion: ConfiguracionDTO): void
+        + buscarEnvioPorID(id: String): EnvioDTO
+        + obtenerCostoTotalEnvio(idEnvio: String): double
+        + mostrarListaEnvios(configuracion: ConfiguracionDTO): List<EnvioDTO>
+        + cancelarEnvio(envio: EnvioDTO): void
     }
 
     class Cliente {
@@ -111,16 +125,20 @@ class ClienteServiceImpl {
         - telefono: String
         - listaEnvios: List<Envio>
         - isActive: boolean
+        - contrasena: String
     }
 
     class Envio {
         - idEnvio: String
-        - remitente: Cliente
-        - destinatario: Cliente
+        - idRemitente: String
+        - idDestinatario: String
         - listaPaquetes: List<Paquete>
-        - rapidez: TipoRapidez
+        - listaIdPaquetes: List<String>
+        - rapidez: TipoServicio
         - metodoPago: MetodoPago
-        + calcularCostoTotal(): double
+        - costoTotal: double
+        - estadoEnvio: EstadoEnvio
+        + calcularCostoTotal(tarifaInmediata: double, tarifaSegundoDia: double, tarifaNormal: double, IVA: double): void
     }
 
     class Rango {
@@ -137,25 +155,25 @@ class ClienteServiceImpl {
         - tieneSeguro: boolean
         - porcentajeSeguro: double
         - ruta: RutaSeguimiento
-        + {abstract} calcularCostoBase(List<Rango> rangos): double
+        + {abstract} calcularCostoBase(rangos: List<Rango>): double
         - calcularCostoSeguro(): double
     }
 
     class Sobre {
         - tamano: Tamano
-        + calcularCostoBase(): double
+        + calcularCostoBase(rangos: List<Rango>): double
     }
 
     class Caja {
         - alto: double
         - ancho: double
         - largo: double
-        + calcularCostoBase(): double
+        + calcularCostoBase(rangos: List<Rango>): double
     }
 
     class RutaSeguimiento {
         - puntosIntermedios: List<PuntoIntermedio>
-        + agregarPaso(PuntoIntermedio puntoIntermedio): void
+        + agregarPaso(puntoIntermedio: PuntoIntermedio): void
     }
 
     class Oficina {
@@ -163,13 +181,15 @@ class ClienteServiceImpl {
         - nombre: String
         - direccion: String
         - telefono: String
-        - isActive: boolean
+        - active: boolean
     }
 
     class PuntoIntermedio {
-        - nombreOficina: String
         - horaLlegada: LocalDateTime
         - horaSalida: LocalDateTime
+        - oficina: Oficina
+        - llegadaTexto: String
+        - salidaTexto: String
     }
 
     enum TipoServicio {
@@ -192,21 +212,27 @@ class ClienteServiceImpl {
         XL
     }
 
+    enum EstadoEnvio {
+        ACTIVO
+        CANCELADO
+    }
+
     Paquete -- Rango
     Cliente "1" o-- "0..*" Envio
     Envio *-- Paquete 
     Paquete o-- RutaSeguimiento 
     Envio ..> TipoServicio
-    Envio ..> MetodoPago 
+    Envio ..> MetodoPago
+    Envio ..> EstadoEnvio
     Sobre ..> Tamano
     Paquete <|-- Sobre 
     Paquete <|-- Caja 
     PuntoIntermedio o-- Oficina
     RutaSeguimiento *-- PuntoIntermedio
-ClienteService <|.. ClienteServiceImpl
-EnvioService <|.. EnvioServiceImpl
-PaqueteService <|.. PaqueteServiceImpl
-OficinaService <|.. OficinaServiceImpl
+    ClienteService <|.. ClienteServiceImpl
+    EnvioService <|.. EnvioServiceImpl
+    PaqueteService <|.. PaqueteServiceImpl
+    OficinaService <|.. OficinaServiceImpl
 }
 @enduml
 ```

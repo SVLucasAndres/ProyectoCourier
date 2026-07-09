@@ -25,12 +25,11 @@ public class OficinaServiceImpl implements OficinaService {
         }
         validarDatosOficina(oficina);
         Oficina nuevaOficina = new Oficina(
-            oficina.getIdOficina(), 
-            oficina.getNombre(), 
-            oficina.getDireccion(), 
-            oficina.getTelefono(), 
-            true
-        );
+                oficina.getIdOficina(),
+                oficina.getNombre(),
+                oficina.getDireccion(),
+                oficina.getTelefono(),
+                true);
         oficinaDAO.guardar(nuevaOficina);
     }
 
@@ -116,7 +115,7 @@ public class OficinaServiceImpl implements OficinaService {
         List<OficinaDTO> lista = new ArrayList<>();
         List<Oficina> todas = oficinaDAO.obtenerTodos();
         for (Oficina o : todas) {
-            if(o.isActive()) {
+            if (o.isActive()) {
                 OficinaDTO dto = new OficinaDTO();
                 dto.setIdOficina(o.getIdOficina());
                 dto.setNombre(o.getNombre());
@@ -135,10 +134,11 @@ public class OficinaServiceImpl implements OficinaService {
                 throw new ValidacionException("El nombre de la oficina solo debe contener letras y números.");
             }
         }
-        
+
         if (oficina.getTelefono() != null && !oficina.getTelefono().trim().isEmpty()) {
             if (!(oficina.getTelefono().matches("^\\d{10}$") || oficina.getTelefono().matches("^\\d{7}$"))) {
-                throw new ValidacionException("El número de teléfono de la oficina debe tener exactamente 7 o 10 dígitos numéricos.");
+                throw new ValidacionException(
+                        "El número de teléfono de la oficina debe tener exactamente 10 dígitos numéricos.");
             }
         }
     }
