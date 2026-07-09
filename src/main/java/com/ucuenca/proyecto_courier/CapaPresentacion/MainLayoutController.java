@@ -40,9 +40,19 @@ public class MainLayoutController {
 
     @FXML
     public void initialize() {
-
+        if(ClienteActual.isIsAdmin()){
+            btnEnvios.setText("Envios");
+            btnPaquetes.setText("Paquetes");
+            cargarVista("Inicio/InicioView.fxml","Inicio");
+            actualizarBotonActivo(btnInicio);
+        }else{
+            btnEnvios.setText("Mís Envios");
+            btnPaquetes.setText("Mís Paquetes");
+            cargarVista("Envios/ListaEnvios/ListaEnviosUserView.fxml","Inicio");
+            actualizarBotonActivo(btnEnvios);
+        }
         // Al arrancar, cargamos la lista automáticamente en ese espacio
-        cargarVista("Inicio/InicioView.fxml","Inicio");
+
     }
     private void cargarVista(String rutaVista, @NotNull @NonNls String nombreVista){
         try{
@@ -116,13 +126,22 @@ public class MainLayoutController {
         }else if(botonPresionado == btnConfig){
             cargarVista("Configuracion/ConfiguracionView.fxml","Configuracion");
         }else if(botonPresionado == btnEnvios){
-            cargarVista("Envios/ListaEnvios/ListaEnviosView.fxml","Envios");
+            if (ClienteActual.isIsAdmin()) {
+                cargarVista("Envios/ListaEnvios/ListaEnviosAdminView.fxml","Envios");
+            } else {
+                cargarVista("Envios/ListaEnvios/ListaEnviosUserView.fxml","Mis Envios");
+            }
+
         }else if(botonPresionado == btnInicio){
             cargarVista("Inicio/InicioView.fxml","Inicio");
         }else if(botonPresionado == btnOficinas){
             cargarVista("Oficinas/ListaOficinas/ListaOficinasView.fxml","Oficinas");
         }else if(botonPresionado == btnPaquetes){
-            cargarVista("Paquetes/ListadoPaquetes/ListadoPaquetesView.fxml","Paquetes");
+            if (ClienteActual.isIsAdmin()) {
+                cargarVista("Paquetes/ListadoPaquetes/ListadoPaquetesAdminView.fxml", "Paquetes - Administración");
+            } else {
+                cargarVista("Paquetes/ListadoPaquetes/ListadoPaquetesUserView.fxml", "Mis Paquetes");
+            }
         }
     }
 
@@ -140,6 +159,39 @@ public class MainLayoutController {
         }
 
         botonSeleccionado.getStyleClass().add(claseActiva);
+    }
+
+    public void configurarMenuSegunRol(@NotNull String rol) {
+        if (rol.equalsIgnoreCase("Cliente")) {
+            // El cliente solo puede ver la pantalla de Inicio, Envíos y sus Paquetes
+            ocultarComponente(btnClientes);
+            ocultarComponente(btnOficinas);
+            ocultarComponente(btnConfig);
+            ocultarComponente(btnInicio);
+
+        } else if (rol.equalsIgnoreCase("Administrador")) {
+            // El administrador tiene acceso total a todos los botones del menú
+            mostrarComponente(btnInicio);
+            mostrarComponente(btnClientes);
+            mostrarComponente(btnEnvios);
+            mostrarComponente(btnPaquetes);
+            mostrarComponente(btnOficinas);
+            mostrarComponente(btnConfig);
+        }
+    }
+
+    private void ocultarComponente(Button boton) {
+        if (boton != null) {
+            boton.setVisible(false);
+            boton.setManaged(false); // Quita el espacio físico reservado en el contenedor layout
+        }
+    }
+
+    private void mostrarComponente(Button boton) {
+        if (boton != null) {
+            boton.setVisible(true);
+            boton.setManaged(true);  // Devuelve el espacio físico en el contenedor layout
+        }
     }
 }
 

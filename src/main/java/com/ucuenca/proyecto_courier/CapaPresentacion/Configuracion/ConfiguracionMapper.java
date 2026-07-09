@@ -13,7 +13,10 @@ public class ConfiguracionMapper {
         ConfiguracionModel model = new ConfiguracionModel();
         model.setIdConfiguracion(dto.getIdConfiguracion());
         model.setImpuestoIVA(dto.getImpuestoIVA());
-
+        model.setPorcentajeSeguro(dto.getPorcentajeSeguro());
+        model.setTasaEntregaInmediata(dto.getTarifaEntregaInmediata());
+        model.setTasaEntregaSegundoDia(dto.getTarifaEntregaSegundoDia());
+        model.setTasaEntregaNormal(dto.getTarifaEntregaNormal());
         List<RangoModel> listaRangosModel = new ArrayList<>();
         if (dto.getRangos() != null) {
             for (RangoDTO rDto : dto.getRangos()) {
@@ -35,6 +38,10 @@ public class ConfiguracionMapper {
         ConfiguracionDTO dto = new ConfiguracionDTO();
         dto.setIdConfiguracion(model.getIdConfiguracion());
         dto.setImpuestoIVA(model.getImpuestoIVA());
+        dto.setPorcentajeSeguro(model.getPorcentajeSeguro());
+        dto.setTarifaEntregaInmediata(model.getTasaEntregaInmediata());
+        dto.setTarifaEntregaNormal(model.getTasaEntregaNormal());
+        dto.setTarifaEntregaSegundoDia(model.getTasaEntregaSegundoDia());
 
         List<RangoDTO> listaRangosDto = new ArrayList<>();
         if (model.getRangos() != null) {

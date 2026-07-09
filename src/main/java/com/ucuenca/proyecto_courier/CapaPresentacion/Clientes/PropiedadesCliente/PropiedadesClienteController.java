@@ -1,6 +1,7 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.PropiedadesCliente;
 
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
@@ -29,10 +30,11 @@ public class PropiedadesClienteController {
     @FXML private TableColumn<EnvioModel, String> colRapidez;
     @FXML private TableColumn<EnvioModel, String> colPago;
 
-    // 🧹 Limpiamos la lista muerta 'listaEnviosModel' que no se usaba
     private final ObservableList<EnvioModel> listaEnvios = FXCollections.observableArrayList();
     private NavegadorVistas navegador;
     private ClienteModel modeloCliente;
+
+    private final ConfiguracionService servicioConfiguracion = GestorServicios.getInstance().obtenerServicioConfiguracion();
 
     @FXML
     public void initialize() {
@@ -74,7 +76,7 @@ public class PropiedadesClienteController {
             EnvioService envioService = GestorServicios.getInstance().obtenerServicioEnvio();
             listaEnvios.clear();
 
-            for (EnvioDTO dto : envioService.mostrarListaEnvios()) {
+            for (EnvioDTO dto : envioService.mostrarListaEnvios(servicioConfiguracion.obtenerConfiguracion())) {
                 if (dto.getIdRemitente() != null && dto.getIdRemitente().equalsIgnoreCase(idCliente)) {
 
                     EnvioModel model = EnvioMapper.dtoToModelo(dto);

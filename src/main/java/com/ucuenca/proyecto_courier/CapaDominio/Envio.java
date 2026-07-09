@@ -1,13 +1,16 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.ConfiguracionDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.EstadoEnvio;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.MetodoPago;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.TipoServicio;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Envio {
+public class Envio implements Serializable {
     private String idEnvio;
     private String idRemitente;
     private String idDestinatario;
@@ -15,8 +18,11 @@ public class Envio {
     private List<String> listaIdPaquetes = new ArrayList<>();
     private TipoServicio rapidez;
     private MetodoPago metodoPago;
-
+    private double costoTotal;
     private EstadoEnvio estadoEnvio;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 
     public Envio(String idEnvio, String idRemitente, String idDestinatario, List<Paquete> listaPaquetes,
@@ -53,14 +59,23 @@ public class Envio {
     public MetodoPago getMetodoPago() { return metodoPago; }
     public void setMetodoPago(MetodoPago metodoPago) { this.metodoPago = metodoPago; }
 
-    public double calcularCostoTotal(List<Rango> rangos, double iva) {
-        double total = 0.0;
-        if (listaPaquetes != null) {
-            for (Paquete p : listaPaquetes) {
-                total += p.calcularCostoBase(rangos) + p.calcularCostoSeguro();
-            }
+    public double getCostoTotal() {
+        return costoTotal;
+    }
+
+    public void setCostoTotal(double costoTotal) {
+        this.costoTotal = costoTotal;
+    }
+
+    public void calcularCostoTotal(double tarifaInmediata,double tarifaSegundoDia,double tarifaNormal, double IVA) {
+        double total = this.costoTotal;
+
+        switch(this.rapidez){
+            case ENTREGA_SIGUIENTE_DIA -> total += tarifaInmediata;
+            case SEGUNDO_DIA -> total += tarifaSegundoDia;
+            case NORMAL -> total += tarifaNormal;
         }
-        return total + (total * (iva / 100.0));
+        this.costoTotal= total + (total * (IVA / 100.0));
     }
 
 

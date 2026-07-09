@@ -40,6 +40,9 @@
 
         <Label text="Método de Pago:" GridPane.columnIndex="2" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
         <Label fx:id="lblPago" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+        <Label text="COSTO TOTAL:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+        <Label fx:id="lblCosto" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     </GridPane>
 
     <Separator/>

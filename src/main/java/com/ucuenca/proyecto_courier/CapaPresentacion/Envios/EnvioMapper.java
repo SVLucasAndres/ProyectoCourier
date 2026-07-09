@@ -57,6 +57,7 @@ public class EnvioMapper {
             modelo.setListaIdPaquetes(ids);
             modelo.setCantidadPaquetes(0);
         }
+        modelo.setCostoTotal(dto.getCostoTotal());
         return modelo;
     }
 }

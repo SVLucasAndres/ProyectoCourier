@@ -3,44 +3,66 @@
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Configuracion">
-    <void property="impuestoIVA">
-     <double>12.0</double>
+    <void property="porcentajeSeguro">
+     <double>10.0</double>
     </void>
     <void property="rangos">
      <object class="java.util.ArrayList">
       <void method="add">
        <object class="com.ucuenca.proyecto_courier.CapaDominio.Rango">
         <void property="costoPorKilogramo">
-         <double>10.0</double>
+         <double>2.0</double>
         </void>
         <void property="nombre">
-         <string>Rango4</string>
+         <string>Rango1</string>
         </void>
         <void property="pesoMaximo">
-         <double>40.0</double>
-        </void>
-        <void property="pesoMinimo">
-         <double>30.1</double>
+         <double>9.99</double>
         </void>
        </object>
       </void>
       <void method="add">
        <object class="com.ucuenca.proyecto_courier.CapaDominio.Rango">
         <void property="costoPorKilogramo">
-         <double>10.0</double>
+         <double>3.0</double>
         </void>
         <void property="nombre">
-         <string>Rango5</string>
+         <string>Rango2</string>
         </void>
         <void property="pesoMaximo">
-         <double>70.0</double>
+         <double>19.99</double>
         </void>
         <void property="pesoMinimo">
-         <double>50.0</double>
+         <double>10.0</double>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.ucuenca.proyecto_courier.CapaDominio.Rango">
+        <void property="costoPorKilogramo">
+         <double>4.0</double>
+        </void>
+        <void property="nombre">
+         <string>Rango3</string>
+        </void>
+        <void property="pesoMaximo">
+         <double>29.99</double>
+        </void>
+        <void property="pesoMinimo">
+         <double>20.0</double>
         </void>
        </object>
       </void>
      </object>
+    </void>
+    <void property="tarifaEntregaInmediata">
+     <double>5.0</double>
+    </void>
+    <void property="tarifaEntregaNormal">
+     <double>1.0</double>
+    </void>
+    <void property="tarifaEntregaSegundoDia">
+     <double>2.5</double>
     </void>
    </object>
   </void>

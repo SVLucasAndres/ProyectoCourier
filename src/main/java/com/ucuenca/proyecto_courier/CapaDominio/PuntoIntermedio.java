@@ -1,13 +1,20 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class PuntoIntermedio {
+public class PuntoIntermedio implements Serializable {
     private LocalDateTime horaLlegada;
     private LocalDateTime horaSalida;
     private Oficina oficina;
 
+    private String llegadaTexto;
+    private String salidaTexto;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public PuntoIntermedio() {
@@ -18,34 +25,38 @@ public class PuntoIntermedio {
         this.horaSalida = horaSalida;
         this.oficina = oficina;
     }
-    @java.beans.Transient
-    public LocalDateTime getHoraLlegada() { return horaLlegada; }
-    public void setHoraLlegada(LocalDateTime horaLlegada) { this.horaLlegada = horaLlegada; }
-    @java.beans.Transient
-    public LocalDateTime getHoraSalida() { return horaSalida; }
-    public void setHoraSalida(LocalDateTime horaSalida) { this.horaSalida = horaSalida; }
+
+    public LocalDateTime getHoraLlegada() {
+        return (this.llegadaTexto != null) ? LocalDateTime.parse(this.llegadaTexto) : null;
+    }
+
+    public LocalDateTime getHoraSalida() {
+        return (this.salidaTexto != null) ? LocalDateTime.parse(this.salidaTexto) : null;
+    }
 
     public Oficina getOficina() { return oficina; }
     public void setOficina(Oficina oficina) { this.oficina = oficina; }
 
 
-    // Problema deserializacion en XML ENCODER para fechas
-    public String getHoraLlegadaXml() {
+    public String getLlegadaTexto() {
         return (this.horaLlegada != null) ? this.horaLlegada.format(FORMATTER) : null;
     }
 
-    public void setHoraLlegadaXml(String horaStr) {
+    public String getSalidaTexto() {
+        return (this.horaSalida != null) ? this.horaSalida.format(FORMATTER) : null;
+    }
+
+    public void setLlegadaTexto(String horaStr) {
+        this.llegadaTexto = horaStr;
         if (horaStr != null && !horaStr.isEmpty()) {
             this.horaLlegada = LocalDateTime.parse(horaStr, FORMATTER);
         } else {
             this.horaLlegada = null;
         }
     }
-    public String getHoraSalidaXml() {
-        return (this.horaSalida != null) ? this.horaSalida.format(FORMATTER) : null;
-    }
 
-    public void setHoraSalidaXml(String horaStr) {
+    public void setSalidaTexto(String horaStr) {
+        this.salidaTexto = horaStr;
         if (horaStr != null && !horaStr.isEmpty()) {
             this.horaSalida = LocalDateTime.parse(horaStr, FORMATTER);
         } else {

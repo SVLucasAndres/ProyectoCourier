@@ -1,11 +1,15 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
-public class Rango {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Rango implements Serializable {
     private String nombre;
     private double pesoMinimo;
     private double pesoMaximo;
     private double costoPorKilogramo;
-
+    @Serial
+    private static final long serialVersionUID = 1L;
     public Rango(String nombre, double pesoMinimo, double pesoMaximo, double costoPorKilogramo) {
         this.nombre = nombre;
         this.pesoMinimo = pesoMinimo;

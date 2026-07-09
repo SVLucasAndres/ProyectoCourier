@@ -3,111 +3,84 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<VBox prefHeight="600.0" prefWidth="650.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 25;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes.DetallePaquetesController">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes.DetallePaquetesController">
+<content>
+    <VBox prefWidth="650.0" spacing="20.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-
         <VBox spacing="5.0">
             <children>
                 <Label text="Detalle del Paquete" textFill="#2c3e50">
-                    <font>
-                        <Font name="System Bold" size="22.0" />
-                    </font>
+                    <font><Font name="System Bold" size="22.0" /></font>
                 </Label>
             </children>
         </VBox>
 
         <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">
             <children>
-
-                <GridPane hgap="15.0" vgap="15.0"> <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                    </rowConstraints>
+                <GridPane hgap="15.0" vgap="15.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                    </columnConstraints>
                     <children>
-                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                            <children>
-                                <Label style="-fx-font-weight: bold;" text="Código de Paquete:" textFill="#34495e" />
-                                <TextField fx:id="txtIdPaquete" editable="false" style="-fx-background-color: #edf2f7; -fx-font-weight: bold;" />
-                            </children>
+                        <VBox spacing="5.0" GridPane.columnIndex="0"><children>
+                            <Label style="-fx-font-weight: bold;" text="Código de Paquete:" textFill="#34495e" />
+                            <TextField fx:id="txtIdPaquete" editable="false" style="-fx-background-color: #edf2f7; -fx-font-weight: bold;" />
+                        </children></VBox>
+                        <VBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1"><children>
+                            <Label style="-fx-font-weight: bold;" text="Asegurado:" textFill="#34495e" />
+                            <CheckBox fx:id="chkSeguro" disable="true" text="Posee seguro de mercadería" />
+                        </children></VBox>
+                        <VBox fx:id="vboxDimensiones" spacing="5.0" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                            <Label style="-fx-font-weight: bold;" text="Dimensiones (Alto x Ancho x Largo):" textFill="#34495e" />
+                            <TextField fx:id="txtDimensiones" editable="false" />
                         </VBox>
-                        <VBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                            <children>
-                                <Label style="-fx-font-weight: bold;" text="Asegurado:" textFill="#34495e" />
-                                <CheckBox fx:id="chkSeguro" disable="true" mnemonicParsing="false" style="-fx-padding: 5 0 0 0;" text="Posee seguro de mercadería" />
-                            </children>
+
+                        <VBox fx:id="vboxTamano" spacing="5.0" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                            <Label style="-fx-font-weight: bold;" text="Tamaño del Sobre:" textFill="#34495e" />
+                            <TextField fx:id="txtTamano" editable="false" />
                         </VBox>
-                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                            <children>
-                                <Label style="-fx-font-weight: bold;" text="Peso Registrado:" textFill="#34495e" />
-                                <TextField fx:id="txtPeso" editable="false" style="-fx-background-color: #edf2f7;" />
-                            </children>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                            <Label style="-fx-font-weight: bold;" text="Peso Total:" textFill="#34495e" />
+                            <TextField fx:id="txtPeso" editable="false" />
                         </VBox>
-                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <children>
-                                <Label style="-fx-font-weight: bold;" text="Valor Declarado:" textFill="#34495e" />
-                                <TextField fx:id="txtValor" editable="false" style="-fx-background-color: #edf2f7;" />
-                            </children>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                            <Label style="-fx-font-weight: bold;" text="Valor Total (con Seguro):" textFill="#34495e" />
+                            <TextField fx:id="txtValor" editable="false" />
                         </VBox>
                     </children>
+
                 </GridPane>
-                <Separator prefWidth="200.0" />
 
-                <StackPane alignment="TOP_LEFT">
-                    <children>
-                        <VBox fx:id="paneSobre" spacing="5.0" visible="false">
-                            <children>
-                                <Label style="-fx-font-weight: bold;" text="Tamaño del Sobre:" textFill="#34495e" />
-                                <TextField fx:id="txtTamano" editable="false" prefWidth="200.0" style="-fx-background-color: #edf2f7;" />
-                            </children>
-                        </VBox>
-
-                        <HBox fx:id="paneCaja" spacing="15.0" visible="false">
-                            <children>
-                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label style="-fx-font-weight: bold;" text="Alto:" textFill="#34495e" />
-                                        <TextField fx:id="txtAlto" editable="false" style="-fx-background-color: #edf2f7;" />
-                                    </children>
-                                </VBox>
-                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label style="-fx-font-weight: bold;" text="Ancho:" textFill="#34495e" />
-                                        <TextField fx:id="txtAncho" editable="false" style="-fx-background-color: #edf2f7;" />
-                                    </children>
-                                </VBox>
-                                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label style="-fx-font-weight: bold;" text="Largo:" textFill="#34495e" />
-                                        <TextField fx:id="txtLargo" editable="false" style="-fx-background-color: #edf2f7;" />
-                                    </children>
-                                </VBox>
-                            </children>
-                        </HBox>
-                    </children>
-                </StackPane>
-
-                <Separator prefWidth="200.0" />
+                <Separator />
 
                 <VBox spacing="5.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Label style="-fx-font-weight: bold;" text="Ruta Logística Asignada (Puntos de Control):" textFill="#34495e" />
-                        <ListView fx:id="lstRutaOficinas" prefHeight="150.0" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
+                        <Label style="-fx-font-weight: bold;" text="Ruta Logística (Estado Actualizado):" textFill="#34495e" />
+                        <ListView fx:id="lstRutaOficinas" style="-fx-background-radius: 5;" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
 
+                <HBox fx:id="hboxAccionesAdmin" alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #f1f2f6; -fx-padding: 10; -fx-background-radius: 5;">
+                    <children>
+                        <ComboBox fx:id="cmbOficinas" promptText="Seleccione Oficina..." />
+                        <Button text="📥" onAction="#handleMarcarLlegada" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" />
+                        <Button text="📤" onAction="#handleMarcarSalida" style="-fx-background-color: #e67e22; -fx-text-fill: white;" />
+                    </children>
+                    <HBox spacing="10.0" style="-fx-padding: 10 0 0 0;">
+                        <children>
+                            <ComboBox fx:id="cmbNuevaOficina" promptText="Nueva parada..." />
+                            <Button text="➕ Añadir Parada" onAction="#handleAgregarOficina" style="-fx-background-color: #3498db; -fx-text-fill: white;" />
+                        </children>
+                    </HBox>
+                </HBox>
             </children>
         </VBox>
 
-        <HBox alignment="CENTER_RIGHT">
-            <children>
-                <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleVolver" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="Volver al Listado" />
-            </children>
-        </HBox>
-
+        <Button fx:id="btnVolver" onAction="#handleVolver" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #34495e; -fx-text-fill: white;" text="Volver al Listado" />
     </children>
 </VBox>
+</content>
+</ScrollPane>

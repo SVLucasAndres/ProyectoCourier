@@ -4,48 +4,32 @@
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
     <void property="direccion">
-     <string>Calle del Tejar</string>
+     <string>Av. de las Américas</string>
     </void>
     <void property="idOficina">
-     <string>OFI-9EE039</string>
+     <string>OFI-8E2F53</string>
     </void>
     <void property="nombre">
-     <string>Tejar</string>
+     <string>Sucursal Miraflores</string>
     </void>
     <void property="telefono">
-     <string>0998295810</string>
+     <string>0969562966</string>
     </void>
    </object>
   </void>
   <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
     <void property="direccion">
-     <string>Av. Solano</string>
+     <string>Av. de las Américas y Av. México</string>
     </void>
     <void property="idOficina">
-     <string>OFI-F069FA</string>
+     <string>OFI-AF620F</string>
     </void>
     <void property="nombre">
-     <string>Centro Historico</string>
+     <string>Sucursal Feria Libre</string>
     </void>
     <void property="telefono">
-     <string>0992736467</string>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-    <void property="direccion">
-     <string>Calle 53</string>
-    </void>
-    <void property="idOficina">
-     <string>OFI-7DFFCD</string>
-    </void>
-    <void property="nombre">
-     <string>Durán</string>
-    </void>
-    <void property="telefono">
-     <string>072817343</string>
+     <string>0969562966</string>
     </void>
    </object>
   </void>

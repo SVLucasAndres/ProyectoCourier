@@ -39,7 +39,7 @@
                             <ComboBox fx:id="cmbRemitente" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione la cédula..." />
                         </VBox>
 
-                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <VBox fx:id="vboxDestinatario" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                             <Label style="-fx-font-weight: bold;" text="Seleccionar Destinatario (Destino) *" textFill="#34495e" />
                             <ComboBox fx:id="cmbDestinatario" prefHeight="35.0" prefWidth="280.0" promptText="Seleccione la cédula..." />
                         </VBox>

@@ -137,8 +137,8 @@ public class OficinaServiceImpl implements OficinaService {
         }
         
         if (oficina.getTelefono() != null && !oficina.getTelefono().trim().isEmpty()) {
-            if (!oficina.getTelefono().matches("^\\d{10}$")) {
-                throw new ValidacionException("El número de teléfono de la oficina debe tener exactamente 10 dígitos numéricos.");
+            if (!(oficina.getTelefono().matches("^\\d{10}$") || oficina.getTelefono().matches("^\\d{7}$"))) {
+                throw new ValidacionException("El número de teléfono de la oficina debe tener exactamente 7 o 10 dígitos numéricos.");
             }
         }
     }

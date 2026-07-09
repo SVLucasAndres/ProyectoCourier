@@ -2,221 +2,33 @@
 <java version="26.0.1" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
-   <object class="com.ucuenca.proyecto_courier.CapaDominio.Sobre">
-    <void property="idPaquete">
-     <string>PAQ-E382CD</string>
-    </void>
-    <void property="peso">
-     <double>14.0</double>
-    </void>
-    <void property="ruta">
-     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento" id="RutaSeguimiento0">
-      <void property="puntosIntermedios">
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina" id="Oficina0">
-           <void property="idOficina">
-            <string>OFI-F069FA - Centro Historico</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-F069FA - Centro Historico</string>
-           </void>
-           <void id="Boolean0" method="isActive"/>
-          </object>
-         </void>
-        </object>
-       </void>
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-9EE039 - Tejar</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-9EE039 - Tejar</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-      </void>
-     </object>
-    </void>
-    <void property="tamano">
-     <object class="java.lang.Enum" id="Tamano0" method="valueOf">
-      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.Tamano</class>
-      <string>MEDIANO</string>
-     </object>
-    </void>
-    <void property="tieneSeguro">
-     <object idref="Boolean0"/>
-    </void>
-    <void property="valorContenido">
-     <double>12.0</double>
-    </void>
-   </object>
-  </void>
-  <void method="add">
    <object class="com.ucuenca.proyecto_courier.CapaDominio.Caja">
     <void property="alto">
-     <double>2.0</double>
+     <double>1.0</double>
     </void>
     <void property="ancho">
-     <double>3.0</double>
+     <double>2.0</double>
     </void>
     <void property="idPaquete">
-     <string>PAQ-E63598</string>
+     <string>PAQ-9481AC</string>
     </void>
     <void property="largo">
-     <double>4.0</double>
-    </void>
-    <void property="peso">
-     <double>23.0</double>
-    </void>
-    <void property="ruta">
-     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento" id="RutaSeguimiento1">
-      <void property="puntosIntermedios">
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-9EE039 - Tejar</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-9EE039 - Tejar</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-7DFFCD - Durán</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-7DFFCD - Durán</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-      </void>
-     </object>
-    </void>
-    <void property="valorContenido">
-     <double>34.0</double>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="com.ucuenca.proyecto_courier.CapaDominio.Sobre">
-    <void property="idPaquete">
-     <string>PAQ-AE28ED</string>
-    </void>
-    <void property="peso">
      <double>3.0</double>
     </void>
-    <void property="ruta">
-     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento" id="RutaSeguimiento2">
-      <void property="puntosIntermedios">
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-F069FA - Centro Historico</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-F069FA - Centro Historico</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-9EE039 - Tejar</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-9EE039 - Tejar</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-      </void>
-     </object>
+    <void property="peso">
+     <double>13.0</double>
     </void>
-    <void property="tamano">
-     <object idref="Tamano0"/>
+    <void property="porcentajeSeguro">
+     <double>10.0</double>
+    </void>
+    <void property="ruta">
+     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento"/>
     </void>
     <void property="tieneSeguro">
-     <object idref="Boolean0"/>
+     <boolean>true</boolean>
     </void>
     <void property="valorContenido">
-     <double>4.0</double>
-    </void>
-   </object>
-  </void>
-  <void method="add">
-   <object class="com.ucuenca.proyecto_courier.CapaDominio.Sobre">
-    <void property="idPaquete">
-     <string>PAQ-685DB1</string>
-    </void>
-    <void property="peso">
-     <double>14.0</double>
-    </void>
-    <void property="ruta">
-     <object class="com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento" id="RutaSeguimiento3">
-      <void property="puntosIntermedios">
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-F069FA - Centro Historico</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-F069FA - Centro Historico</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-       <void method="add">
-        <object class="com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio">
-         <void property="oficina">
-          <object class="com.ucuenca.proyecto_courier.CapaDominio.Oficina">
-           <void property="idOficina">
-            <string>OFI-7DFFCD - Durán</string>
-           </void>
-           <void property="nombre">
-            <string>Oficina OFI-7DFFCD - Durán</string>
-           </void>
-          </object>
-         </void>
-        </object>
-       </void>
-      </void>
-     </object>
-    </void>
-    <void property="tamano">
-     <object class="java.lang.Enum" method="valueOf">
-      <class>com.ucuenca.proyecto_courier.CapaDominio.Enums.Tamano</class>
-      <string>PEQUENO</string>
-     </object>
-    </void>
-    <void property="valorContenido">
-     <double>12.0</double>
+     <double>56.1</double>
     </void>
    </object>
   </void>

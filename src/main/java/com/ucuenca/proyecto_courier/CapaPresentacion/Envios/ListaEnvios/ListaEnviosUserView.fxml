@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ListaEnvios.ListaEnviosController">
+    <children>
+        <HBox alignment="CENTER_LEFT">
+            <Label text="Mis Envíos" textFill="#2c3e50">
+                <font> <Font name="System Bold" size="20.0" /> </font>
+            </Label>
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnGenerarEnvio" mnemonicParsing="false" onAction="#handleGenerarEnvio" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="+ Nuevo Envío" />
+        </HBox>
+
+        <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                    <Label text="📤 Envíos Realizados (Remitente)" style="-fx-font-weight: bold; -fx-text-fill: #34495e; -fx-font-size: 13px;" />
+                    <TableView fx:id="tablaEnviosRealizados" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colIdRealizado" text="Código" />
+                            <TableColumn fx:id="colRapidezRealizado" text="Rapidez" />
+                            <TableColumn fx:id="colAccionesRealizado" text="Acciones" />
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                    <Label text="📥 Envíos por Recibir (Destinatario)" style="-fx-font-weight: bold; -fx-text-fill: #34495e; -fx-font-size: 13px;" />
+                    <TableView fx:id="tablaEnviosRecibidos" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colIdRecibido" text="Código" />
+                            <TableColumn fx:id="colRapidezRecibido" text="Rapidez" />
+                            <TableColumn fx:id="colAccionesRecibido" text="Acciones" />
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>

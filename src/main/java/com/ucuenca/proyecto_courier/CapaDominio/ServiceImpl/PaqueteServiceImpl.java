@@ -1,41 +1,31 @@
 package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 
 import com.ucuenca.proyecto_courier.CapaDominio.*;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.Paquete;
-import com.ucuenca.proyecto_courier.CapaDominio.Caja;
-import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
-import com.ucuenca.proyecto_courier.CapaDominio.Envio;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.CajaDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.*;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.EntidadNoEncontradaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
 import com.ucuenca.proyecto_courier.CapaDA.DAO;
+
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PaqueteServiceImpl implements PaqueteService {
     private DAO<Paquete> paqueteDAO;
     private DAO<Envio> envioDAO;
     private DAO<Oficina> oficinaDAO;
 
-    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO, DAO<Envio> envioDAO,DAO<Oficina> oficinaDao) {
+    public PaqueteServiceImpl(DAO<Paquete> paqueteDAO, DAO<Envio> envioDAO, DAO<Oficina> oficinaDao) {
         this.paqueteDAO = paqueteDAO;
         this.oficinaDAO = oficinaDao;
         this.envioDAO = envioDAO;
     }
 
     @Override
-    public void crearPaquete(PaqueteDTO paquete) {
+    public void crearPaquete(PaqueteDTO paquete, ConfiguracionDTO configuracion) {
         if (paqueteDAO == null) {
             throw new OperacionInvalidaException("El DAO de paquete no está inicializado.");
         }
@@ -46,13 +36,8 @@ public class PaqueteServiceImpl implements PaqueteService {
         RutaSeguimiento ruta = new RutaSeguimiento();
         if (paquete.getListaOficinas() != null) {
             for (OficinaDTO o : paquete.getListaOficinas()) {
-
                 Optional<Oficina> oficinaBd = (oficinaDAO != null) ? oficinaDAO.buscarPorId(o.getIdOficina()) : Optional.empty();
-
-                Oficina oficinaDominio;
-                // Trae nombre, dirección, teléfono, etc.
-                oficinaDominio = oficinaBd.orElseGet(() -> new Oficina(o.getIdOficina(), "Oficina " + o.getIdOficina(), "", "", true));
-
+                Oficina oficinaDominio = oficinaBd.orElseGet(() -> new Oficina(o.getIdOficina(), "Oficina " + o.getIdOficina(), "", "", true));
                 PuntoIntermedio punto = new PuntoIntermedio(null, null, oficinaDominio);
                 ruta.agregarPaso(punto);
             }
@@ -62,40 +47,51 @@ public class PaqueteServiceImpl implements PaqueteService {
 
         if (paquete instanceof CajaDTO) {
             CajaDTO cDTO = (CajaDTO) paquete;
-            Caja cajaEntity = new Caja(
+            nuevoPaquete = new Caja(
                     cDTO.getIdPaquete(),
                     cDTO.getPeso(),
                     cDTO.getValorContenido(),
                     cDTO.isTieneSeguro(),
-                    cDTO.getPorcentajeSeguro(),
-                    ruta, //Pasamos la ruta
+                    configuracion.getPorcentajeSeguro(),
+                    ruta,
                     cDTO.getAlto(),
                     cDTO.getAncho(),
                     cDTO.getLargo()
             );
-            nuevoPaquete = cajaEntity;
 
+            for(RangoDTO r:configuracion.getRangos()){
+                double minimo = r.getPesoMinimo();
+                double maximo = r.getPesoMaximo();
+                if(nuevoPaquete.getPeso() <= maximo && nuevoPaquete.getPeso() >=minimo){
+                    nuevoPaquete.setValorContenido(nuevoPaquete.getValorContenido() + (nuevoPaquete.getPeso() * r.getCostoPorKilogramo()));
+                }
+            }
         } else if (paquete instanceof SobreDTO) {
             SobreDTO sDTO = (SobreDTO) paquete;
-
             Sobre sobreEntity = new Sobre(
                     sDTO.getIdPaquete(),
                     sDTO.getPeso(),
                     sDTO.getValorContenido(),
                     sDTO.isTieneSeguro(),
-                    sDTO.getPorcentajeSeguro(),
-                    ruta, //Pasamos la ruta
+                    configuracion.getPorcentajeSeguro(),
+                    ruta,
                     sDTO.getTamano()
             );
-
             if (sDTO.getTamano() != null) {
                 sobreEntity.setTamano(sDTO.getTamano());
             }
-
             nuevoPaquete = sobreEntity;
         }
+
         if (nuevoPaquete != null) {
+            nuevoPaquete.setPorcentajeSeguro(configuracion.getPorcentajeSeguro());
+            boolean valorSeguro = nuevoPaquete.isTieneSeguro();
+            nuevoPaquete.setTieneSeguro(false);
+            nuevoPaquete.setTieneSeguro(valorSeguro);
+            double costoSeguro = nuevoPaquete.calcularCostoSeguro();
+            nuevoPaquete.setValorContenido(nuevoPaquete.getValorContenido() + costoSeguro);
             paqueteDAO.guardar(nuevoPaquete);
+
         } else {
             throw new ValidacionException("Tipo de paquete desconocido.");
         }
@@ -108,33 +104,7 @@ public class PaqueteServiceImpl implements PaqueteService {
         }
         Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
         if (opt.isPresent()) {
-            Paquete p = opt.get();
-            PaqueteDTO dto = null;
-            if (p instanceof Caja) {
-                Caja c = (Caja) p;
-                CajaDTO cajaDTO = new CajaDTO();
-                cajaDTO.setAlto(c.getAlto());
-                cajaDTO.setAncho(c.getAncho());
-                cajaDTO.setLargo(c.getLargo());
-                dto = cajaDTO;
-            } else if (p instanceof Sobre) {
-                Sobre s = (Sobre) p;
-                SobreDTO sobreDTO = new SobreDTO();
-                sobreDTO.setTamano(s.getTamano());
-                dto = sobreDTO;
-            }
-            
-            if (dto != null) {
-                dto.setIdPaquete(p.getIdPaquete());
-                dto.setPeso(p.getPeso());
-                dto.setValorContenido(p.getValorContenido());
-                dto.setTieneSeguro(p.isTieneSeguro());
-                dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
-
-                // Mapeamos los puntos intermedios a una lista limpia de Strings
-                dto.setPuntosRuta(generarPuntosRutaTexto(p));
-            }
-            return dto;
+            return mapearAModeloDTO(opt.get());
         } else {
             throw new EntidadNoEncontradaException("No se encontró el paquete con ID: " + idPaquete);
         }
@@ -146,37 +116,143 @@ public class PaqueteServiceImpl implements PaqueteService {
             throw new OperacionInvalidaException("El DAO de paquete no está inicializado.");
         }
         List<PaqueteDTO> lista = new ArrayList<>();
-        List<Paquete> todos = paqueteDAO.obtenerTodos();
-        for (Paquete p : todos) {
-            PaqueteDTO dto = null;
-            if (p instanceof Caja) {
-                Caja c = (Caja) p;
-                CajaDTO cajaDTO = new CajaDTO();
-                cajaDTO.setAlto(c.getAlto());
-                cajaDTO.setAncho(c.getAncho());
-                cajaDTO.setLargo(c.getLargo());
-                dto = cajaDTO;
-            } else if (p instanceof Sobre) {
-                Sobre s = (Sobre) p;
-                SobreDTO sobreDTO = new SobreDTO();
-                sobreDTO.setTamano(s.getTamano());
-                dto = sobreDTO;
-            }
-            
+        for (Paquete p : paqueteDAO.obtenerTodos()) {
+            PaqueteDTO dto = mapearAModeloDTO(p);
             if (dto != null) {
-                dto.setIdPaquete(p.getIdPaquete());
-                dto.setPeso(p.getPeso());
-                dto.setValorContenido(p.getValorContenido());
-                dto.setTieneSeguro(p.isTieneSeguro());
-                dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
-
-                //Asignamos la lista formateada de strings al DTO
-                dto.setPuntosRuta(generarPuntosRutaTexto(p));
-
                 lista.add(dto);
             }
         }
         return lista;
+    }
+
+    @Override
+    public List<PaqueteDTO> mostrarPaquetesSinEnvio() {
+        if (paqueteDAO == null || envioDAO == null) {
+            throw new OperacionInvalidaException("Los DAO no están inicializados.");
+        }
+
+        List<Envio> envios = envioDAO.obtenerTodos();
+        java.util.Set<String> idsOcupados = envios.stream()
+                .filter(e -> e.getListaIdPaquetes() != null)
+                .flatMap(e -> e.getListaIdPaquetes().stream())
+                .collect(java.util.stream.Collectors.toSet());
+
+        List<PaqueteDTO> paquetesLibres = new ArrayList<>();
+        for (Paquete p : paqueteDAO.obtenerTodos()) {
+            if (!idsOcupados.contains(p.getIdPaquete())) {
+                PaqueteDTO dto = mapearAModeloDTO(p);
+                if (dto != null) {
+                    paquetesLibres.add(dto);
+                }
+            }
+        }
+        return paquetesLibres;
+    }
+
+    @Override
+    public void registrarMovimientoPaquete(String idPaquete, String nombreOficina, LocalDateTime fechaHora, boolean esLlegada, String textoFormateado) {
+        Optional<Paquete> paqueteBuscado = paqueteDAO.buscarPorId(idPaquete);
+
+        if (paqueteBuscado.isPresent()) {
+            Paquete paqueteActual = paqueteBuscado.get();
+            List<PuntoIntermedio> puntos = paqueteActual.getRuta().getPuntosIntermedios();
+
+            // --- VALIDACIÓN DE SECUENCIA ---
+            for (int i = 0; i < puntos.size(); i++) {
+                PuntoIntermedio p = puntos.get(i);
+
+                if (p.getOficina().getNombre().contains(nombreOficina)) {
+                    // Si es el primer punto, siempre se permite
+                    if (i > 0) {
+                        PuntoIntermedio anterior = puntos.get(i - 1);
+                        if (anterior.getHoraSalida() == null) {
+                            throw new OperacionInvalidaException("No se puede registrar movimiento en " + nombreOficina +
+                                    ". El punto anterior (" + anterior.getOficina().getNombre() + ") aún no ha sido despachado.");
+                        }
+                    }
+
+                    // Procesar el movimiento encontrado
+                    String fechaStr = fechaHora.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    if (esLlegada) p.setLlegadaTexto(fechaStr);
+                    else p.setSalidaTexto(fechaStr);
+
+                    paqueteDAO.guardar(paqueteActual);
+                    return; // Éxito
+                }
+            }
+        }
+    }
+
+    @Override
+    public void agregarPuntoRuta(String idPaquete, String nombreOficina) {
+        Paquete p = paqueteDAO.buscarPorId(idPaquete).orElseThrow();
+
+        // Buscar la oficina en el sistema (DAO de oficinas)
+        Oficina oficina = oficinaDAO.obtenerTodos().stream()
+                .filter(o -> o.getNombre().equals(nombreOficina))
+                .findFirst()
+                .orElseThrow(() -> new EntidadNoEncontradaException("Oficina no encontrada"));
+
+        // Crear el nuevo punto (sin llegada ni salida aún)
+        PuntoIntermedio nuevoPunto = new PuntoIntermedio(null, null, oficina);
+
+        // Agregar a la ruta
+        p.getRuta().agregarPaso(nuevoPunto);
+
+        // Persistir
+        paqueteDAO.guardar(p);
+    }
+
+    public List<PaqueteDTO> obtenerPaquetesPorDestinatario(String idDestinatario) {
+        if (paqueteDAO == null || envioDAO == null) {
+            throw new OperacionInvalidaException("Los DAO no están inicializados.");
+        }
+        java.util.Set<String> idsPaquetesDelDestinatario = new java.util.HashSet<>();
+        for (Envio e : envioDAO.obtenerTodos()) {
+            if (e.getIdDestinatario() != null && e.getIdDestinatario().equalsIgnoreCase(idDestinatario.trim())) {
+                if (e.getListaIdPaquetes() != null) {
+                    idsPaquetesDelDestinatario.addAll(e.getListaIdPaquetes());
+                }
+            }
+        }
+
+        List<PaqueteDTO> resultado = new ArrayList<>();
+        for (Paquete p : paqueteDAO.obtenerTodos()) {
+            if (idsPaquetesDelDestinatario.contains(p.getIdPaquete())) {
+                PaqueteDTO dto = mapearAModeloDTO(p);
+                if (dto != null) {
+                    resultado.add(dto);
+                }
+            }
+        }
+        return resultado;
+    }
+
+    @Override
+    public List<PaqueteDTO> obtenerPaquetesPorRemitente(String idRemitente) {
+        if (paqueteDAO == null || envioDAO == null) {
+            throw new OperacionInvalidaException("Los DAO no están inicializados.");
+        }
+
+        java.util.Set<String> idsPaquetesDelRemitente = new java.util.HashSet<>();
+        for (Envio e : envioDAO.obtenerTodos()) {
+            if (e.getIdRemitente() != null && e.getIdRemitente().equalsIgnoreCase(idRemitente.trim())) {
+                if (e.getListaIdPaquetes() != null) {
+                    idsPaquetesDelRemitente.addAll(e.getListaIdPaquetes());
+                }
+            }
+        }
+
+        List<PaqueteDTO> resultado = new ArrayList<>();
+        for (Paquete p : paqueteDAO.obtenerTodos()) {
+            if (idsPaquetesDelRemitente.contains(p.getIdPaquete())) {
+                PaqueteDTO dto = mapearAModeloDTO(p);
+                if (dto != null) {
+                    resultado.add(dto);
+                }
+            }
+        }
+        return resultado;
     }
 
     private List<String> generarPuntosRutaTexto(Paquete p) {
@@ -201,100 +277,53 @@ public class PaqueteServiceImpl implements PaqueteService {
         return paradasTexto;
     }
 
-    @Override
-    public void registrarLlegadaPaquete(String idPaquete, Date fecha) {
-        if (paqueteDAO == null) {
-            throw new OperacionInvalidaException("El DAO de paquete no está inicializado.");
+    private PaqueteDTO mapearAModeloDTO(Paquete p) {
+        if (p == null) return null;
+
+        PaqueteDTO dto = null;
+
+        if (p instanceof Caja) {
+            Caja c = (Caja) p;
+            CajaDTO cajaDTO = new CajaDTO();
+            cajaDTO.setAlto(c.getAlto());
+            cajaDTO.setAncho(c.getAncho());
+            cajaDTO.setLargo(c.getLargo());
+            dto = cajaDTO;
+        } else if (p instanceof Sobre) {
+            Sobre s = (Sobre) p;
+            SobreDTO sobreDTO = new SobreDTO();
+            sobreDTO.setTamano(s.getTamano());
+            dto = sobreDTO;
         }
-        Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
-        if (opt.isPresent()) {
-            Paquete p = opt.get();
-            if (p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
-                var puntos = p.getRuta().getPuntosIntermedios();
-                if (!puntos.isEmpty()) {
-                    var ultimoPunto = puntos.get(puntos.size() - 1);
-                    ultimoPunto.setHoraLlegada(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
-                    paqueteDAO.guardar(p);
-                }
+
+        if (dto != null) {
+            dto.setIdPaquete(p.getIdPaquete());
+            dto.setPeso(p.getPeso());
+            dto.setValorContenido(p.getValorContenido());
+            dto.setTieneSeguro(p.isTieneSeguro());
+            dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
+            dto.setPuntosRuta(generarPuntosRutaTexto(p));
+        }
+
+        return dto;
+    }
+
+    @Override
+    public List<String> obtenerTextosRutaConEstados(String idPaquete) {
+        Paquete p = paqueteDAO.buscarPorId(idPaquete).orElseThrow();
+        List<String> lista = new ArrayList<>();
+        for (var punto : p.getRuta().getPuntosIntermedios()) {
+            String estado;
+            if (punto.getHoraLlegada() != null && punto.getHoraSalida() != null) {
+                estado = "Despachado";
+            } else if (punto.getHoraLlegada() != null) {
+                estado = "Recibido";
             } else {
-                throw new OperacionInvalidaException("El paquete no tiene una ruta válida asignada.");
+                estado = "En espera";
             }
-        } else {
-            throw new EntidadNoEncontradaException("No se encontró el paquete con ID: " + idPaquete);
+            lista.add(punto.getOficina().getNombre() + " [" + estado + "]");
         }
+        return lista;
     }
 
-    @Override
-    public void registrarSalidaPaquete(String idPaquete, Date fecha) {
-        if (paqueteDAO == null) {
-            throw new OperacionInvalidaException("El DAO de paquete no está inicializado.");
-        }
-        Optional<Paquete> opt = paqueteDAO.buscarPorId(idPaquete);
-        if (opt.isPresent()) {
-            Paquete p = opt.get();
-            if (p.getRuta() != null && p.getRuta().getPuntosIntermedios() != null) {
-                var puntos = p.getRuta().getPuntosIntermedios();
-                if (!puntos.isEmpty()) {
-                    var ultimoPunto = puntos.get(puntos.size() - 1);
-                    ultimoPunto.setHoraSalida(LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault()));
-                    paqueteDAO.guardar(p);
-                }
-            } else {
-                throw new OperacionInvalidaException("El paquete no tiene una ruta válida asignada.");
-            }
-        } else {
-            throw new EntidadNoEncontradaException("No se encontró el paquete con ID: " + idPaquete);
-        }
-    }
-
-    @Override
-    public List<PaqueteDTO> mostrarPaquetesSinEnvio() {
-        if (paqueteDAO == null || envioDAO == null) {
-            throw new OperacionInvalidaException("Los DAO no están inicializados.");
-        }
-
-        // 1. Obtener todos los envíos
-        List<Envio> envios = envioDAO.obtenerTodos();
-
-        // 2. Extraer los IDs de todos los paquetes que ya están en algún envío
-        java.util.Set<String> idsOcupados = envios.stream()
-                .filter(e -> e.getListaIdPaquetes() != null)
-                .flatMap(e -> e.getListaIdPaquetes().stream())
-                .collect(java.util.stream.Collectors.toSet());
-
-        // 3. Obtener todos los paquetes y mapear a DTO solo los que no estén en la
-        // lista de ocupados
-        List<PaqueteDTO> paquetesLibres = new ArrayList<>();
-        List<Paquete> todosPaquetes = paqueteDAO.obtenerTodos();
-
-        for (Paquete p : todosPaquetes) {
-            if (!idsOcupados.contains(p.getIdPaquete())) {
-                PaqueteDTO dto = null;
-                if (p instanceof Caja) {
-                    Caja c = (Caja) p;
-                    CajaDTO cajaDTO = new CajaDTO();
-                    cajaDTO.setAlto(c.getAlto());
-                    cajaDTO.setAncho(c.getAncho());
-                    cajaDTO.setLargo(c.getLargo());
-                    dto = cajaDTO;
-                } else if (p instanceof Sobre) {
-                    Sobre s = (Sobre) p;
-                    SobreDTO sobreDTO = new SobreDTO();
-                    sobreDTO.setTamano(s.getTamano());
-                    dto = sobreDTO;
-                }
-
-                if (dto != null) {
-                    dto.setIdPaquete(p.getIdPaquete());
-                    dto.setPeso(p.getPeso());
-                    dto.setValorContenido(p.getValorContenido());
-                    dto.setTieneSeguro(p.isTieneSeguro());
-                    dto.setPorcentajeSeguro(p.getPorcentajeSeguro());
-                    paquetesLibres.add(dto);
-                }
-            }
-        }
-
-        return paquetesLibres;
-    }
 }

@@ -3,8 +3,10 @@ package com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.GeneracionPaquete
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.Tamano;
+import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.OficinaService;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
+import com.ucuenca.proyecto_courier.CapaPresentacion.ClienteActual;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaModel;
@@ -57,6 +59,8 @@ public class GeneracionPaquetesController {
 
     @FXML private Button btnGuardar;
 
+    @FXML private VBox seccionOficinas;
+
     @FXML
     public void initialize() {
         String idGenerado = "PAQ-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
@@ -73,7 +77,7 @@ public class GeneracionPaquetesController {
         sobreModel.setListaOficinasTexto(rutaOficinas);
         cajaModel.setListaOficinasTexto(rutaOficinas);
         lstRutaOficinas.setItems(rutaOficinas);
-
+        seccionOficinas.setVisible(ClienteActual.isIsAdmin());
         // Configurar cómo se muestra el objeto OficinaModel en el ComboBox de selección
         var cellFactoryCombo = new javafx.util.Callback<ListView<OficinaModel>, ListCell<OficinaModel>>() {
             @Override
@@ -224,7 +228,7 @@ public class GeneracionPaquetesController {
             }
         }
 
-        if (rutaOficinas.isEmpty()) {
+        if (rutaOficinas.isEmpty() && ClienteActual.isIsAdmin()) {
             textoAlerta.setText("Debe añadir al menos una oficina a la ruta.");
             btnGuardar.setDisable(true);
             return;
@@ -252,11 +256,22 @@ public class GeneracionPaquetesController {
             PaqueteDTO paqueteDto = PaqueteMapper.modeloToDto(modeloAEnviar);
 
             PaqueteService servicioPaquete = GestorServicios.getInstance().obtenerServicioPaquete();
-            servicioPaquete.crearPaquete(paqueteDto);
+            ConfiguracionService servicioConfiguracion = GestorServicios.getInstance().obtenerServicioConfiguracion();
+
+            servicioPaquete.crearPaquete(paqueteDto,servicioConfiguracion.obtenerConfiguracion());
 
             Alert alerta = new Alert(Alert.AlertType.INFORMATION, "¡Paquete registrado correctamente!");
+
             alerta.setHeaderText(null);
             alerta.showAndWait();
+
+            if(!ClienteActual.isIsAdmin()){
+                alerta = new Alert(Alert.AlertType.INFORMATION, "LA RUTA QUE SEGUIRA EL PAQUETE LA CONFIGURA EL ADMINISTRADOR");
+                alerta.setHeaderText(null);
+                alerta.showAndWait();
+            }
+
+
 
             regresarAListado();
 
@@ -277,7 +292,10 @@ public class GeneracionPaquetesController {
 
     private void regresarAListado() {
         if (navegador != null) {
-            navegador.cambiarAPantalla("Paquetes/ListadoPaquetes/ListadoPaquetesView.fxml", "Lista de Paquetes");
+            if(ClienteActual.isIsAdmin())
+                navegador.cambiarAPantalla("Paquetes/ListadoPaquetes/ListadoPaquetesAdminView.fxml", "Lista de Paquetes");
+            else
+                navegador.cambiarAPantalla("Paquetes/ListadoPaquetes/ListadoPaquetesUserView.fxml", "Mis Paquetes");
         }
     }
 }

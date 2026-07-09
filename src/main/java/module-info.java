@@ -7,6 +7,7 @@ module com.ucuenca.proyecto_courier {
     requires com.dlsc.formsfx;
     requires com.almasb.fxgl.all;
     requires annotations;
+    requires java.naming;
 
     opens com.ucuenca.proyecto_courier.CapaPresentacion to javafx.fxml;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Clientes to javafx.fxml;
@@ -47,6 +48,8 @@ module com.ucuenca.proyecto_courier {
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.GeneracionPaquetes to javafx.fxml;
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ListadoPaquetes to javafx.fxml;
+    exports com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes;
+    opens com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes to javafx.fxml;
     exports com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion;
     opens com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion to javafx.fxml;
 }

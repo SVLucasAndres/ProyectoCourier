@@ -33,6 +33,10 @@ public class ConfiguracionServiceImpl implements ConfiguracionService {
             dto.setImpuestoIVA(c.getImpuestoIVA());
             dto.setIdConfiguracion(c.getIdConfiguracion());
             List<RangoDTO> rangosDto = new ArrayList<>();
+            dto.setPorcentajeSeguro(c.getPorcentajeSeguro());
+            dto.setTarifaEntregaInmediata(c.getTarifaEntregaInmediata());
+            dto.setTarifaEntregaSegundoDia(c.getTarifaEntregaSegundoDia());
+            dto.setTarifaEntregaNormal(c.getTarifaEntregaNormal());
             if (c.getRangos() != null) {
                 for (Rango r : c.getRangos()) {
                     rangosDto.add(new RangoDTO(r.getNombre(), r.getPesoMinimo(), r.getPesoMaximo(), r.getCostoPorKilogramo()));
@@ -59,7 +63,8 @@ public class ConfiguracionServiceImpl implements ConfiguracionService {
                 rangos.add(new Rango(r.getNombre(), r.getPesoMinimo(), r.getPesoMaximo(), r.getCostoPorKilogramo()));
             }
         }
-        Configuracion c = new Configuracion(configuracion.getImpuestoIVA(), rangos);
+        Configuracion c = new Configuracion(
+                configuracion.getTarifaEntregaNormal(),configuracion.getTarifaEntregaSegundoDia(),configuracion.getTarifaEntregaInmediata(), configuracion.getPorcentajeSeguro(), rangos,configuracion.getImpuestoIVA(),"GLOBAL");
         configDAO.guardar(c);
     }
 }

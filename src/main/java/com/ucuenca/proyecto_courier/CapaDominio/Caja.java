@@ -1,11 +1,15 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class Caja extends Paquete {
+public class Caja extends Paquete implements Serializable {
     private double alto;
     private double ancho;
     private double largo;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Caja(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro,
             RutaSeguimiento ruta, double alto, double ancho, double largo) {

@@ -81,7 +81,7 @@
                     </children>
                 </StackPane>
 
-                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                <VBox fx:id="seccionOficinas" spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
                         <Label style="-fx-font-weight: bold;" text="Configurar Ruta de Seguimiento (Oficinas en Orden)" textFill="#34495e" />
                         <HBox alignment="CENTER_LEFT" spacing="10.0">

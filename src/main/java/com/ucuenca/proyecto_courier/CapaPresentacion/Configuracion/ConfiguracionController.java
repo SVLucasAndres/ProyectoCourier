@@ -25,6 +25,7 @@ public class ConfiguracionController {
     @FXML private TableColumn<RangoModel, Number> colHasta;
     @FXML private TableColumn<RangoModel, Number> colPrecio;
     @FXML private TableColumn<RangoModel, Void> colAcciones;
+    @FXML private TextField txtPorcentajeSeguro, txtTasaInmediata, txtTasaSegundoDia, txtTasaNormal;
 
     @FXML private Button btnGuardar;
 
@@ -41,6 +42,18 @@ public class ConfiguracionController {
         colDesde.setCellValueFactory(cellData -> cellData.getValue().pesoMinimoProperty());
         colHasta.setCellValueFactory(cellData -> cellData.getValue().pesoMaximoProperty());
         colPrecio.setCellValueFactory(cellData -> cellData.getValue().costoPorKilogramoProperty());
+
+        txtPorcentajeSeguro.textProperty().bindBidirectional(
+                configuracionModel.porcentajeSeguroProperty(), new NumberStringConverter());
+
+        txtTasaInmediata.textProperty().bindBidirectional(
+                configuracionModel.tasaEntregaInmediataProperty(), new NumberStringConverter());
+
+        txtTasaSegundoDia.textProperty().bindBidirectional(
+                configuracionModel.tasaEntregaSegundoDiaProperty(), new NumberStringConverter());
+
+        txtTasaNormal.textProperty().bindBidirectional(
+                configuracionModel.tasaEntregaNormalProperty(), new NumberStringConverter());
 
         configurarColumnaEliminar();
 
@@ -140,6 +153,10 @@ public class ConfiguracionController {
                 ConfiguracionModel cargado = ConfiguracionMapper.dtoToModelo(dto);
                 configuracionModel.setIdConfiguracion(cargado.getIdConfiguracion());
                 configuracionModel.setImpuestoIVA(cargado.getImpuestoIVA());
+                configuracionModel.setPorcentajeSeguro(cargado.getPorcentajeSeguro());
+                configuracionModel.setTasaEntregaInmediata(cargado.getTasaEntregaInmediata());
+                configuracionModel.setTasaEntregaSegundoDia(cargado.getTasaEntregaSegundoDia());
+                configuracionModel.setTasaEntregaNormal(cargado.getTasaEntregaNormal());
                 configuracionModel.getRangos().setAll(cargado.getRangos());
 
                 ivaOriginal = cargado.getImpuestoIVA();
@@ -218,45 +235,65 @@ public class ConfiguracionController {
 
         dialog.getDialogPane().setContent(grid);
 
+// Buscamos el botón real en el panel para controlar su comportamiento
+        final Button btnAgregar = (Button) dialog.getDialogPane().lookupButton(buttonTypeOk);
+        btnAgregar.addEventFilter(javafx.event.ActionEvent.ACTION, evento -> {
+            try {
+                String nombre = txtId.getText().trim();
+                double min = Double.parseDouble(txtMin.getText().trim());
+                double max = Double.parseDouble(txtMax.getText().trim());
+                double costo = Double.parseDouble(txtVal.getText().trim());
+
+                if (nombre.isEmpty()) {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error de Datos", "El ID del rango no puede estar vacío.");
+                    event.consume(); // Bloquea el cierre del diálogo
+                    return;
+                }
+
+                if (min >= max) {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error de Pesos", "El peso mínimo no puede ser mayor o igual al máximo.");
+                    event.consume();
+                    return;
+                }
+
+                for (RangoModel e : configuracionModel.getRangos()) {
+                    if (e.getNombre().equalsIgnoreCase(nombre)) {
+                        mostrarAlerta(Alert.AlertType.ERROR, "Error de Nombre", "Este rango ya existe. Elija otro nombre.");
+                        event.consume();
+                        return;
+                    }
+                    if (min <= e.getPesoMaximo() && min >= e.getPesoMinimo()) {
+                        mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso mínimo", "El límite inferior está sobre el rango " + e.getNombre());
+                        event.consume();
+                        return;
+                    }
+                    if (max <= e.getPesoMaximo() && max >= e.getPesoMinimo()) {
+                        mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso máximo", "El límite superior está sobre el rango " + e.getNombre());
+                        event.consume();
+                        return;
+                    }
+                }
+            } catch (NumberFormatException e) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Los límites y el costo deben ser números válidos.");
+                event.consume();
+            }
+        });
+
+// El convertidor de resultados ahora va seguro porque los datos ya pasaron el filtro previo
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == buttonTypeOk) {
-                try {
-                    RangoModel nuevoRango = new RangoModel();
-                    nuevoRango.setNombre(txtId.getText().trim());
-                    nuevoRango.setPesoMinimo(Double.parseDouble(txtMin.getText().trim()));
-                    nuevoRango.setPesoMaximo(Double.parseDouble(txtMax.getText().trim()));
-                    nuevoRango.setCostoPorKilogramo(Double.parseDouble(txtVal.getText().trim()));
-
-                    for(RangoModel e : configuracionModel.getRangos()){
-                        if(e.getNombre().equalsIgnoreCase(nuevoRango.getNombre())){
-                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Nombre", "Este rango ya existe. Eliga otro nombre");
-                            return null;
-                        }
-                        if(nuevoRango.getPesoMinimo() <= e.getPesoMaximo() && nuevoRango.getPesoMinimo() >= e.getPesoMinimo()){
-                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso minimo", "El límite inferior está sobre el rango " + e.getNombre());
-                            return null;
-                        }
-                        if(nuevoRango.getPesoMaximo() <= e.getPesoMaximo() && nuevoRango.getPesoMaximo() >= e.getPesoMinimo()){
-                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Peso máximo", "El límite superior está sobre el rango " + e.getNombre());
-                            return null;
-                        }
-                        if(nuevoRango.getPesoMinimo() >= nuevoRango.getPesoMaximo()){
-                            mostrarAlerta(Alert.AlertType.ERROR, "Error de Pesos", "El peso minimo no puede ser mayor o igual al máximo");
-                            return null;
-                        }
-                    }
-                    return nuevoRango;
-                } catch (NumberFormatException e) {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Los límites y el costo deben ser números válidos.");
-                }
+                RangoModel nuevoRango = new RangoModel();
+                nuevoRango.setNombre(txtId.getText().trim());
+                nuevoRango.setPesoMinimo(Double.parseDouble(txtMin.getText().trim()));
+                nuevoRango.setPesoMaximo(Double.parseDouble(txtMax.getText().trim()));
+                nuevoRango.setCostoPorKilogramo(Double.parseDouble(txtVal.getText().trim()));
+                return nuevoRango;
             }
             return null;
         });
 
         dialog.showAndWait().ifPresent(nuevoRango -> {
-            if (!nuevoRango.getNombre().isEmpty()) {
-                configuracionModel.getRangos().add(nuevoRango);
-            }
+            configuracionModel.getRangos().add(nuevoRango);
         });
     }
 

@@ -15,6 +15,7 @@ public class EnvioModel {
     private final IntegerProperty cantidadPaquetes = new SimpleIntegerProperty();
     private final StringProperty estadoEnvio = new SimpleStringProperty("ACTIVO");
     private final ListProperty<String> listaIdPaquetes = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final DoubleProperty costoTotal = new SimpleDoubleProperty();
 
     // Property getters
     public StringProperty estadoEnvioProperty() { return estadoEnvio; }
@@ -25,6 +26,7 @@ public class EnvioModel {
     public StringProperty metodoPagoProperty() { return metodoPago; }
     public IntegerProperty cantidadPaquetesProperty() { return cantidadPaquetes; }
     public ListProperty<String> listaIdPaquetesProperty(){return listaIdPaquetes;}
+    public DoubleProperty costoTotalProperty(){return costoTotal;}
 
     // Getters y Setters estándar
     public String getIdEnvio() { return idEnvio.get(); }
@@ -50,6 +52,9 @@ public class EnvioModel {
 
     public String getEstadoEnvio() { return estadoEnvio.get(); }
     public void setEstadoEnvio(String value) { estadoEnvio.set(value); }
+
+    public double getCostoTotal(){return costoTotal.get();}
+    public void setCostoTotal(Double value){costoTotal.set(value);}
 
     public List<String> getListaIdPaquetes(){return listaIdPaquetes.get();}
     public void setListaIdPaquetes(List<String> value){

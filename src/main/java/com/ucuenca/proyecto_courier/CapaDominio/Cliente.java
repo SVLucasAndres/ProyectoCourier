@@ -1,14 +1,19 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class Cliente {
+public class Cliente implements Serializable {
     private String idCliente;
     private String nombre;
     private String direccion;
     private String telefono;
     private List<Envio> listaEnvios;
     private boolean isActive;
+    private String contrasena;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Cliente(String idCliente, String nombre, String direccion, String telefono, List<Envio> listaEnvios, boolean isActive) {
         this.idCliente = idCliente;
@@ -40,4 +45,12 @@ public class Cliente {
 
     public boolean isIsActive() { return isActive; }
     public void setIsActive(boolean isActive) { this.isActive = isActive; }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 }

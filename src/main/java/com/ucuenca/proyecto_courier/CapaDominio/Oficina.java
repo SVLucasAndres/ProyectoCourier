@@ -1,12 +1,16 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
-public class Oficina {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Oficina implements Serializable {
     private String idOficina = "";
     private String nombre = "";
     private String direccion = "";
     private String telefono = "";
     private boolean active = true;
-
+    @Serial
+    private static final long serialVersionUID = 1L;
     public Oficina() {
     }
 

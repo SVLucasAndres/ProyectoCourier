@@ -3,16 +3,15 @@ package com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl;
 import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteEnviosDTO;
+import com.ucuenca.proyecto_courier.CapaDominio.DTO.ConfiguracionDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
-import com.ucuenca.proyecto_courier.CapaDominio.DTO.RangoDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Envio;
-import com.ucuenca.proyecto_courier.CapaDominio.Rango;
+import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.AutenticacionExcepcion;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.EntidadNoEncontradaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.ValidacionException;
 import com.ucuenca.proyecto_courier.CapaDA.DAO;
-import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void crearCliente(ClienteDTO cliente) {
+    public void crearCliente(ClienteDTO cliente, String contrasena) {
         if (clienteDAO == null) {
             throw new OperacionInvalidaException("El DAO de cliente no está inicializado.");
         }
@@ -43,6 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
             new ArrayList<>(), 
             true
         );
+        nuevoCliente.setContrasena(contrasena);
         clienteDAO.guardar(nuevoCliente);
     }
 
@@ -125,7 +125,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, List<Rango> rangos, double iva) {
+    public ClienteEnviosDTO obtenerListadoPaquetesPorIdCliente(String id, ConfiguracionDTO configuracion) {
 
         Cliente clienteEncontrado;
         if (clienteDAO.buscarPorId(id).isEmpty())
@@ -139,7 +139,7 @@ public class ClienteServiceImpl implements ClienteService {
             envio.setIdRemitente(e.getIdRemitente());
             envio.setRapidez(e.getRapidez());
             envio.setMetodoPago(e.getMetodoPago());
-            envio.setCostoTotal(e.calcularCostoTotal(rangos, iva));
+            envio.setCostoTotal(e.getCostoTotal());
             enviosPorCliente.add(envio);
         }
         return new ClienteEnviosDTO(
@@ -202,5 +202,20 @@ public class ClienteServiceImpl implements ClienteService {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+    @Override
+    public ClienteDTO validarLogin(ClienteDTO cliente, String contrasena){
+        Optional<Cliente> clienteAuth = clienteDAO.buscarPorId(cliente.getIdCliente());
+        if(clienteAuth.isPresent()){
+            if(clienteAuth.get().getContrasena().equals(contrasena)){
+                return cliente;
+            }else {
+                throw new AutenticacionExcepcion("Credenciales incorrectas");
+            }
+        }else{
+            throw new EntidadNoEncontradaException("Este usuario no existe en el sistema.");
+
+        }
+
     }
 }

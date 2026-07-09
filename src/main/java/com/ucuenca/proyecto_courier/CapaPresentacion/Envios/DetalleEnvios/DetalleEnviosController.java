@@ -3,6 +3,7 @@ package com.ucuenca.proyecto_courier.CapaPresentacion.Envios.DetalleEnvios;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.EnvioDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.EnvioService;
+import com.ucuenca.proyecto_courier.CapaPresentacion.ClienteActual;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ContextoEnvio;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioMapper;
@@ -21,6 +22,7 @@ public class DetalleEnviosController {
     @FXML private Label lblRapidez;
     @FXML private Label lblPago;
     @FXML private Label lblEstado;
+    @FXML private Label lblCosto;
 
     @FXML private TableView<PaqueteDTO> tablaPaquetesDetalle;
     @FXML private TableColumn<PaqueteDTO, String> colIdPaquete;
@@ -77,8 +79,6 @@ public class DetalleEnviosController {
         // Enlazamos la lista observable a la tabla
         tablaPaquetesDetalle.setItems(listaPaquetes);
 
-
-
         if (envioActual != null) {
             mostrarDetallesDelEnvio();
         }
@@ -90,6 +90,7 @@ public class DetalleEnviosController {
         lblDestinatario.setText(envioActual.getIdDestinatario());
         lblRapidez.setText(envioActual.getRapidez());
         lblPago.setText(envioActual.getMetodoPago());
+        lblCosto.setText(String.format("%.2f", envioActual.getCostoTotal()));
 
         if (envioActual.getEstadoEnvio() != null) {
             actualizarLabelEstado(envioActual.getEstadoEnvio());
@@ -143,7 +144,10 @@ public class DetalleEnviosController {
     @FXML
     private void handleRegresar() {
         if (navegador != null) {
-            navegador.cambiarAPantalla("Envios/ListaEnvios/ListaEnviosView.fxml", "Listado de Envios");
+            if(ClienteActual.isIsAdmin())
+                navegador.cambiarAPantalla("Envios/ListaEnvios/ListaEnviosAdminView.fxml", "Listado de Envios");
+            else
+                navegador.cambiarAPantalla("Envios/ListaEnvios/ListaEnviosUserView.fxml", "Mis Envios");
         }
     }
 }

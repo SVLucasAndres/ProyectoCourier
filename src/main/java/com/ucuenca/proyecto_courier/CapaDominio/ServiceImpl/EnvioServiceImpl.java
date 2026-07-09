@@ -46,7 +46,7 @@ public class EnvioServiceImpl implements EnvioService {
     }
 
     @Override
-    public void realizarEnvio(EnvioDTO dto) {
+    public void realizarEnvio(EnvioDTO dto, ConfiguracionDTO configuracion) {
         if (envioDAO == null) {
             throw new OperacionInvalidaException("El DAO de envío no está inicializado.");
         }
@@ -65,8 +65,25 @@ public class EnvioServiceImpl implements EnvioService {
                 idsPaquetes.add(pDto.getIdPaquete());
             }
         }
-        envioDominio.setListaIdPaquetes(idsPaquetes);
+        double total = 0.0;
 
+        envioDominio.setListaIdPaquetes(idsPaquetes);
+        for(String p:idsPaquetes){
+            Optional<Paquete> paquete = paqueteDAO.buscarPorId(p);
+            if(paquete.isPresent()){
+                total += paquete.get().getValorContenido();
+            }else{
+                throw new EntidadNoEncontradaException("No se encontró un paquete");
+            }
+        }
+        envioDominio.setCostoTotal(total);
+
+        envioDominio.calcularCostoTotal(
+                configuracion.getTarifaEntregaInmediata(),
+                configuracion.getTarifaEntregaSegundoDia(),
+                configuracion.getTarifaEntregaNormal(),
+                configuracion.getImpuestoIVA()
+        );
         envioDAO.guardar(envioDominio);
     }
 
@@ -101,7 +118,7 @@ public class EnvioServiceImpl implements EnvioService {
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
             dto.setListaPaquetes(paquetesDtos);
-            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos(), obtenerIVA()));
+            dto.setCostoTotal(e.getCostoTotal());
 
             return dto;
         } else {
@@ -116,7 +133,7 @@ public class EnvioServiceImpl implements EnvioService {
     }
 
     @Override
-    public List<EnvioDTO> mostrarListaEnvios() {
+    public List<EnvioDTO> mostrarListaEnvios(ConfiguracionDTO configuracion) {
         List<Envio> listaDominio = envioDAO.obtenerTodos();
         List<EnvioDTO> listaDtos = new ArrayList<>();
 
@@ -143,9 +160,9 @@ public class EnvioServiceImpl implements EnvioService {
             dto.setRapidez(e.getRapidez());
             dto.setMetodoPago(e.getMetodoPago());
             dto.setEstadoEnvio(e.getEstadoEnvio());
+            dto.setCostoTotal(e.getCostoTotal());
 
             dto.setListaPaquetes(paquetesDtos);
-            dto.setCostoTotal(e.calcularCostoTotal(obtenerRangos(), obtenerIVA()));
 
             listaDtos.add(dto);
         }

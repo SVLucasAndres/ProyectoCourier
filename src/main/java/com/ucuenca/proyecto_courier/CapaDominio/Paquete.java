@@ -1,15 +1,18 @@
 package com.ucuenca.proyecto_courier.CapaDominio;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class Paquete {
+public abstract class Paquete implements Serializable {
     private String idPaquete;
     private double peso;
     private double valorContenido;
     private boolean tieneSeguro;
     private double porcentajeSeguro;
     private RutaSeguimiento ruta;
-
+    @Serial
+    private static final long serialVersionUID = 1L;
     public Paquete(String idPaquete, double peso, double valorContenido, boolean tieneSeguro, double porcentajeSeguro, RutaSeguimiento ruta) {
         this.idPaquete = idPaquete;
         this.peso = peso;
@@ -44,6 +47,7 @@ public abstract class Paquete {
     public abstract double calcularCostoBase(List<Rango> rangos);
 
     public double calcularCostoSeguro() {
+
         if (tieneSeguro) {
             return valorContenido * (porcentajeSeguro / 100.0);
         }
