@@ -4,7 +4,7 @@ package com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.AgregacionOficina
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.OficinaService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaMapper; // Mapeador idéntico al de Clientes
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaModel;  // Tu modelo reactivo de UI
 

@@ -1,4 +1,4 @@
-package com.ucuenca.proyecto_courier.CapaPresentacion;
+package com.ucuenca.proyecto_courier;
 
 import com.ucuenca.proyecto_courier.CapaDominio.*;
 import com.ucuenca.proyecto_courier.CapaDominio.ServiceImpl.*;

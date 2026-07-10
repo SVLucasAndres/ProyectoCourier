@@ -1,6 +1,6 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Clientes;
 
-import com.ucuenca.proyecto_courier.CapaDominio.Cliente;
+
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ClienteDTO;
 
 public class ClienteMapper {

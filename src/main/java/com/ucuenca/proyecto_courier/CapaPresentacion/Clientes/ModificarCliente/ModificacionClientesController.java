@@ -7,7 +7,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ClienteService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ClienteModel;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Clientes.ContextoCliente;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
 import javafx.event.ActionEvent;

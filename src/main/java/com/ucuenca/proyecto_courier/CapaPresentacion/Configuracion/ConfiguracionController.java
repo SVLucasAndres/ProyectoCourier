@@ -3,7 +3,7 @@ package com.ucuenca.proyecto_courier.CapaPresentacion.Configuracion;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.ConfiguracionDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.RangoDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.ConfiguracionService;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 
 import javafx.collections.ListChangeListener;

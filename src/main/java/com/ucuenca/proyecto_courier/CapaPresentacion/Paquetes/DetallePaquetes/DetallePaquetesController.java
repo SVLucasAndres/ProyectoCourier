@@ -1,10 +1,11 @@
 package com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.DetallePaquetes;
 
-import com.ucuenca.proyecto_courier.CapaDominio.Caja;
+
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Excepciones.OperacionInvalidaException;
-import com.ucuenca.proyecto_courier.CapaDominio.Sobre;
+
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.*;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.*;
 import javafx.collections.FXCollections;

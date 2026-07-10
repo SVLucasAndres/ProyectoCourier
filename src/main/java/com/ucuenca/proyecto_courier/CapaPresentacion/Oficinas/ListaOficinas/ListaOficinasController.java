@@ -3,7 +3,7 @@ package com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ListaOficinas;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.OficinaService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.ContextoOficina;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaModel;

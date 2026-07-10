@@ -4,7 +4,7 @@ import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.interfaces.PaqueteService;
 import com.ucuenca.proyecto_courier.CapaPresentacion.ClienteActual;
 import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.ContextoPaquete;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.PaqueteMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Paquetes.PaqueteModel;

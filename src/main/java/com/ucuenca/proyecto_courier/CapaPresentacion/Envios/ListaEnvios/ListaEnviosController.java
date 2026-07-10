@@ -8,7 +8,7 @@ import com.ucuenca.proyecto_courier.CapaPresentacion.NavegadorVistas;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.ContextoEnvio;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Envios.EnvioModel;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+import com.ucuenca.proyecto_courier.GestorServicios;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

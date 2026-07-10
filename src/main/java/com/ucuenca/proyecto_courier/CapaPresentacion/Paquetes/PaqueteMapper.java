@@ -5,9 +5,9 @@ import com.ucuenca.proyecto_courier.CapaDominio.DTO.OficinaDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.PaqueteDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.DTO.SobreDTO;
 import com.ucuenca.proyecto_courier.CapaDominio.Enums.Tamano;
-import com.ucuenca.proyecto_courier.CapaDominio.PuntoIntermedio;
-import com.ucuenca.proyecto_courier.CapaDominio.RutaSeguimiento;
-import com.ucuenca.proyecto_courier.CapaPresentacion.GestorServicios;
+
+
+import com.ucuenca.proyecto_courier.GestorServicios;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaMapper;
 import com.ucuenca.proyecto_courier.CapaPresentacion.Oficinas.OficinaModel;
 import javafx.beans.binding.ListBinding;
