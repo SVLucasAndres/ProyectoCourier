@@ -67,5 +67,27 @@
     </void>
    </object>
   </void>
+  <void method="add">
+   <object class="com.ucuenca.proyecto_courier.CapaDominio.Cliente">
+    <void property="contrasena">
+     <string>Alex</string>
+    </void>
+    <void property="direccion">
+     <string>Av. Gapal</string>
+    </void>
+    <void property="idCliente">
+     <string>0704576669</string>
+    </void>
+    <void property="listaEnvios">
+     <object class="java.util.ArrayList"/>
+    </void>
+    <void property="nombre">
+     <string>Alexandra Romero</string>
+    </void>
+    <void property="telefono">
+     <string>0956442834</string>
+    </void>
+   </object>
+  </void>
  </object>
 </java>
